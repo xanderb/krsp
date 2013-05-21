@@ -1,0 +1,77 @@
+html, body{
+    height: 100%;
+    position: relative;
+}
+.sub_menu{
+    margin: 10px 0;
+}
+.wrapper{
+    min-height: 100%;
+}
+#main_container{
+    overflow: auto;
+    padding-bottom: 60px;
+}
+footer{
+    position: relative;
+    margin-top: -30px; /* negative value of footer height */
+    height: 30px;
+    clear:both;
+    padding-top:0px;
+    bottom: 15px;
+    width: 100%;
+    text-align: center;
+}
+.word-wrap{
+    word-wrap: break-word;
+    word-break: break-all;
+}
+caption{
+    border-radius: 5px 5px 0 0;
+    font-size: 1.3em;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    background-repeat: repeat-x;
+}
+
+.caption-invert{
+    color: #FFFFFF;
+    background-color: #363636;
+    background-image: linear-gradient(to bottom, #444444, #222222);
+}
+.caption-danger{
+    color: #FFFFFF;
+    background-color: #DA4F49;
+    background-image: linear-gradient(to bottom, #EE5F5B, #BD362F);
+}
+.underline {
+    text-decoration: underline;
+}
+.well-very-small {
+    padding: 5px;
+}
+
+a.left-button {
+    position: fixed;
+    left: -90px;
+    top: 300px;
+    -o-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    transform: rotate(90deg);
+    cursor: pointer;
+    border-radius: 5px 5px 0 0;
+}
+.left-padding {
+    padding-left: 25px;
+}
+.auth {
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid #e7e7e7;
+    background-color: #f9f9f9;
+    box-shadow: 1px 1px 2px #000;
+}
