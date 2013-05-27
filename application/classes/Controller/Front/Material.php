@@ -80,16 +80,36 @@ class Controller_Front_Material extends Controller_Front
 
 	public function action_index()
 	{
-        $this->addScript('bs-plug');
         $this->addScript('front');
+        $this->addScript('datepicker.10.3.min');
+        $this->addStyle('ui.10.3.min');
+        $this->addScript('jquery.ui.datepicker-ru');
+
+        $page = Request::$current->param('page');
 
         $filters = Help::render_filter_form();
-        $materials = ORM_Log::factory('material')->where('archive', '=', '0')->order_by('registration_date', 'DESC')->find_all();
+        $materials = ORM_Log::factory('material')->where('archive', '=', '0');
+        $materials =
+            $materials
+            ->add_filters($this->session->get('filters'))
+            ->order_by('registration_date', 'DESC')
+            ->limit($this->config->items_per_page)
+            ->offset((isset($page) ? ($page-1)*$this->config->items_per_page : 0))
+            ->find_all();
+        $total_items = ORM_Log::factory('material')
+                ->where('archive', '=', '0')
+                ->add_filters($this->session->get('filters'))
+                ->order_by('registration_date', 'DESC')
+                ->find_all()->count();
 
         $materials_view = View::factory('front/materials_table');
         $materials_view->caption = "Сообщения в журнале";
         $materials_view->datas = $materials;
         $materials_view->t_headers = $this->materials_headers;
+
+        if(ceil($total_items / $this->config->items_per_page) > 1){
+            $materials_view->paginator = Help::render_paginator('material', '', $page, $total_items); //добавление постраничной навигации
+        }
 
 
         $grid = View::factory('front/front_grid');
@@ -99,7 +119,7 @@ class Controller_Front_Material extends Controller_Front
 
         $this->template->body = $grid;
         $this->template->filter_button = View::factory('front/filter_button');
-        //$this->template->debug = Debug::vars($this->session);
+        $this->template->debug = Debug::vars($this->session, $materials, $total_items);
 	}
 
 }

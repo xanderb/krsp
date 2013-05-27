@@ -9,7 +9,7 @@
 
 class Help
 {
-    public static function select($name, array $options = NULL, $selected = NULL, array $attributes = NULL, array $default_option = NULL)
+    public static function select($name, array $options = NULL, $selected = NULL, array $attributes = NULL, array $default_option = NULL, $force_default = FALSE)
     {
         // Set the input name
         $attributes['name'] = $name;
@@ -92,7 +92,7 @@ class Help
                     $options[$value] = '<option'.HTML::attributes($option).'>'.HTML::chars($name, FALSE).'</option>';
                 }
             }
-            if(is_array($default_option) AND is_array($selected) AND count($selected) < 1)
+            if(is_array($default_option) AND (is_array($selected) AND count($selected) < 1 OR $force_default))
             {
                 foreach($default_option as $def_key => $def_value)
                 {
@@ -133,18 +133,44 @@ class Help
         return $paginator;
     }
 
-    public static function render_filter_form()
+    public static function render_filter_form($type = 'select')
     {
         $session = Session::instance();
         $post_filters = $session->get('filters');
-        $sources = ORM::factory('source')->order_by('sort')->find_all();
-        $articles = ORM::factory('article')-> order_by('sort')->find_all();
+        if($type == 'checkbox')
+        {
+            $sources = ORM::factory('source')->order_by('sort')->find_all();
+            $articles = ORM::factory('article')-> order_by('sort')->find_all();
 
-        $filters = View::factory('front/filters');
+            $filters = View::factory('front/filters');
+        }
+        elseif($type == 'select')
+        {
+            $sources = ORM::factory('source')->order_by('sort')->find_all()->as_array('id', 'text');
+            $articles_value = ORM::factory('article')-> order_by('sort')->find_all()->as_array('id', 'value');
+            $articles_text = ORM::factory('article')-> order_by('sort')->find_all()->as_array('id', 'text');
+            foreach($articles_value as $key => $value){
+                $articles[$key] = $value.' - '.$articles_text[$key];
+            }
+            $investigators = ORM::factory('investigator')->order_by('sort')->find_all()->as_array('id', 'name');
+            $decrees = ORM::factory('decree')->order_by('sort')->find_all()->as_array('id', 'text');
+            $periods = ORM::factory('period')->order_by('sort')->find_all()->as_array('id', 'days');
+            $chars = ORM::factory('characteristic')->order_by('sort')->find_all()->as_array('id', 'text');
+            $failure_causes = ORM::factory('fcause')->order_by('sort')->find_all()->as_array('id', 'text');
+
+
+            $filters = View::factory('front/select_filters');
+        }
+
         $filters->filters = $post_filters;
         $filters->action = '/filter/change';
         $filters->sources = $sources;
         $filters->articles = $articles;
+        $filters->invs = $investigators;
+        $filters->decrees = $decrees;
+        $filters->periods = $periods;
+        $filters->chars = $chars;
+        $filters->failure_causes = $failure_causes;
 
         return $filters;
     }

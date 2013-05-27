@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" name="Default" comment="" />
+    <list default="true" id="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/application/views/front/select_filters.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/classes/Controller/Front/Filter.php" afterPath="$PROJECT_DIR$/application/classes/Controller/Front/Filter.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/classes/Help.php" afterPath="$PROJECT_DIR$/application/classes/Help.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/classes/Controller/Front/Material.php" afterPath="$PROJECT_DIR$/application/classes/Controller/Front/Material.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/classes/Model/Material.php" afterPath="$PROJECT_DIR$/application/classes/Model/Material.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/config/basic.php" afterPath="$PROJECT_DIR$/application/config/basic.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/js/front.js" afterPath="$PROJECT_DIR$/public/js/front.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/css/global.css" afterPath="$PROJECT_DIR$/public/css/global.css" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/routing.php" afterPath="$PROJECT_DIR$/application/routing.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="kohana.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/index.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1368992642576" ignored="false" />
@@ -19,7 +31,7 @@
     <file path="/Reg.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369122761465" ignored="false" />
     <file path="/login.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369124418530" ignored="false" />
     <file path="/routing.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1368632611928" ignored="false" />
-    <file path="/Material.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369075779261" ignored="false" />
+    <file path="/Material.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369406745881" ignored="false" />
     <file path="/user_info.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1367493227435" ignored="false" />
     <file path="/Source.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1368355356896" ignored="false" />
     <file path="/Characteristic.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1365866335528" ignored="false" />
@@ -32,7 +44,7 @@
     <file path="/Cp.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1368352195806" ignored="false" />
     <file path="/control_panel.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1368268255093" ignored="false" />
     <file path="/Crud.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1366707267978" ignored="false" />
-    <file path="/global.css" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369124254355" ignored="false" />
+    <file path="/global.css" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369236224124" ignored="false" />
     <file path="/Periods.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1366224235376" ignored="false" />
     <file path="/table.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1368521990384" ignored="false" />
     <file path="/admin-table.js" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1366290745690" ignored="false" />
@@ -55,7 +67,7 @@
     <file path="/materials_table.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1368795236030" ignored="false" />
     <file path="/bs-plug.js" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1367494888926" ignored="false" />
     <file path="/edit_material.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1368139997101" ignored="false" />
-    <file path="/Help.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369062225006" ignored="false" />
+    <file path="/Help.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369397161501" ignored="false" />
     <file path="/material-form.js" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1368270271084" ignored="false" />
     <file path="/jquery-ui-1.10.3.custom.min.css" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1368006668009" ignored="false" />
     <file path="/Archive.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1368283506239" ignored="false" />
@@ -65,9 +77,15 @@
     <file path="/edit_decree.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1368377406859" ignored="false" />
     <file path="/edit_char.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1368378484351" ignored="false" />
     <file path="/front_grid.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369076113408" ignored="false" />
-    <file path="/Filter.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369062441404" ignored="false" />
-    <file path="/front.js" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1368955204473" ignored="false" />
+    <file path="/Filter.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369405625074" ignored="false" />
+    <file path="/front.js" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369385210321" ignored="false" />
     <file path="/filters.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369062149508" ignored="false" />
+    <file path="/Dummy.txt" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369639632185" ignored="false" />
+    <file path="$PROJECT_DIR$/../test/select/index.html" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369213583004" ignored="false" />
+    <file path="$PROJECT_DIR$/../test/select/script.js" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369213301199" ignored="false" />
+    <file path="/index.html" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369213570892" ignored="false" />
+    <file path="/script.js" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369213163978" ignored="false" />
+    <file path="/select_filters.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369397040387" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,19 +105,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="front_grid.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/views/front/front_grid.php">
+      <file leaf-file-name="Filter.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/classes/Controller/Front/Filter.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="89" column="39" selection-start="2617" selection-end="2617" vertical-scroll-proportion="0.0">
+            <state line="69" column="46" selection-start="2738" selection-end="2738" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Filter.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/classes/Controller/Front/Filter.php">
+      <file leaf-file-name="Material.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/classes/Model/Material.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="45" selection-start="734" selection-end="734" vertical-scroll-proportion="0.0">
+            <state line="240" column="45" selection-start="7887" selection-end="7887" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -108,16 +126,37 @@
       <file leaf-file-name="Help.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/classes/Help.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="138" column="49" selection-start="4669" selection-end="4669" vertical-scroll-proportion="0.0">
+            <state line="121" column="57" selection-start="4112" selection-end="4112" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/views/main/index.php">
+      <file leaf-file-name="paginator.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/views/main/paginator.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="55" column="25" selection-start="1371" selection-end="1371" vertical-scroll-proportion="0.0">
+            <state line="38" column="35" selection-start="1251" selection-end="1251" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="select_filters.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/views/front/select_filters.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="240" column="44" selection-start="7849" selection-end="7849" vertical-scroll-proportion="0.0">
+              <folding>
+                <marker date="1369397291521" expanded="true" signature="2076:2162" placeholder="..." />
+                <marker date="1369397291521" expanded="true" signature="3537:3616" placeholder="..." />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="admin-form.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/public/js/admin-form.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="384" column="29" selection-start="10754" selection-end="10754" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -127,7 +166,9 @@
         <entry file="file://$PROJECT_DIR$/application/views/front/filter_button.php">
           <provider selected="true" editor-type-id="text-editor">
             <state line="11" column="4" selection-start="359" selection-end="359" vertical-scroll-proportion="0.0">
-              <folding />
+              <folding>
+                <marker date="1368992629940" expanded="true" signature="293:358" placeholder="..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -135,16 +176,25 @@
       <file leaf-file-name="Material.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/classes/Controller/Front/Material.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="101" column="10" selection-start="2878" selection-end="2878" vertical-scroll-proportion="0.0">
+            <state line="110" column="77" selection-start="3350" selection-end="3350" vertical-scroll-proportion="-17.307692">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Material.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/classes/Controller/Admin/Material.php">
+      <file leaf-file-name="routing.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/routing.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="130" column="6" selection-start="1698" selection-end="3486" vertical-scroll-proportion="0.0">
+            <state line="30" column="7" selection-start="810" selection-end="810" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Source.php" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/classes/Controller/Admin/Source.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="96" column="44" selection-start="2754" selection-end="2754" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -153,7 +203,7 @@
       <file leaf-file-name="filters.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/views/front/filters.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="65" column="29" selection-start="2206" selection-end="2206" vertical-scroll-proportion="0.0">
+            <state line="73" column="25" selection-start="2485" selection-end="2485" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -162,16 +212,7 @@
       <file leaf-file-name="edit_material.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/views/Back/edit_material.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="195" column="22" selection-start="5186" selection-end="5825" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="user_table.php" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/views/Back/user_table.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="64" selection-start="1000" selection-end="1000" vertical-scroll-proportion="0.0">
+            <state line="101" column="38" selection-start="2349" selection-end="2349" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -180,25 +221,25 @@
       <file leaf-file-name="front.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/js/front.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="0" selection-start="173" selection-end="173" vertical-scroll-proportion="0.0">
+            <state line="48" column="87" selection-start="2124" selection-end="2124" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="materials_table.php" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="materials_table.php" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/application/views/front/materials_table.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="83" column="46" selection-start="2311" selection-end="2311" vertical-scroll-proportion="0.0">
+            <state line="46" column="63" selection-start="1030" selection-end="1030" vertical-scroll-proportion="0.46344486">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="basic.php" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="basic.php" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/config/basic.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="2" selection-start="356" selection-end="356" vertical-scroll-proportion="0.4811321">
+            <state line="13" column="2" selection-start="312" selection-end="312" vertical-scroll-proportion="-8.5">
               <folding />
             </state>
           </provider>
@@ -207,7 +248,7 @@
       <file leaf-file-name="global.css" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/css/global.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="59" column="32" selection-start="1127" selection-end="1127" vertical-scroll-proportion="0.0">
+            <state line="76" column="1" selection-start="1511" selection-end="1511" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -247,24 +288,37 @@
       <setting name="OPEN_NEW_TAB" value="false" />
     </FindUsagesManager>
   </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="XanderB" />
+      </list>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitLogSettings">
+    <option name="myDateState">
+      <MyDateState />
+    </option>
+  </component>
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/application/classes/Controller/Front.php" />
-        <option value="$PROJECT_DIR$/application/routing.php" />
-        <option value="$PROJECT_DIR$/application/views/front/materials_table.php" />
-        <option value="$PROJECT_DIR$/public/js/front.js" />
         <option value="$PROJECT_DIR$/application/views/Back/user_table.php" />
         <option value="$PROJECT_DIR$/application/views/front/filter-button.php" />
-        <option value="$PROJECT_DIR$/application/classes/Help.php" />
         <option value="$PROJECT_DIR$/application/views/front/filters.php" />
-        <option value="$PROJECT_DIR$/application/classes/Controller/Front/Filter.php" />
-        <option value="$PROJECT_DIR$/application/classes/Controller/Front/Material.php" />
         <option value="$PROJECT_DIR$/application/views/front/front_grid.php" />
         <option value="$PROJECT_DIR$/application/views/main/index.php" />
-        <option value="$PROJECT_DIR$/public/css/global.css" />
         <option value="$PROJECT_DIR$/application/views/front/auth/login.php" />
         <option value="$PROJECT_DIR$/application/classes/Controller/Front/Reg.php" />
+        <option value="$PROJECT_DIR$/public/css/global.css" />
+        <option value="$PROJECT_DIR$/application/classes/Help.php" />
+        <option value="$PROJECT_DIR$/public/js/front.js" />
+        <option value="$PROJECT_DIR$/application/views/front/select_filters.php" />
+        <option value="$PROJECT_DIR$/application/classes/Model/Material.php" />
+        <option value="$PROJECT_DIR$/application/classes/Controller/Front/Filter.php" />
+        <option value="$PROJECT_DIR$/application/classes/Controller/Front/Material.php" />
+        <option value="$PROJECT_DIR$/application/routing.php" />
         <option value="$PROJECT_DIR$/application/config/basic.php" />
       </list>
     </option>
@@ -276,7 +330,7 @@
     <option name="width" value="1936" />
     <option name="height" value="1056" />
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="false">
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
     <OptionsSetting value="true" id="Remove" />
     <OptionsSetting value="true" id="Checkout" />
@@ -879,27 +933,10 @@
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="true" />
     <property name="options.lastSelected" value="project.propVCSSupport.Mappings" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../test/select" />
     <property name="FullScreen" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
-  </component>
-  <component name="PublishConfig">
-    <servers>
-      <server id="4d66d622-724c-43e0-a011-593067d06a9d">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-      <server id="fa4b4418-afe3-43b7-bb9c-c0f5156a0fe9">
-        <serverdata>
-          <mappings>
-            <mapping local="$PROJECT_DIR$" />
-          </mappings>
-        </serverdata>
-      </server>
-    </servers>
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -929,7 +966,7 @@
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="StructureViewFactory">
-    <option name="ACTIVE_ACTIONS" value="Show Includes,ALPHA_COMPARATOR,Show Fields,Show Inherited" />
+    <option name="ACTIVE_ACTIONS" value="Show Includes,SHOW_INHERITED,ALPHA_COMPARATOR,Show Fields,Show Inherited,SHOW_FIELDS" />
   </component>
   <component name="SvnConfiguration" maxAnnotateRevisions="500" myUseAcceleration="nothing" myAutoUpdateAfterCommit="false" cleanupOnStartRun="false" SSL_PROTOCOLS="all">
     <option name="USER" value="" />
@@ -980,17 +1017,17 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37940234" sideWeight="0.22135706" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4018143" sideWeight="0.3307436" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37940234" sideWeight="0.4493882" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4018143" sideWeight="0.6692564" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Event Log" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32925472" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32925472" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1063,108 +1100,111 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/application/views/front/filters.php">
+    <entry file="file://$PROJECT_DIR$/public/js/bs-plug.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="29" selection-start="2206" selection-end="2206" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="15" column="7" selection-start="336" selection-end="336" vertical-scroll-proportion="0.29929578" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/front/filter_button.php">
+    <entry file="file://$PROJECT_DIR$/public/js/admin-form.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="4" selection-start="359" selection-end="359" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/classes/Controller/Admin/Material.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="130" column="6" selection-start="1698" selection-end="3486" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/front/materials_table.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="83" column="46" selection-start="2311" selection-end="2311" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/classes/Controller/Front/Material.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="101" column="10" selection-start="2878" selection-end="2878" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/routing.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="30" selection-start="800" selection-end="800" vertical-scroll-proportion="0.34299517" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/messages/controllers/Reg.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/classes/ORM/Log.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/front/front_grid.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="89" column="39" selection-start="2617" selection-end="2617" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/css/global.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="32" selection-start="1127" selection-end="1127" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/main/user_info.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/main/index.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="55" column="25" selection-start="1371" selection-end="1371" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/front/auth/login.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="73" selection-start="807" selection-end="807" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/classes/Controller/Front/Reg.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="49" selection-start="1617" selection-end="1617" vertical-scroll-proportion="0.0">
+        <state line="384" column="29" selection-start="10754" selection-end="10754" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/public/js/front.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="0" selection-start="173" selection-end="173" vertical-scroll-proportion="0.0">
+        <state line="48" column="87" selection-start="2124" selection-end="2124" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/front/select_filters.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="240" column="44" selection-start="7849" selection-end="7849" vertical-scroll-proportion="0.0">
+          <folding>
+            <marker date="1369397291521" expanded="true" signature="2076:2162" placeholder="..." />
+            <marker date="1369397291521" expanded="true" signature="3537:3616" placeholder="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/classes/Model/Material.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="240" column="45" selection-start="7887" selection-end="7887" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/classes/Controller/Front/Filter.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="69" column="46" selection-start="2738" selection-end="2738" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/front/front_grid.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="89" column="39" selection-start="2617" selection-end="2617" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/classes/Help.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="121" column="57" selection-start="4112" selection-end="4112" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/classes/Controller/Admin/Source.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="96" column="44" selection-start="2754" selection-end="2754" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/main/paginator.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="35" selection-start="1251" selection-end="1251" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/main/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="55" column="25" selection-start="1371" selection-end="1371" vertical-scroll-proportion="0.0" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/routing.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="7" selection-start="810" selection-end="810" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/application/config/basic.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="2" selection-start="356" selection-end="356" vertical-scroll-proportion="0.4811321">
+        <state line="13" column="2" selection-start="312" selection-end="312" vertical-scroll-proportion="-8.5">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/classes/Controller/Front/Material.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="110" column="77" selection-start="3350" selection-end="3350" vertical-scroll-proportion="-17.307692">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/Back/user_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="76" column="26" selection-start="1551" selection-end="1551" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/front/materials_table.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="46" column="63" selection-start="1030" selection-end="1030" vertical-scroll-proportion="0.46344486">
           <folding />
         </state>
       </provider>

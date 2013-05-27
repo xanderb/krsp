@@ -29,7 +29,7 @@ Route::set('filters', 'filter/<action>(/<filter>(/<filter_item>))')
         'controller' => 'filter',
         'action'     => 'index',
     ));
-Route::set('front_page', '<controller>/page/<page>')
+Route::set('front_page', 'page/<page>')
     ->defaults(array(
         'directory'  => 'front',
         'controller' => 'material',

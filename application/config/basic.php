@@ -9,8 +9,6 @@
 defined('SYSPATH') OR die('No direct access allowed.');
 
 return array(
-    'items_per_page'    => 5,
-    'total_filters'     => 15,
-    'filters_per_block' => 5,
-    'cells_per_block'   => 4
+    'application_domain' => 'http://kohana',
+    'items_per_page'    => 10,
 );

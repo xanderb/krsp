@@ -190,4 +190,76 @@ class Model_Material extends ORM_Log
 
         return $content;
     }
+
+    public function add_filters($filters = NULL)
+    {
+        if(isset($filters) AND is_array($filters))
+        {
+            foreach($filters as $key => $values)
+            {
+                switch($key)
+                {
+                    case 'krsp_num':
+                        $this->and_where('krsp_num', '=', $values[0]);
+                        break;
+                    case 'articles':
+                        $this->and_where('article_id', 'IN', $values);
+                        break;
+                    case 'sources':
+                        $this->and_where('source_id', 'IN', $values);
+                        break;
+                    case 'investigators':
+                        $this->and_where('investigator_id', 'IN', $values);
+                        break;
+                    case 'decrees':
+                        $this->and_where('decree_id', 'IN', $values);
+                        break;
+                    case 'periods':
+                        $this->and_where('period_id', 'IN', $values);
+                        break;
+                    case 'characteristics':
+                        $this->join(array('materials_characteristics', 'm_c'))
+                        ->on('material.id', '=', 'm_c.material_id')
+                        ->and_where('m_c.characteristic_id', 'IN', $values)
+                        ->distinct('id');
+                        break;
+                    case 'failure_causes':
+                        $this->and_where('failure_cause_id', 'IN', $values);
+                        break;
+                    case 'extra_investigators':
+                        $this->and_where('extra_investigators_id', 'IN', $values);
+                        break;
+                    case 'extra_periods':
+                        $this->and_where('extra_period_id', 'IN', $values);
+                        break;
+                    case 'extra_decrees':
+                        $this->and_where('extra_decree_id', 'IN', $values);
+                        break;
+                    case 'registration_date':
+                    case 'decree_date':
+                    case 'decree_cancel_date':
+                    case 'extra_decree_date':
+                        if(count($values) > 1)
+                        {
+                            $from = date('Y-m-d 00:00:00', strtotime($values[0]));
+                            $to = date('Y-m-d 23:59:59', strtotime($values[1]));
+                            $this->and_where_open()->where($key, '>=', $from)->and_where($key, '<=', $to)->and_where_close();
+                        }
+                        elseif(isset($values[0]))
+                        {
+                            $from = date('Y-m-d 00:00:00', strtotime($values[0]));
+                            $this->and_where($key, '>=', $from);
+                        }
+                        elseif(isset($values[1]))
+                        {
+                            $to = date('Y-m-d 23:59:59', strtotime($values[1]));
+                            $this->and_where($key, '<=', $to);
+                        }
+                        break;
+                }
+            }
+        }
+
+        return $this;
+    }
 }
