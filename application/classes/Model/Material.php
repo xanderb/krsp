@@ -51,13 +51,6 @@ class Model_Material extends ORM_Log
 
     );
 
-    protected $_has_many = array(
-        'characteristic'         => array(
-            'model'         => 'characteristic',
-            'through'       => 'materials_characteristics'
-        ),
-    );
-
     public static $t_headers = array(
         array(
             'text' => 'ID',
@@ -127,6 +120,22 @@ class Model_Material extends ORM_Log
             'text' => '(ДОП) Дата принятия решения',
             'field' => 'extra_decree_date'
         ),
+    );
+
+    protected $_has_many = array(
+        'characteristic'         => array(
+            'model'         => 'characteristic',
+            'through'       => 'materials_characteristics'
+        ),
+    );
+
+    public $order_field_far_tables = array(
+        'sources' => 'text',
+        'articles' => 'value',
+        'investigators' => 'name',
+        'decrees'   => 'text',
+        'periods'   => 'days',
+        'failure_causes' => 'text'
     );
 
     public function rules()
@@ -260,6 +269,58 @@ class Model_Material extends ORM_Log
             }
         }
 
+        return $this;
+    }
+
+    public function add_sort($sort = NULL)
+    {
+        $without_join = array(
+            'id',
+            'registration_date',
+            'krsp_num',
+            'plot',
+            'decree_date',
+            'decree_cancel_date',
+            'extra_decree_date'
+        );
+        if(is_null($sort))
+        {
+            $this->order_by('registration_date', 'DESC');
+        }
+        else
+        {
+            if(in_array($sort['field'], $without_join))
+            {
+                $this->order_by($sort['field'], $sort['direction']);
+            }
+            elseif($sort['field'] != 'characteristic')
+            {
+                if(!preg_match('#extra_.+#is', $sort['field']))
+                {
+                    $this->join(array($sort['field'].'s', 'jt'), 'LEFT OUTER')
+                        ->on($sort['field'].'_id', '=', 'jt.id')
+                        ->order_by($this->order_field_far_tables[$sort['field'].'s'], $sort['direction']);
+                }
+                else
+                {
+                    $field = str_replace('extra_', '', $sort['field']);
+                    $this->join(array($field.'s', 'jt'), 'LEFT OUTER')
+                        ->on($sort['field'].'_id', '=', 'jt.id')
+                        ->order_by($this->order_field_far_tables[$field.'s'], $sort['direction']);
+                }
+
+            }
+            else
+            {
+                $this->join(array('materials_characteristics', 'm_c'), 'LEFT OUTER')
+                    ->on('material.id', '=', 'm_c.material_id')
+                    ->join(array('characteristics', 'jt'), 'LEFT OUTER')
+                    ->on('m_c.characteristic_id', '=', 'jt.id')
+                    ->distinct('id')
+                    ->order_by('jt.text', $sort['direction']);
+            }
+
+        }
         return $this;
     }
 }

@@ -95,4 +95,13 @@ $(function(){
         }
         return true;
     });
+
+    $('.js-row').hover(function(e){
+        $(this).addClass('success').css('cursor', 'pointer');
+    }, function(e){
+        $(this).removeClass('success');
+    }).click(function(e){
+        var id = $(this).find('.js-id').html();
+        location.href = "/material/info/"+id;
+    });
 });

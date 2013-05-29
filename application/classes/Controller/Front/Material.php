@@ -7,6 +7,13 @@ class Controller_Front_Material extends Controller_Front
 
     protected $auth_required = 'login';
 
+    public $badges = array(
+        array(
+            'text' => 'Всего сообщений',
+            'class' => 'badge-info',
+        ),
+    );
+
     public $materials_headers = array(
         array(
             'text' => 'ID',
@@ -88,24 +95,29 @@ class Controller_Front_Material extends Controller_Front
         $page = Request::$current->param('page');
 
         $filters = Help::render_filter_form();
+        $sort = $this->session->get('sort');
+
         $materials = ORM_Log::factory('material')->where('archive', '=', '0');
         $materials =
             $materials
             ->add_filters($this->session->get('filters'))
-            ->order_by('registration_date', 'DESC')
+            ->add_sort(isset($sort['materials']) ? $sort['materials'] : NULL)
             ->limit($this->config->items_per_page)
             ->offset((isset($page) ? ($page-1)*$this->config->items_per_page : 0))
             ->find_all();
         $total_items = ORM_Log::factory('material')
-                ->where('archive', '=', '0')
-                ->add_filters($this->session->get('filters'))
-                ->order_by('registration_date', 'DESC')
-                ->find_all()->count();
+            ->where('archive', '=', '0')
+            ->add_filters($this->session->get('filters'))
+            ->add_sort(isset($sort['materials']) ? $sort['materials'] : NULL)
+            ->find_all()->count();
 
         $materials_view = View::factory('front/materials_table');
         $materials_view->caption = "Сообщения в журнале";
         $materials_view->datas = $materials;
         $materials_view->t_headers = $this->materials_headers;
+        $materials_view->total_materials = $total_items;
+        $materials_view->badges = $this->badges;
+        $materials_view->sort = isset($sort['materials']) ? $sort['materials'] : array();
 
         if(ceil($total_items / $this->config->items_per_page) > 1){
             $materials_view->paginator = Help::render_paginator('material', '', $page, $total_items); //добавление постраничной навигации
@@ -121,5 +133,37 @@ class Controller_Front_Material extends Controller_Front
         $this->template->filter_button = View::factory('front/filter_button');
         $this->template->debug = Debug::vars($this->session, $materials, $total_items);
 	}
+
+    public function action_info()
+    {
+        $id = Request::$current->param('id', NULL);
+        if(!is_null($id))
+        {
+            $material = ORM_Log::factory('material', $id);
+            $view = View::factory('front/info');
+            $view->material = $material;
+            $view->auth = $this->auth;
+            $view->user = $this->user;
+            $view->roles = $this->config->auth_required;
+        }
+        else
+        {
+            $view = View::factory('back/error');
+            $view->message = "Ошибка! Не был указан ID сообщения для вывода";
+            $view->back_path = '/';
+            $view->back_path_text = "Вернуться назад";
+        }
+        $this->template->body = $view;
+        $this->template->debug = Debug::vars($this->config->auth_required);
+    }
+
+    public function action_edit()
+    {
+        $auth_required = $this->config->auth_required['front_edit'];
+        if($this->auth->logged_in($auth_required) OR $this->auth->logged_in($this->config->auth_required['admin']))
+        {
+
+        }
+    }
 
 }

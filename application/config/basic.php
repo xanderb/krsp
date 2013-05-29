@@ -9,6 +9,11 @@
 defined('SYSPATH') OR die('No direct access allowed.');
 
 return array(
-    'application_domain' => 'http://kohana',
-    'items_per_page'    => 10,
+    'application_domain'    => 'http://kohana',
+    'items_per_page'        => 10,
+    'auth_required'         => array(
+        'front'         => 'login',
+        'admin'         => 'admin',
+        'front_edit'    => 'editor'
+    ),
 );

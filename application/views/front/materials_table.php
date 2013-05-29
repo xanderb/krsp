@@ -55,7 +55,45 @@ if(isset($total_materials) AND isset($badges))
             <?php
             foreach($t_headers as $h){
                 ?>
-                <th><?=$h['text']?></th>
+                <th>
+                    <?php
+                    if(!isset($sort) OR count($sort) < 1)
+                    {
+                        ?>
+                    <a href="
+                        <?php
+                        echo Route::url(
+                            'sort',
+                            array(
+                                'field' => $h['field'],
+                                'direction' => $h['field'] != 'registration_date' ? 'DESC' : 'ASC'
+                            )
+                        );
+                        ?>
+                    "><?=$h['text']?> <div class="sort-direction-block"><span class="sort-chevron"><?=$h['field'] != 'registration_date' ? '&#709;' : '&#708;'?></span></div></a>
+                        <?php
+                    }
+                    else
+                    {
+                        ?>
+                        <a href="
+                        <?php
+                        echo Route::url(
+                            'sort',
+                            array(
+                                'field' => $h['field'],
+                                'direction' => $h['field'] != $sort['field'] ? 'DESC' : ($sort['direction'] == 'ASC') ? 'DESC' : 'ASC'
+                            )
+                        );
+                        ?>
+                    "><?=$h['text']?> <div class="sort-direction-block"><span class="sort-chevron"><?=$h['field'] != $sort['field'] ? '&#709;' : ($sort['direction'] == 'ASC') ? '&#708;' : '&#709;'?></span></div></a>
+                    <?php
+                    }
+                    ?>
+
+
+
+                </th>
                 <?php
                 $field[] = $h['field'];
             }

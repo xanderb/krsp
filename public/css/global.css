@@ -78,3 +78,33 @@ a.left-button {
 .block {
     display: block;
 }
+.sort-chevron {
+    font-size: 1.3em;
+    font-weight: bold;
+}
+tr.table-header th {
+    vertical-align: bottom;
+}
+.sort-direction-block
+{
+    text-align: center;
+}
+.table tr td.first {
+    min-width: 40%;
+    background-image: url("../img/dotted.png");
+    background-repeat: repeat-x;
+    background-position: 0 18px;
+    padding-left: 0;
+}
+td.first span {
+    background-color: #fff;
+    padding-right: 10px;
+    padding-left: 5px;
+    display: inline-block;
+}
+.table-striped tbody>tr:nth-child(odd)>td.first span {
+    padding-right: 10px;
+    padding-left: 5px;
+    background-color: #f9f9f9;
+    display: inline-block;
+}

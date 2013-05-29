@@ -29,6 +29,12 @@ Route::set('filters', 'filter/<action>(/<filter>(/<filter_item>))')
         'controller' => 'filter',
         'action'     => 'index',
     ));
+Route::set('sort', 'sort/<field>(/<direction>(/<table>))')
+    ->defaults(array(
+        'directory'  => 'front',
+        'controller' => 'sort',
+        'action'     => 'index'
+    ));
 Route::set('front_page', 'page/<page>')
     ->defaults(array(
         'directory'  => 'front',
