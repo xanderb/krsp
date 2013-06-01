@@ -338,7 +338,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
                     $material_form->periods = $periods->as_array('id', 'days');
                     $material_form->failure_causes = $failure_causes->as_array('id', 'text');
 
-                    $material_form->legend = "Форма создания материала";
+                    $material_form->legend = "Форма редактирования материала";
                     $material_form->sub_menus = $this->back_menu;
                     $material_form->error = $exc->errors('validation');
                     $content = $material_form;

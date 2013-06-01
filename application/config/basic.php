@@ -14,6 +14,7 @@ return array(
     'auth_required'         => array(
         'front'         => 'login',
         'admin'         => 'admin',
-        'front_edit'    => 'editor'
+        'front_edit'    => 'editor',
+        'front_add'     => 'editor',
     ),
 );

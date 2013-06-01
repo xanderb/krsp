@@ -29,7 +29,7 @@
                     </tr>
                     <tr>
                         <td class="first"><span>Дата регистрации сообщения</span></td>
-                        <td><?=date('d.m.Y H:i:s', strtotime($material->registration_date))?></td>
+                        <td><?=strtotime($material->registration_date) > 0 ? date('d.m.Y H:i:s', strtotime($material->registration_date)) : ''?></td>
                     </tr>
                     <tr>
                         <td class="first"><span>Источник сообщения</span></td>
@@ -69,11 +69,11 @@
                     </tr>
                     <tr>
                         <td class="first"><span>Дата принятия решения</span></td>
-                        <td><?=date('d.m.Y H:i:s', strtotime($material->decree_date))?></td>
+                        <td><?=strtotime($material->decree_date) > 0 ? date('d.m.Y H:i:s', strtotime($material->decree_date)) : ''?></td>
                     </tr>
                     <tr>
                         <td class="first"><span>Срок рассмотрения сообщения</span></td>
-                        <td><?=$material->period->days.' дня(ей)'?></td>
+                        <td><?=isset($material->period->days) ? $material->period->days.' дня(ей)' : ''?></td>
                     </tr>
                     <tr>
                         <td class="first"><span>Причина отказа</span></td>
@@ -81,7 +81,7 @@
                     </tr>
                     <tr>
                         <td class="first"><span>Дата отмены решения</span></td>
-                        <td><?=date('d.m.Y H:i:s', strtotime($material->decree_cancel_date))?></td>
+                        <td><?=strtotime($material->decree_cancel_date) > 0 ? date('d.m.Y H:i:s', strtotime($material->decree_cancel_date)) : ''?></td>
                     </tr>
                     <tr>
                         <td class="first"><span>(ДОП) Следователь</span></td>
@@ -89,7 +89,7 @@
                     </tr>
                     <tr>
                         <td class="first"><span>(ДОП) Срок рассмотрения</span></td>
-                        <td><?=$material->extra_period->days.' дня(ей)'?></td>
+                        <td><?=isset($material->extra_period->days) ? $material->extra_period->days.' дня(ей)' : ''?></td>
                     </tr>
                     <tr>
                         <td class="first"><span>(ДОП) Решение по сообщению</span></td>
@@ -97,7 +97,7 @@
                     </tr>
                     <tr>
                         <td class="first"><span>(ДОП) Дата принятия решения</span></td>
-                        <td><?=date('d.m.Y H:i:s', strtotime($material->extra_decree_date))?></td>
+                        <td><?=strtotime($material->extra_decree_date) > 0 ? date('d.m.Y H:i:s', strtotime($material->extra_decree_date)) : ''?></td>
                     </tr>
                     <?php
                 }
@@ -112,7 +112,7 @@
         if(isset($material) AND isset($auth) AND ($auth->logged_in($roles['front_edit']) OR $auth->logged_in('admin')))
         {
             ?>
-            <a class="btn btn-primary" href="/material/edit/<?=$material->id?>">Редактировать</a>
+            <a class="btn btn-primary" href="/material/edit/<?=$material->id?>">Добавить информацию</a>
             <?php
         }
         ?>
@@ -120,7 +120,7 @@
         if(isset($material) AND isset($auth) AND $auth->logged_in('admin'))
         {
             ?>
-            <a class="btn btn-info" href="/material/logs/<?=$material->id?>">Посмотреть логи изменения сообщения</a>
+            <a class="btn btn-info" href="/material/logs/<?=$material->id?>">Логи изменения сообщения</a>
         <?php
         }
         ?>
