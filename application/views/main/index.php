@@ -14,6 +14,7 @@
     ?>
 </head>
 <body>
+<?php ProfilerToolbar::render(true); //TODO сделать включаемой/отключаемой из админки?>
 <?php
 if(isset($filter_button)){
     echo $filter_button;

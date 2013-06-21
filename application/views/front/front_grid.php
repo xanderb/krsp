@@ -7,7 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 ?>
-<div class="span12">
+<div class="span12 left-padding">
     <h1><?=(isset($p_title) ? $p_title : 'Административная панель')?></h1>
 
 
@@ -31,8 +31,8 @@
  *
  */
 ?>
-<div class="row-fluid">
-    <div class="btn-toolbar">
+    <div class="row-fluid">
+        <div class="btn-toolbar">
         <?php
         if(isset($buttons))
         {
@@ -83,11 +83,11 @@
         }
         ?>
     </div>
-</div>
+    </div>
 
 
     <div class="row-fluid">
-        <div class="span12 left-padding"><?=(isset($top_content) ? $top_content : NULL)?></div>
+        <div class="span12"><?=(isset($top_content) ? $top_content : NULL)?></div>
     </div>
     <div class="row-fluid">
         <div class="span6"><?=(isset($left_content) ? $left_content : NULL)?></div>

@@ -94,6 +94,33 @@ class Controller_Front_Material extends Controller_Front
         ),
     );
 
+    public $today_table_headers = array(
+        array(
+            'text'  => 'ID',
+            'field' => 'id'
+        ),
+        array(
+            'text' => 'КРСП',
+            'field' => 'krsp_num'
+        ),
+        array(
+            'text' => 'Дата регистрации',
+            'field' => 'registration_date'
+        ),
+        array(
+            'text' => 'Срок рассмотрения',
+            'field' => 'period'
+        ),
+        array(
+            'text' => 'Краткая фабула',
+            'field' => 'plot'
+        ),
+        array(
+            'text' => 'Следователь',
+            'field' => 'investigator'
+        ),
+    );
+
 	public function action_index()
 	{
         $this->addScript('front');
@@ -143,15 +170,98 @@ class Controller_Front_Material extends Controller_Front
             $materials_view->paginator = Help::render_paginator('material', '', $page, $total_items); //добавление постраничной навигации
         }
 
+        //Таблица сообщений актуальных сегодня
+        $today = date('Y-m-d', time());
+        $today_mess = ORM_Log::factory('material')
+            ->join(array('periods', 'p'), 'LEFT OUTER')
+            ->on('period_id', '=', 'p.id')
+            ->join( array('periods', 'ep'), 'LEFT OUTER')
+            ->on('extra_period_id', '=', 'ep.id')
+            ->where_open()
+                ->where(DB::expr('material.registration_date + INTERVAL p.days DAY'), '>=', $today.' 00:00:00')
+                ->and_where(DB::expr('material.registration_date + INTERVAL p.days DAY'), '<=', $today.' 23:59:59')
+                ->and_where('decree_id', '=', NULL)
+            ->where_close()
+            ->or_where_open()
+                ->where('failure_cause_id', '!=', NULL)
+                ->and_where(DB::expr('material.decree_cancel_date + INTERVAL ep.days DAY'), '>=', $today.' 00:00:00')
+                ->and_where(DB::expr('material.decree_cancel_date + INTERVAL ep.days DAY'), '<=', $today.' 23:59:59')
+                ->and_where('extra_decree_id', '=', NULL)
+            ->or_where_close()
+            ->find_all();
+        /*$today_mess = DB::query(
+            Database::SELECT,
+            "SELECT m.*
+              FROM `materials` as m
+                  INNER JOIN `periods` AS p ON m.period_id = p.id
+                  WHERE
+                  m.registration_date + INTERVAL p.days DAY >= '{$today} 00:00:00'
+                  AND m.registration_date + INTERVAL p.days DAY <= '{$today} 23:59:59'")->execute();*/
+
+        $today_table = View::factory('front/short_materials');
+        $today_table->datas = $today_mess;
+        $today_table->t_headers = $this->today_table_headers;
+        $today_table->caption = 'Сообщения срок рассмотрения которых заканчивается сегодня';
+        $today_table->caption_type = 'invert';
+        $today_table->total_materials = $today_mess->count();
+        $today_table->badges = array(
+            array(
+                'text' => 'Всего актуальных сегодня сообщений',
+                'class' => 'badge-info'
+            ),
+        );
+        //
+
+        //Таблица просроченных сообщений
+        $fail_mess = ORM_Log::factory('material')
+            ->join(array('periods', 'p'), 'LEFT OUTER')
+            ->on('period_id', '=', 'p.id')
+            ->join( array('periods', 'ep'), 'LEFT OUTER')
+            ->on('extra_period_id', '=', 'ep.id')
+            ->where_open()
+                ->where(DB::expr('material.registration_date + INTERVAL p.days DAY'), '<', $today.' 00:00:00')
+                ->and_where('decree_id', '=', NULL)
+            ->where_close()
+            ->or_where_open()
+                ->where('failure_cause_id', '!=', NULL)
+                ->and_where(DB::expr('material.decree_cancel_date + INTERVAL ep.days DAY'), '<', $today.' 00:00:00')
+                ->and_where('extra_decree_id', '=', NULL)
+            ->or_where_close()
+            ->find_all();
+        /*$today_mess = DB::query(
+            Database::SELECT,
+            "SELECT m.*
+              FROM `materials` as m
+                  INNER JOIN `periods` AS p ON m.period_id = p.id
+                  WHERE
+                  m.registration_date + INTERVAL p.days DAY >= '{$today} 00:00:00'
+                  AND m.registration_date + INTERVAL p.days DAY <= '{$today} 23:59:59'")->execute();*/
+
+        $fail_table = View::factory('front/short_materials');
+        $fail_table->datas = $fail_mess;
+        $fail_table->t_headers = $this->today_table_headers;
+        $fail_table->caption = 'Просроченные сообщения';
+        $fail_table->caption_type = 'danger';
+        $fail_table->total_materials = $fail_mess->count();
+        $fail_table->badges = array(
+            array(
+                'text' => 'Всего просроченных сообщений',
+                'class' => 'badge-info'
+            ),
+        );
+        //
+
 
         $grid = View::factory('front/front_grid');
         $grid->p_title = "Электронная книга регистрации сообщений о преступлениях";
         $grid->filters = $filters;
         $grid->top_content = $materials_view;
+        $grid->left_content = $today_table;
+        $grid->right_content = $fail_table;
 
         $this->template->body = $grid;
         $this->template->filter_button = View::factory('front/filter_button');
-        $this->template->debug = Debug::vars($this->session, $materials, $total_items);
+        $this->template->debug = Debug::vars($this->session, $fail_mess, $today_mess);
 	}
 
     public function action_info()
@@ -174,7 +284,7 @@ class Controller_Front_Material extends Controller_Front
             $view->back_path_text = "Вернуться назад";
         }
         $this->template->body = $view;
-        $this->template->debug = Debug::vars($this->config->auth_required);
+        //$this->template->debug = Debug::vars($this->config->auth_required);
     }
 
     public function action_add()
@@ -402,7 +512,7 @@ class Controller_Front_Material extends Controller_Front
 
 
         $this->template->body = $view;
-        $this->template->debug = Debug::vars(Request::$current->directory());
+        //$this->template->debug = Debug::vars(Request::$current->directory());
     }
 
 }

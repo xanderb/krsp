@@ -114,7 +114,7 @@ if(isset($total_materials) AND isset($badges))
                     <td><?=date('d.m.Y H:i:s', strtotime($data->registration_date))?></td>
                     <td><?=$data->source->text?></td>
                     <td class="word-wrap">
-                        <a class="plot" href="#" rel="popover" data-content="<?=$data->plot?>" data-original-title="Краткая фабула">
+                        <a class="plot" href="#cur" rel="popover" data-content="<?=$data->plot?>" data-original-title="Краткая фабула">
                             <?php echo mb_substr($data->plot, 0, 50).(strlen($data->plot) > 50 ? '&hellip;' : NULL); ?>
                         </a>
                     </td>
