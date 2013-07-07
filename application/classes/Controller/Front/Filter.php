@@ -18,13 +18,13 @@ class Controller_Front_Filter extends Controller_Front
     {
         $filter = Request::$current->param('filter', NULL);
         $filter_item = Request::$current->param('filter_item', NULL);
-        Controller::redirect('');
+        Controller::redirect(URL::site(Request::$current->referrer()));
     }
 
     public function action_alldelete()
     {
         $this->session->delete('filters');
-        Controller::redirect('');
+        Controller::redirect(URL::site(Request::$current->referrer()));
     }
 
     public function action_change()
@@ -74,6 +74,6 @@ class Controller_Front_Filter extends Controller_Front
             $this->session->set('filters', $filters);
         }
        // $this->template->debug = Debug::vars($this->session->as_array());
-        Controller::redirect('');
+        Controller::redirect(URL::site(Request::$current->referrer()));
     }
 }

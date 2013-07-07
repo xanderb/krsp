@@ -48,6 +48,10 @@ class Model_Material extends ORM_Log
             'model'         => 'decree',
             'foreign_key'   => 'extra_decree_id'
         ),
+        'user'              => array(
+            'model'         => 'user',
+            'foreign_key'   => 'user_id'
+        ),
 
     );
 
@@ -181,7 +185,8 @@ class Model_Material extends ORM_Log
             'extra_period_id'       => '(ДОП) Срок рассмотрения',
             'extra_decree_id'       => '(ДОП) Решение',
             'extra_decree_date'     => '(ДОП) Дата принятия решения',
-            'characteristic'        => 'Характеристики'
+            'characteristic'        => 'Характеристики',
+            'user'                  => 'Автор сообщения',
         );
     }
 

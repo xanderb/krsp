@@ -191,10 +191,10 @@ echo Form::hidden('id', (isset($material)) ? $material->id: NULL);?>
                         Form::checkbox(
                             'chars[]',
                             $char->id,
-                            (isset($material) AND $material->has('characteristic', $char->id) ? TRUE : FALSE),
+                            isset($material) AND $material->has('characteristic', $char->id) ? TRUE : FALSE,
                             array(
                                 'id'    => 'char'.$char->id,
-                                'disabled'  => $material->has('characteristic', $char->id) ? 'disabled' : NULL,
+                                'disabled'  => (isset($material) AND $material->has('characteristic', $char->id)) ? 'disabled' : NULL,
                             )
                         )
                             .' '

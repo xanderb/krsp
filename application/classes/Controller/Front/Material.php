@@ -14,6 +14,20 @@ class Controller_Front_Material extends Controller_Front
         ),
     );
 
+    public $sub_menu = array(
+        array(
+            'href'  => '/material/add',
+            'text'  => 'Добавить сообщение',
+            'type'  => 'n'
+        ),
+        array(
+            'href'  => '/archive/',
+            'text'  => 'Архив сообщений',
+            'type'  => 'n',
+            'class' => 'btn-info'
+        ),
+    );
+
     public $back_menu = array(
         array(
             'text' => '<i class="icon-arrow-left"></i> Вернуться назад',
@@ -156,13 +170,7 @@ class Controller_Front_Material extends Controller_Front
         $materials_view->sort = isset($sort['materials']) ? $sort['materials'] : array();
         if($this->auth->logged_in($this->config->auth_required['front_add']) OR $this->auth->logged_in($this->config->auth_required['admin']))
         {
-            $materials_view->sub_menus = array(
-                array(
-                    'href'  => '/material/add',
-                    'text'  => 'Добавить сообщение',
-                    'type'  => 'n'
-                ),
-            );
+            $materials_view->sub_menus = $this->sub_menu;
         }
 
 
@@ -275,16 +283,18 @@ class Controller_Front_Material extends Controller_Front
             $view->auth = $this->auth;
             $view->user = $this->user;
             $view->roles = $this->config->auth_required;
+            $view->back_path = URL::site(Request::$current->referrer());
+            $view->back_path_text = "Назад";
         }
         else
         {
             $view = View::factory('back/error');
             $view->message = "Не был указан ID сообщения для вывода";
-            $view->back_path = '/';
+            $view->back_path = URL::site(Request::$current->referrer());
             $view->back_path_text = "Вернуться назад";
         }
         $this->template->body = $view;
-        //$this->template->debug = Debug::vars($this->config->auth_required);
+        $this->template->debug = Debug::vars(URL::site(Request::$current->referrer()));
     }
 
     public function action_add()
@@ -306,7 +316,8 @@ class Controller_Front_Material extends Controller_Front
             $failure_causes = ORM::factory('fcause')->find_all();
             //***//
 
-            if(isset($_POST['submit'])){
+            if(isset($_POST['submit']))
+            {
                 $new_material = ORM_Log::factory('material');
                 $new_material->values(
                     array(
@@ -321,6 +332,7 @@ class Controller_Front_Material extends Controller_Front
                         'extra_investigator_id' => (Arr::get($_POST, 'extra_investigator_id', NULL) == '' ? NULL : Arr::get($_POST, 'extra_investigator_id', NULL)),
                         'extra_period_id' => (Arr::get($_POST, 'extra_period_id', NULL) == '' ? NULL : Arr::get($_POST, 'extra_period_id', NULL)),
                         'extra_decree_id' => (Arr::get($_POST, 'extra_decree_id', NULL) == '' ? NULL : Arr::get($_POST, 'extra_decree_id', NULL)),
+                        'user_id' => $this->user->id,
                     )
                 );
                 if(Arr::get($_POST, 'registration_date', NULL) != ''){
@@ -335,6 +347,7 @@ class Controller_Front_Material extends Controller_Front
                 if(Arr::get($_POST, 'extra_decree_date', NULL) != ''){
                     $new_material->extra_decree_date = Help::datepicker_to_timestamp(Arr::get($_POST, 'extra_decree_date', NULL));
                 }
+                $new_material->add_date = date('Y-m-d H:i:s', time()); //Время добавления записи
 
                 $chars_array = Arr::get($_POST, 'chars', NULL);
                 try
@@ -361,12 +374,14 @@ class Controller_Front_Material extends Controller_Front
                     $material_form->periods = $periods->as_array('id', 'days');
                     $material_form->failure_causes = $failure_causes->as_array('id', 'text');
 
-                    $material_form->legend = "Форма создания материала";
+                    $material_form->legend = "Форма создания сообщения";
                     $material_form->sub_menus = $this->back_menu;
                     $material_form->error = $exc->errors('validation');
                     $content = $material_form;
                 }
-            }else{
+            }
+            else
+            {
                 $material_form = View::factory('/front/edit_material');
 
                 $material_form->sources = $sources->as_array('id', 'text');
@@ -377,7 +392,7 @@ class Controller_Front_Material extends Controller_Front
                 $material_form->periods = $periods->as_array('id', 'days');
                 $material_form->failure_causes = $failure_causes->as_array('id', 'text');
 
-                $material_form->legend = "Форма создания материала";
+                $material_form->legend = "Форма создания сообщения";
                 $material_form->sub_menus = $this->back_menu;
                 $content = $material_form;
             }

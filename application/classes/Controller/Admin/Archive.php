@@ -39,6 +39,11 @@ class Controller_Admin_Archive extends Controller_Back
 
     public $sub_menus = array(
         array(
+            'text'  => '<i class="icon-list"></i> Подробности',
+            'href'  => '/admin/archive/info',
+            'type'  =>  'y'
+        ),
+        array(
             'text'  => '<i class="icon-folder-open"></i> Вывести материал из архива',
             'href'  => '/admin/archive/material',
             'type'  => 'y'
@@ -185,5 +190,35 @@ class Controller_Admin_Archive extends Controller_Back
         $admin_view->p_title = 'Вывод материалов из архива';
         $admin_view->content = $content;
         $this->template->body = $admin_view;
+    }
+
+    public function action_info()
+    {
+        $id = Request::$current->param('id', NULL);
+        if(!is_null($id))
+        {
+            $material = ORM_Log::factory('material', $id);
+            $content = View::factory('back/info');
+            $content->material = $material;
+            $content->auth = $this->auth;
+            $content->user = $this->user;
+            $content->roles = $this->config->auth_required;
+            $content->back_path = '/admin/archive';
+            $content->no_edit = TRUE;
+            $content->no_logs = TRUE;
+        }
+        else
+        {
+            $content = View::factory('back/error');
+            $content->message = "Не был указан ID сообщения для вывода";
+            $content->back_path = '/admin/archive';
+            $content->back_path_text = "Вернуться назад";
+        }
+
+        $view = View::factory('/back/control_panel');
+        $view->p_title = 'Подробная информация об архивном сообщении';
+        $view->content = $content;
+        $this->template->body = $view;
+        //$this->template->debug = Debug::vars($this->config->auth_required);
     }
 }

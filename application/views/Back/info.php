@@ -8,7 +8,6 @@
  */
 ?>
 <div class="span12">
-    <h1>Подробная информация о сообщении</h1>
     <div class="row-fluid">
         <div class="span6">
             <table class="table table-striped">
@@ -116,26 +115,27 @@
         </div>
     </div>
     <div class="form-actions">
-        <a class="btn" href="<?=isset($back_path) ? $back_path : '/'?>"><?=isset($back_path_text) ? $back_path_text : '/'?></a>
+        <a class="btn" href="<?=isset($back_path) ? $back_path : '/admin/material'?>">Назад</a>
         <?php
-        if(
-            isset($material)
-            AND isset($auth)
-            AND ($auth->logged_in($roles['front_edit']) OR $auth->logged_in('admin'))
-            AND (!isset($back_path) OR $back_path != '/archive')
-        )
+        if(isset($material) AND isset($auth) AND ($auth->logged_in($roles['front_edit']) OR $auth->logged_in('admin')))
         {
+            if(!isset($no_edit) OR $no_edit != TRUE)
+            {
             ?>
-            <a class="btn btn-primary" href="/material/edit/<?=$material->id?>">Добавить информацию</a>
+            <a class="btn btn-primary" href="/admin/material/edit/<?=$material->id?>">Редактировать</a>
             <?php
+            }
         }
         ?>
         <?php
         if(isset($material) AND isset($auth) AND $auth->logged_in('admin'))
         {
-            ?>
-            <a class="btn btn-info" href="/material/logs/<?=$material->id?>">Логи изменения сообщения</a>
-        <?php
+            if(!isset($no_logs) OR $no_logs != TRUE)
+            {
+                ?>
+                <a class="btn btn-info" href="/admin/material/logs/<?=$material->id?>">Логи изменения сообщения</a>
+                <?php
+            }
         }
         ?>
 

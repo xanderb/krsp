@@ -12,7 +12,7 @@ if(isset($sub_menus)){
         <?php
         foreach($sub_menus as $item){
             ?>
-            <a class="btn <?php
+            <a class="btn <?=isset($item['class']) ? $item['class'] : NULL?> <?php
             if($item['type'] == 'y')
                 echo 'js-p';
             ?>" href="<?=$item['href']?>"><?=$item['text']?></a>

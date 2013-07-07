@@ -43,6 +43,11 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
             'type'  => 'n'
         ),
         array(
+            'text'  => '<i class="icon-list"></i> Подробности',
+            'href'  => '/admin/material/info',
+            'type'  =>  'y'
+        ),
+        array(
             'text'  => '<i class="icon-pencil"></i> Редактировать',
             'href'  => '/admin/material/edit',
             'type'  =>  'y'
@@ -196,6 +201,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
                     'extra_investigator_id' => (Arr::get($_POST, 'extra_investigator_id', NULL) == '' ? NULL : Arr::get($_POST, 'extra_investigator_id', NULL)),
                     'extra_period_id' => (Arr::get($_POST, 'extra_period_id', NULL) == '' ? NULL : Arr::get($_POST, 'extra_period_id', NULL)),
                     'extra_decree_id' => (Arr::get($_POST, 'extra_decree_id', NULL) == '' ? NULL : Arr::get($_POST, 'extra_decree_id', NULL)),
+                    'user_id' => $this->user->id,
                 )
             );
             if(Arr::get($_POST, 'registration_date', NULL) != ''){
@@ -210,6 +216,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
             if(Arr::get($_POST, 'extra_decree_date', NULL) != ''){
                 $new_material->extra_decree_date = Help::datepicker_to_timestamp(Arr::get($_POST, 'extra_decree_date', NULL));
             }
+            $new_material->add_date = date('Y-m-d H:i:s', time()); //Время добавления записи
 
             $chars_array = Arr::get($_POST, 'chars', NULL);
             try
@@ -463,5 +470,33 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
         $admin_view->p_title = 'Перевод материалов в архив';
         $admin_view->content = $content;
         $this->template->body = $admin_view;
+    }
+
+    public function action_info()
+    {
+        $id = Request::$current->param('id', NULL);
+        if(!is_null($id))
+        {
+            $material = ORM_Log::factory('material', $id);
+            $content = View::factory('back/info');
+            $content->material = $material;
+            $content->auth = $this->auth;
+            $content->user = $this->user;
+            $content->roles = $this->config->auth_required;
+            $content->back_path = '/admin/material';
+        }
+        else
+        {
+            $content = View::factory('back/error');
+            $content->message = "Не был указан ID сообщения для вывода";
+            $content->back_path = '/admin/material';
+            $content->back_path_text = "Вернуться назад";
+        }
+
+        $view = View::factory('/back/control_panel');
+        $view->p_title = 'Подробная информация о сообщении';
+        $view->content = $content;
+        $this->template->body = $view;
+        //$this->template->debug = Debug::vars($this->config->auth_required);
     }
 }
