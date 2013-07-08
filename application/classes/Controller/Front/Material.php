@@ -441,21 +441,27 @@ class Controller_Front_Material extends Controller_Front
                 //***//
                 if(isset($_POST['submit']))
                 {
-                    $material->values(
-                        array(
-                            'krsp_num' => (Arr::get($_POST, 'krsp_num', NULL) == '' ? NULL : Arr::get($_POST, 'krsp_num', NULL)),
-                            'source_id' => (Arr::get($_POST, 'source_id', NULL) == '' ? NULL : Arr::get($_POST, 'source_id', NULL)),
-                            'plot' => (Arr::get($_POST, 'plot', NULL) == '' ? NULL : Arr::get($_POST, 'plot', NULL)),
-                            'article_id' => (Arr::get($_POST, 'article_id', NULL) == '' ? NULL : Arr::get($_POST, 'article_id', NULL)),
-                            'investigator_id' => (Arr::get($_POST, 'investigator_id', NULL) == '' ? NULL : Arr::get($_POST, 'investigator_id', NULL)),
-                            'decree_id' => (Arr::get($_POST, 'decree_id', NULL) == '' ? NULL : Arr::get($_POST, 'decree_id', NULL)),
-                            'period_id' => (Arr::get($_POST, 'period_id', NULL) == '' ? NULL : Arr::get($_POST, 'period_id', NULL)),
-                            'failure_cause_id' => (Arr::get($_POST, 'failure_cause_id', NULL) == '' ? NULL : Arr::get($_POST, 'failure_cause_id', NULL)),
-                            'extra_investigator_id' => (Arr::get($_POST, 'extra_investigator_id', NULL) == '' ? NULL : Arr::get($_POST, 'extra_investigator_id', NULL)),
-                            'extra_period_id' => (Arr::get($_POST, 'extra_period_id', NULL) == '' ? NULL : Arr::get($_POST, 'extra_period_id', NULL)),
-                            'extra_decree_id' => (Arr::get($_POST, 'extra_decree_id', NULL) == '' ? NULL : Arr::get($_POST, 'extra_decree_id', NULL)),
-                        )
+                    $post_values = array(
+                        'krsp_num' => (Arr::get($_POST, 'krsp_num', NULL) == '' ? NULL : Arr::get($_POST, 'krsp_num', NULL)),
+                        'source_id' => (Arr::get($_POST, 'source_id', NULL) == '' ? NULL : Arr::get($_POST, 'source_id', NULL)),
+                        'plot' => (Arr::get($_POST, 'plot', NULL) == '' ? NULL : Arr::get($_POST, 'plot', NULL)),
+                        'article_id' => (Arr::get($_POST, 'article_id', NULL) == '' ? NULL : Arr::get($_POST, 'article_id', NULL)),
+                        'investigator_id' => (Arr::get($_POST, 'investigator_id', NULL) == '' ? NULL : Arr::get($_POST, 'investigator_id', NULL)),
+                        'decree_id' => (Arr::get($_POST, 'decree_id', NULL) == '' ? NULL : Arr::get($_POST, 'decree_id', NULL)),
+                        'period_id' => (Arr::get($_POST, 'period_id', NULL) == '' ? NULL : Arr::get($_POST, 'period_id', NULL)),
+                        'failure_cause_id' => (Arr::get($_POST, 'failure_cause_id', NULL) == '' ? NULL : Arr::get($_POST, 'failure_cause_id', NULL)),
+                        'extra_investigator_id' => (Arr::get($_POST, 'extra_investigator_id', NULL) == '' ? NULL : Arr::get($_POST, 'extra_investigator_id', NULL)),
+                        'extra_period_id' => (Arr::get($_POST, 'extra_period_id', NULL) == '' ? NULL : Arr::get($_POST, 'extra_period_id', NULL)),
+                        'extra_decree_id' => (Arr::get($_POST, 'extra_decree_id', NULL) == '' ? NULL : Arr::get($_POST, 'extra_decree_id', NULL)),
                     );
+                    foreach($post_values as $key => $value)
+                    {
+                        if(is_null($value))
+                        {
+                            unset($post_values[$key]);
+                        }
+                    }
+                    $material->values($post_values);
                     if(Arr::get($_POST, 'registration_date', NULL) != ''){
                         $material->registration_date = Help::datepicker_to_timestamp(Arr::get($_POST, 'registration_date', NULL));
                     }
@@ -527,7 +533,7 @@ class Controller_Front_Material extends Controller_Front
 
 
         $this->template->body = $view;
-        //$this->template->debug = Debug::vars(Request::$current->directory());
+        $this->template->debug = Debug::vars(isset($post_values) ? $post_values : NULL);
     }
 
 }
