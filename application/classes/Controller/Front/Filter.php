@@ -60,20 +60,27 @@ class Controller_Front_Filter extends Controller_Front
                     'registration_date'
                 ); //Массив содержит ключи массива фильтров в которых НЕ удаляются повторяющиеся элементы (даты)
 
-                if(!in_array($key, $without_unique))
-                    $arr = array_unique($value_arr);
+                if(!is_array($value_arr))       //Если нужно отобрать все незаполненные поля
+                {
+                    $filters[$key] = $value_arr;
+                }
                 else
-                    $arr = $value_arr;
-
-                foreach($arr as $key_in => $a_i){
-                    if($a_i != '' AND !is_null($a_i)){
-                        $filters[$key][$key_in] = $a_i;
+                {
+                    if(!in_array($key, $without_unique))    //очистка повторяющихся значений из фильтра
+                        $arr = array_unique($value_arr);
+                    else
+                        $arr = $value_arr;
+                    foreach($arr as $key_in => $a_i){
+                        if($a_i != '' AND !is_null($a_i)){
+                            $filters[$key][$key_in] = $a_i;
+                        }
                     }
                 }
+
             }
             $this->session->set('filters', $filters);
         }
-       // $this->template->debug = Debug::vars($this->session->as_array());
+        //$this->template->debug = Debug::vars($_POST);
         Controller::redirect(URL::site(Request::$current->referrer()));
     }
 }

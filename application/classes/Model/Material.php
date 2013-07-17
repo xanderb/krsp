@@ -214,19 +214,34 @@ class Model_Material extends ORM_Log
                 switch($key)
                 {
                     case 'krsp_num':
-                        $this->and_where('krsp_num', '=', $values[0]);
+                        if(is_array($values))
+                            $this->and_where('krsp_num', '=', $values[0]);
+                        else
+                            $this->and_where('krsp_num', '=', NULL);
                         break;
                     case 'articles':
-                        $this->and_where('article_id', 'IN', $values);
+                        if(is_array($values))
+                            $this->and_where('article_id', 'IN', $values);
+                        else
+                            $this->and_where('article_id', '=', NULL);
                         break;
                     case 'sources':
-                        $this->and_where('source_id', 'IN', $values);
+                        if(is_array($values))
+                            $this->and_where('source_id', 'IN', $values);
+                        else
+                            $this->and_where('source_id', '=', NULL);
                         break;
                     case 'investigators':
-                        $this->and_where('investigator_id', 'IN', $values);
+                        if(is_array($values))
+                            $this->and_where('investigator_id', 'IN', $values);
+                        else
+                            $this->and_where('investigator_id', '=', NULL);
                         break;
                     case 'decrees':
-                        $this->and_where('decree_id', 'IN', $values);
+                        if(is_array($values))
+                            $this->and_where('decree_id', 'IN', $values);
+                        else
+                            $this->and_where('decree_id', '=', NULL);
                         break;
                     case 'periods':
                         $this->and_where('period_id', 'IN', $values);
@@ -238,37 +253,51 @@ class Model_Material extends ORM_Log
                         ->distinct('id');
                         break;
                     case 'failure_causes':
-                        $this->and_where('failure_cause_id', 'IN', $values);
+                        if(is_array($values))
+                            $this->and_where('failure_cause_id', 'IN', $values);
+                        else
+                            $this->and_where('failure_cause_id', '=', NULL);
                         break;
                     case 'extra_investigators':
-                        $this->and_where('extra_investigators_id', 'IN', $values);
+                        if(is_array($values))
+                            $this->and_where('extra_investigators_id', 'IN', $values);
+                        else
+                            $this->and_where('extra_investigators_id', '=', NULL);
                         break;
                     case 'extra_periods':
                         $this->and_where('extra_period_id', 'IN', $values);
                         break;
                     case 'extra_decrees':
-                        $this->and_where('extra_decree_id', 'IN', $values);
+                        if(is_array($values))
+                            $this->and_where('extra_decree_id', 'IN', $values);
+                        else
+                            $this->and_where('extra_decree_id', '=', NULL);
                         break;
                     case 'registration_date':
                     case 'decree_date':
                     case 'decree_cancel_date':
                     case 'extra_decree_date':
-                        if(count($values) > 1)
+                        if(is_array($values))
                         {
-                            $from = date('Y-m-d 00:00:00', strtotime($values[0]));
-                            $to = date('Y-m-d 23:59:59', strtotime($values[1]));
-                            $this->and_where_open()->where($key, '>=', $from)->and_where($key, '<=', $to)->and_where_close();
+                            if(count($values) > 1)
+                            {
+                                $from = date('Y-m-d 00:00:00', strtotime($values[0]));
+                                $to = date('Y-m-d 23:59:59', strtotime($values[1]));
+                                $this->and_where_open()->where($key, '>=', $from)->and_where($key, '<=', $to)->and_where_close();
+                            }
+                            elseif(isset($values[0]))
+                            {
+                                $from = date('Y-m-d 00:00:00', strtotime($values[0]));
+                                $this->and_where($key, '>=', $from);
+                            }
+                            elseif(isset($values[1]))
+                            {
+                                $to = date('Y-m-d 23:59:59', strtotime($values[1]));
+                                $this->and_where($key, '<=', $to);
+                            }
                         }
-                        elseif(isset($values[0]))
-                        {
-                            $from = date('Y-m-d 00:00:00', strtotime($values[0]));
-                            $this->and_where($key, '>=', $from);
-                        }
-                        elseif(isset($values[1]))
-                        {
-                            $to = date('Y-m-d 23:59:59', strtotime($values[1]));
-                            $this->and_where($key, '<=', $to);
-                        }
+                        else
+                            $this->and_where($key, '=', NULL);
                         break;
                 }
             }

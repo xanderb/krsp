@@ -19,34 +19,34 @@ $(function(){
     }
 
     $('.source-select').change(function(e){
-        universal_select(this, '#first-source-select', 'fieldset#source-select');
+        universal_select(this, '#first-source-select', 'fieldset#source-select div.row-fluid');
     });
     $('.article-select').change(function(e){
-        universal_select(this, '#first-article-select', 'fieldset#article-select');
+        universal_select(this, '#first-article-select', 'fieldset#article-select div.row-fluid');
     });
     $('.invest-select').change(function(e){
-        universal_select(this, '#first-invest-select', 'fieldset#invest-select');
+        universal_select(this, '#first-invest-select', 'fieldset#invest-select div.row-fluid');
     });
     $('.decree-select').change(function(e){
-        universal_select(this, '#first-decree-select', 'fieldset#decree-select');
+        universal_select(this, '#first-decree-select', 'fieldset#decree-select div.row-fluid');
     });
     $('.period-select').change(function(e){
-        universal_select(this, '#first-period-select', 'fieldset#period-select');
+        universal_select(this, '#first-period-select', 'fieldset#period-select div.row-fluid');
     });
     $('.failure_cause-select').change(function(e){
-        universal_select(this, '#first-failure_cause-select', 'fieldset#failure_cause-select');
+        universal_select(this, '#first-failure_cause-select', 'fieldset#failure_cause-select div.row-fluid');
     });
     $('.extra_invest-select').change(function(e){
-        universal_select(this, '#first-extra_invest-select', 'fieldset#extra_invest-select');
+        universal_select(this, '#first-extra_invest-select', 'fieldset#extra_invest-select div.row-fluid');
     });
     $('.extra_period-select').change(function(e){
-        universal_select(this, '#first-extra_period-select', 'fieldset#extra_period-select');
+        universal_select(this, '#first-extra_period-select', 'fieldset#extra_period-select div.row-fluid');
     });
     $('.extra_decree-select').change(function(e){
-        universal_select(this, '#first-extra_decree-select', 'fieldset#extra_decree-select');
+        universal_select(this, '#first-extra_decree-select', 'fieldset#extra_decree-select div.row-fluid');
     });
     $('.characteristic-select').change(function(e){
-        universal_select(this, '#first-characteristic-select', 'fieldset#characteristic-select');
+        universal_select(this, '#first-characteristic-select', 'fieldset#characteristic-select div.row-fluid');
     });
     /**END Select-Form Scripts****/
 
@@ -115,5 +115,26 @@ $(function(){
         var id = $(this).parent().find('.js-id').html();
             //alert('сработало. id = '+id);
         location.href = "/material/info/"+id;
+    });
+
+    $('.null_check').click(function(e){
+        if($(this).prop('checked'))
+        {
+            if($(this).parent().parent().find('input[type="text"]').length > 0)
+                $(this).parent().parent().find('input[type="text"]').attr('disabled', 1);
+            else
+                $(this).parent().parent().find('select').each(function(){
+                    $(this).attr('disabled', 1);
+                });
+        }
+        else
+        {
+            if($(this).parent().parent().find('input[type="text"]').length > 0)
+                $(this).parent().parent().find('input[type="text"]').removeAttr('disabled');
+            else
+                $(this).parent().parent().find('select').each(function(){
+                    $(this).removeAttr('disabled')
+                });
+        }
     });
 });
