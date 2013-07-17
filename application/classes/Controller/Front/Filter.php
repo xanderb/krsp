@@ -30,7 +30,7 @@ class Controller_Front_Filter extends Controller_Front
     public function action_change()
     {
 
-        if(isset($_POST['filter-submit']))
+        if(isset($_POST['filter-submit']) OR (isset($_POST['krsp_num']) AND !empty($_POST['krsp_num'])))
         {
             $this->session->delete('filters');
             $prefilters = array(

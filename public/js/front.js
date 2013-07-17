@@ -60,7 +60,7 @@ $(function(){
             return true;
         }
     }
-    $('#filter-form').submit(function(e){
+    function filter_submit(e){
         var rdf = $('#registration_date_from').val().split('.');
         var rdt = $('#registration_date_to').val().split('.');
 
@@ -94,6 +94,17 @@ $(function(){
             return false;
         }
         return true;
+    }
+    $('#filter-form').submit(
+        function(e)
+        {
+            filter_submit(e);
+        }
+    );
+    $('#krsp_num').keypress(function(e){
+        if(e.keyCode == 13){
+            $('#filter-form').submit();
+        }
     });
 
     $('.js-row').hover(function(e){

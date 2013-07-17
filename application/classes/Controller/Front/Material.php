@@ -269,7 +269,7 @@ class Controller_Front_Material extends Controller_Front
 
         $this->template->body = $grid;
         $this->template->filter_button = View::factory('front/filter_button');
-        $this->template->debug = Debug::vars($this->session, $fail_mess, $today_mess);
+        $this->template->debug = Debug::vars($filters);
 	}
 
     public function action_info()

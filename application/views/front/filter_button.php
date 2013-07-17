@@ -7,6 +7,6 @@
  * To change this template use File | Settings | File Templates.
  */
 ?>
-<a class="btn btn-inverse btn-large left-button filters" href="#" data-toggle="modal" data-target="#filtersModal" role="button">
+<a class="btn btn-inverse btn-large left-button filters" href="#none" data-toggle="modal" data-target="#filtersModal" role="button">
     <i class="icon-filter icon-white"></i> Фильтр сообщений
 </a>

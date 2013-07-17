@@ -8,50 +8,66 @@
  */
 ?>
 <div class="modal" id="filtersModal" tabindex="-1" role="dialog" aria-hidden="true" style="display:none;">
-    <div class="modal-header">
-        <button class="close" aria-hidden="true" data-dismiss="modal" type="button">×</button>
-        <h3 id="myModalLabel">Фильтры для таблицы сообщений</h3>
-    </div>
-    <div class="modal-body">
-        <?=Form::open(
-            (isset($action) ? $action : '/filter/'),
-            array(
-                'name' => 'filter-form',
-                'id' => 'filter-form'
-            )
-        )?>
-        <fieldset>
-            <legend>Номер КРСП</legend>
+<div class="modal-header">
+    <button class="close" aria-hidden="true" data-dismiss="modal" type="button">×</button>
+    <h3 id="myModalLabel">Фильтры для таблицы сообщений</h3>
+</div>
+<div class="modal-body">
+<?=Form::open(
+    (isset($action) ? $action : '/filter/'),
+    array(
+        'name' => 'filter-form',
+        'id' => 'filter-form'
+    )
+)?>
+<fieldset>
+    <legend>Номер КРСП</legend>
+    <div class="row-fluid">
+        <div class="span5">
             <?=Form::label('krsp_num', 'Фильтр по номеру КРСП')?>
             <?=Form::input(
                 'krsp_num[]',
                 isset($filters['krsp_num'][0]) ? $filters['krsp_num'][0] : NULL,
                 array(
-                    'class' => 'span3',
+                    'class' => 'span6',
                     'id' => 'krsp_num'
                 )
             )?>
-        </fieldset>
-        <fieldset>
-            <legend>Дата регистрации сообщения</legend>
-            <?=Form::label('registration_date', 'Фильтрация по дате регистрации сообщения')?>
-            <?php echo Form::input(
-                'registration_date[0]',
-                isset($filters['registration_date'][0]) ? $filters['registration_date'][0] : NULL,
+        </div>
+        <div class="span5 offset2">
+            <?=Form::label('null-krsp_num', 'Сообщения без номера КРСП')?>
+            <?=Form::checkbox(
+                'krsp_num',
+                'NULL',
+                isset($filters['krsp_num']) AND !is_array($filter['krsp_num']) ? TRUE : FALSE,
                 array(
-                    'class' => 'span3 datepicker',
-                    'id' => 'registration_date_from'
+                    'class' => '',
+                    'id' => 'null-krsp_num'
                 )
-            ).' - '.
-                Form::input(
-                    'registration_date[1]',
-                    isset($filters['registration_date'][1]) ? $filters['registration_date'][1] : NULL,
-                    array(
-                        'class' => 'span3 datepicker',
-                        'id' => 'registration_date_to'
-                    )
-                )?>
-        </fieldset>
+            )?>
+        </div>
+    </div>
+</fieldset>
+<fieldset>
+    <legend>Дата регистрации сообщения</legend>
+    <?=Form::label('registration_date', 'Фильтрация по дате регистрации сообщения')?>
+    <?php echo Form::input(
+        'registration_date[0]',
+        isset($filters['registration_date'][0]) ? $filters['registration_date'][0] : NULL,
+        array(
+            'class' => 'span3 datepicker',
+            'id' => 'registration_date_from'
+        )
+    ).' - '.
+        Form::input(
+            'registration_date[1]',
+            isset($filters['registration_date'][1]) ? $filters['registration_date'][1] : NULL,
+            array(
+                'class' => 'span3 datepicker',
+                'id' => 'registration_date_to'
+            )
+        )?>
+</fieldset>
 <?php
 if(isset($sources))
 {
@@ -296,26 +312,26 @@ if(isset($decrees))
 <?php
 }
 ?>
-        <fieldset>
-            <legend>Дата принятия решения</legend>
-            <?=Form::label('decree_date', 'Фильтрация по дате принятия решения')?>
-            <?php echo Form::input(
-                    'decree_date[0]',
-                    isset($filters['decree_date'][0]) ? $filters['decree_date'][0] : NULL,
-                    array(
-                        'class' => 'span3 datepicker',
-                        'id' => 'decree_date_from'
-                    )
-                ).' - '.
-                Form::input(
-                    'decree_date[1]',
-                    isset($filters['decree_date'][1]) ? $filters['decree_date'][1] : NULL,
-                    array(
-                        'class' => 'span3 datepicker',
-                        'id' => 'decree_date_to'
-                    )
-                )?>
-        </fieldset>
+<fieldset>
+    <legend>Дата принятия решения</legend>
+    <?=Form::label('decree_date', 'Фильтрация по дате принятия решения')?>
+    <?php echo Form::input(
+        'decree_date[0]',
+        isset($filters['decree_date'][0]) ? $filters['decree_date'][0] : NULL,
+        array(
+            'class' => 'span3 datepicker',
+            'id' => 'decree_date_from'
+        )
+    ).' - '.
+        Form::input(
+            'decree_date[1]',
+            isset($filters['decree_date'][1]) ? $filters['decree_date'][1] : NULL,
+            array(
+                'class' => 'span3 datepicker',
+                'id' => 'decree_date_to'
+            )
+        )?>
+</fieldset>
 <?php
 if(isset($periods))
 {
@@ -416,73 +432,73 @@ if(isset($failure_causes))
 <?php
 }
 ?>
-    <fieldset>
-        <legend>Дата отмены решения</legend>
-        <?=Form::label('decree_cancel_date', 'Фильтрация по дате отмены решения')?>
-        <?php echo Form::input(
-                'decree_cancel_date[0]',
-                isset($filters['decree_cancel_date'][0]) ? $filters['decree_cancel_date'][0] : NULL,
-                array(
-                    'class' => 'span3 datepicker',
-                    'id' => 'decree_cancel_date_from'
-                )
-            ).' - '.
-            Form::input(
-                'decree_cancel_date[1]',
-                isset($filters['decree_cancel_date'][1]) ? $filters['decree_cancel_date'][1] : NULL,
-                array(
-                    'class' => 'span3 datepicker',
-                    'id' => 'decree_cancel_date_to'
-                )
-            )?>
-    </fieldset>
+<fieldset>
+    <legend>Дата отмены решения</legend>
+    <?=Form::label('decree_cancel_date', 'Фильтрация по дате отмены решения')?>
+    <?php echo Form::input(
+        'decree_cancel_date[0]',
+        isset($filters['decree_cancel_date'][0]) ? $filters['decree_cancel_date'][0] : NULL,
+        array(
+            'class' => 'span3 datepicker',
+            'id' => 'decree_cancel_date_from'
+        )
+    ).' - '.
+        Form::input(
+            'decree_cancel_date[1]',
+            isset($filters['decree_cancel_date'][1]) ? $filters['decree_cancel_date'][1] : NULL,
+            array(
+                'class' => 'span3 datepicker',
+                'id' => 'decree_cancel_date_to'
+            )
+        )?>
+</fieldset>
 <?php
 if(isset($invs))
 {
-?>
-<fieldset id="extra_invest-select">
-    <legend>(ДОП) Следователи</legend>
-    <?php
-    if(isset($filters['extra_investigators']) AND count($filters['extra_investigators']) > 0){
-        foreach($filters['extra_investigators'] as $k_filter => $filter)
-        {
+    ?>
+    <fieldset id="extra_invest-select">
+        <legend>(ДОП) Следователи</legend>
+        <?php
+        if(isset($filters['extra_investigators']) AND count($filters['extra_investigators']) > 0){
+            foreach($filters['extra_investigators'] as $k_filter => $filter)
+            {
+                echo Help::select(
+                    'extra_investigators[]',
+                    $invs,
+                    $filter,
+                    array(
+                        'class' => 'extra_invest-select block',
+                        'id' => ($k_filter == 0 ? 'first-extra_invest-select' : '')
+                    ),
+                    array('' => '=(ДОП) Следователи='),
+                    TRUE
+                );
+            }
             echo Help::select(
                 'extra_investigators[]',
                 $invs,
-                $filter,
+                NULL,
                 array(
                     'class' => 'extra_invest-select block',
-                    'id' => ($k_filter == 0 ? 'first-extra_invest-select' : '')
+                ),
+                array('' => '=(ДОП) Следователи='),
+                TRUE
+            );
+        }else{
+            echo Help::select(
+                'extra_investigators[]',
+                $invs,
+                isset($filters['extra_investigators'][0]) ? $filters['extra_investigators'][0] : NULL,
+                array(
+                    'class' => 'extra_invest-select block',
+                    'id' => 'first-extra_invest-select',
                 ),
                 array('' => '=(ДОП) Следователи='),
                 TRUE
             );
         }
-        echo Help::select(
-            'extra_investigators[]',
-            $invs,
-            NULL,
-            array(
-                'class' => 'extra_invest-select block',
-            ),
-            array('' => '=(ДОП) Следователи='),
-            TRUE
-        );
-    }else{
-        echo Help::select(
-            'extra_investigators[]',
-            $invs,
-            isset($filters['extra_investigators'][0]) ? $filters['extra_investigators'][0] : NULL,
-            array(
-                'class' => 'extra_invest-select block',
-                'id' => 'first-extra_invest-select',
-            ),
-            array('' => '=(ДОП) Следователи='),
-            TRUE
-        );
-    }
-    ?>
-</fieldset>
+        ?>
+    </fieldset>
 <?php
 }
 
@@ -585,26 +601,26 @@ if(isset($decrees))
 <?php
 }
 ?>
-        <fieldset>
-            <legend>(ДОП) Дата принятия решения</legend>
-            <?=Form::label('extra_decree_date', 'Фильтрация по дате принятия решения (ДОП)')?>
-            <?php echo Form::input(
-                    'extra_decree_date[0]',
-                    isset($filters['extra_decree_date'][0]) ? $filters['extra_decree_date'][0] : NULL,
-                    array(
-                        'class' => 'span3 datepicker',
-                        'id' => 'extra_decree_date_from'
-                    )
-                ).' - '.
-                Form::input(
-                    'extra_decree_date[1]',
-                    isset($filters['extra_decree_date'][1]) ? $filters['extra_decree_date'][1] : NULL,
-                    array(
-                        'class' => 'span3 datepicker',
-                        'id' => 'extra_decree_date_to'
-                    )
-                )?>
-        </fieldset>
+<fieldset>
+    <legend>(ДОП) Дата принятия решения</legend>
+    <?=Form::label('extra_decree_date', 'Фильтрация по дате принятия решения (ДОП)')?>
+    <?php echo Form::input(
+        'extra_decree_date[0]',
+        isset($filters['extra_decree_date'][0]) ? $filters['extra_decree_date'][0] : NULL,
+        array(
+            'class' => 'span3 datepicker',
+            'id' => 'extra_decree_date_from'
+        )
+    ).' - '.
+        Form::input(
+            'extra_decree_date[1]',
+            isset($filters['extra_decree_date'][1]) ? $filters['extra_decree_date'][1] : NULL,
+            array(
+                'class' => 'span3 datepicker',
+                'id' => 'extra_decree_date_to'
+            )
+        )?>
+</fieldset>
 </div>
 <div class="modal-footer">
     <button class="btn" data-dismiss="modal">Закрыть</button>

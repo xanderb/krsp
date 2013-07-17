@@ -52,7 +52,7 @@ if(isset($filter_button)){
     </div>
 </footer>
 <?php
-if(isset($debug)){
+if(isset($debug)){   //Сделать отключаемым через админку (таблица БД опций)
     ?>
     <div class="debug alert alert-info"><?=$debug?></div>
     <?php
