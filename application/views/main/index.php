@@ -12,6 +12,15 @@
         }
     }
     ?>
+    <?php
+    if(isset($scripts) AND is_array($scripts)){
+        foreach($scripts as $script){
+            ?>
+            <script src="<?=URL::base()?>public/js/<?=$script?>.js"></script>
+        <?php
+        }
+    }
+    ?>
 </head>
 <body>
 <?php ProfilerToolbar::render(true); //TODO сделать включаемой/отключаемой из админки?>
@@ -59,15 +68,7 @@ if(isset($debug)){   //Сделать отключаемым через адми
 }
 ?>
 
-<?php
-if(isset($scripts) AND is_array($scripts)){
-    foreach($scripts as $script){
-        ?>
-        <script src="<?=URL::base()?>public/js/<?=$script?>.js"></script>
-    <?php
-    }
-}
-?>
+
 </body>
 </html>
 

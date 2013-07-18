@@ -111,4 +111,6 @@ td.first span {
     background-color: #f9f9f9;
     display: inline-block;
 }
-
+.hid{
+    display: none;
+}

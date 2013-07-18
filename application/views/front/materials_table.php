@@ -55,7 +55,7 @@ if(isset($total_materials) AND isset($badges))
             <?php
             foreach($t_headers as $h){
                 ?>
-                <th>
+                <th <?php echo ($h['field'] == 'id' ? 'class="hid"' : NULL);?>>
                     <?php
                     if(!isset($sort) OR count($sort) < 1)
                     {
@@ -109,7 +109,7 @@ if(isset($total_materials) AND isset($badges))
             foreach($datas as $data){
                 ?>
                 <tr class="js-row">
-                    <td class="js-id"><?=$data->id?></td>
+                    <td class="js-id hid"><?=$data->id?></td>
                     <td><?=$data->krsp_num?></td>
                     <td><?=date('d.m.Y H:i:s', strtotime($data->registration_date))?></td>
                     <td><?=$data->source->text?></td>

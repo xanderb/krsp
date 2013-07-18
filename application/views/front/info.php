@@ -131,7 +131,7 @@
         }
         ?>
         <?php
-        if(isset($material) AND isset($auth) AND $auth->logged_in('admin'))
+        if(isset($material) AND isset($auth) AND $auth->logged_in('admin') AND 0)
         {
             ?>
             <a class="btn btn-info" href="/material/logs/<?=$material->id?>">Логи изменения сообщения</a>

@@ -55,7 +55,7 @@ if(isset($caption)){
             <?php
             foreach($t_headers as $h){
                 ?>
-                <th><?=$h['text']?></th>
+                <th <?php echo ($h['field'] == 'id' ? 'class="hid"' : NULL);?>><?=$h['text']?></th>
                 <?php
                 $field[] = $h['field'];
             }
@@ -71,7 +71,7 @@ if(isset($caption)){
         foreach($datas as $data){
             ?>
             <tr class="js-row">
-                <td class="js-id"><?=$data->id?></td>
+                <td class="js-id hid"><?=$data->id?></td>
                 <td><?=$data->krsp_num?></td>
                 <td><?=date('d.m.Y', strtotime($data->registration_date))?></td>
                 <td><?=isset($data->period->days) ? $data->period->days.' дня(ей)' : ''?></td>
