@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/classes/Controller/Front/Filter.php" afterPath="$PROJECT_DIR$/application/classes/Controller/Front/Filter.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/classes/Model/Material.php" afterPath="$PROJECT_DIR$/application/classes/Model/Material.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/front/select_filters.php" afterPath="$PROJECT_DIR$/application/views/front/select_filters.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sql/dump.sql" afterPath="$PROJECT_DIR$/sql/dump.sql" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="kohana.iws" />
@@ -73,7 +71,7 @@
     <file path="/Filter.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1374234109784" ignored="false" />
     <file path="/front.js" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1374220760475" ignored="false" />
     <file path="/filters.php" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369062149508" ignored="false" />
-    <file path="/Dummy.txt" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1374233770501" ignored="false" />
+    <file path="/Dummy.txt" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1374235495512" ignored="false" />
     <file path="$PROJECT_DIR$/../test/select/index.html" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369213583004" ignored="false" />
     <file path="$PROJECT_DIR$/../test/select/script.js" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369213301199" ignored="false" />
     <file path="/index.html" changelist="65d29a44-8347-42f7-ba6e-8294f9bf3b9c" time="1369213570892" ignored="false" />
@@ -680,7 +678,11 @@
       <created>1374233777025</created>
       <updated>1374233777025</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Поиск по краткой фабуле">
+      <created>1374235502384</created>
+      <updated>1374235502384</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TodoView" selected-index="0">
@@ -770,7 +772,7 @@
     <option name="WRAP_WHEN_TYPING_REACHES_RIGHT_MARGIN" value="false" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Убраны &quot;лишние&quot; поля с таблицы на главной&#10;Сделан редирект при успешном изменении, создании данных&#10;Переделаны &quot;пути назад&quot; в редактировании" />
+    <option name="LAST_COMMIT_MESSAGE" value="Поиск по краткой фабуле" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -799,6 +801,7 @@
     <MESSAGE value="Fix drop characteristics bug" />
     <MESSAGE value="Изменен порядок полей в доп.таблицах на главной и сортировка (теперь по следователю)" />
     <MESSAGE value="Убраны &quot;лишние&quot; поля с таблицы на главной&#10;Сделан редирект при успешном изменении, создании данных&#10;Переделаны &quot;пути назад&quot; в редактировании" />
+    <MESSAGE value="Поиск по краткой фабуле" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
