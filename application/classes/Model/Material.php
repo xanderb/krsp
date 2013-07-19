@@ -215,6 +215,12 @@ class Model_Material extends ORM_Log
                         else
                             $this->and_where('krsp_num', '=', NULL);
                         break;
+                    case 'plot':
+                        if(is_array($values))
+                            $this->and_where('plot', 'LIKE', '%'.$values[0].'%');
+                        else
+                            $this->and_where('plot', 'LIKE', '%'.$values.'%');
+                        break;
                     case 'articles':
                         if(is_array($values))
                         {

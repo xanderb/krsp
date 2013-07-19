@@ -49,6 +49,7 @@ class Controller_Front_Filter extends Controller_Front
                 'extra_periods' =>  Arr::get($_POST, 'extra_periods', array()),
                 'extra_decrees' =>  Arr::get($_POST, 'extra_decrees', array()),
                 'extra_decree_date' =>  Arr::get($_POST, 'extra_decree_date', array()),
+                'plot' => Arr::get($_POST, 'plot', NULL),
             );
             $filters = array();
             foreach($prefilters as $key => $value_arr){
@@ -57,7 +58,8 @@ class Controller_Front_Filter extends Controller_Front
                     'extra_decree_date',
                     'decree_cancel_date',
                     'decree_date',
-                    'registration_date'
+                    'registration_date',
+                    'plot'
                 ); //Массив содержит ключи массива фильтров в которых НЕ удаляются повторяющиеся элементы (даты)
 
                 if(!is_array($value_arr))       //Если нужно отобрать все незаполненные поля

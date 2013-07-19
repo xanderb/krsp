@@ -49,6 +49,23 @@
     </div>
 </fieldset>
 <fieldset>
+    <legend>Поиск по фабуле</legend>
+    <div class="row-fluid">
+        <div class="span5">
+            <?=Form::label('plot', 'Поиск по краткой фабуле')?>
+            <?=Form::textarea(
+                'plot',
+                isset($filters['plot']) ? $filters['plot'] : NULL,
+                array(
+                    'class' => '',
+                    'rows'  => '2',
+                    'id' => 'plot_search'
+                )
+            )?>
+        </div>
+    </div>
+</fieldset>
+<fieldset>
     <legend>Дата регистрации сообщения</legend>
     <?=Form::label('registration_date', 'Фильтрация по дате регистрации сообщения')?>
     <?php echo Form::input(
