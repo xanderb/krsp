@@ -126,7 +126,7 @@
         )
         {
             ?>
-            <a class="btn btn-primary" href="/material/edit/<?=$material->id?>">Добавить информацию</a>
+            <a class="btn btn-primary" href="/material/edit/<?=$material->id?>">Редактировать</a>
             <?php
         }
         ?>

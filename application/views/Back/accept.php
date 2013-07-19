@@ -10,8 +10,8 @@
 <script type="text/javascript">
     $(function(){
        setTimeout(function(){
-           //location.href = '<?=$back_path?>';
-       }, 3000);
+           location.href = '<?=$back_path?>';
+       }, 1000);
     });
 </script>
 <div class="span11">

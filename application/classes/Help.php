@@ -165,7 +165,7 @@ class Help
         $filters->filters = $post_filters;
         $filters->action = '/filter/change';
         $filters->sources = $sources;
-        $filters->articles = $articles;
+        //$filters->articles = $articles;
         $filters->invs = $investigators;
         $filters->decrees = $decrees;
         $filters->periods = $periods;
@@ -173,5 +173,17 @@ class Help
         $filters->failure_causes = $failure_causes;
 
         return $filters;
+    }
+
+    public static function real_back_path_menu()
+    {
+        return array(
+            array(
+                'text' => '<i class="icon-arrow-left"></i> Вернуться на главную',
+                'href' => Request::$current->referrer(),
+                'type' => 'n'
+            )
+        );
+
     }
 }

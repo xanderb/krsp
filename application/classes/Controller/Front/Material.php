@@ -30,7 +30,7 @@ class Controller_Front_Material extends Controller_Front
 
     public $back_menu = array(
         array(
-            'text' => '<i class="icon-arrow-left"></i> Вернуться назад',
+            'text' => '<i class="icon-arrow-left"></i> Вернуться на главную',
             'href' => '/',
             'type' => 'n'
         ),
@@ -70,10 +70,10 @@ class Controller_Front_Material extends Controller_Front
             'text' => 'Характеристика',
             'field' => 'characteristic'
         ),
-        array(
+        /*array(
             'text' => 'Решение',
             'field' => 'decree'
-        ),
+        ),*/
         array(
             'text' => 'Дата принятия решения',
             'field' => 'decree_date'
@@ -82,7 +82,7 @@ class Controller_Front_Material extends Controller_Front
             'text' => 'Срок рассмотрения',
             'field' => 'period'
         ),
-        array(
+        /*array(
             'text' => 'Причина отказа',
             'field' => 'failure_cause'
         ),
@@ -105,7 +105,7 @@ class Controller_Front_Material extends Controller_Front
         array(
             'text' => '(ДОП) Дата принятия решения',
             'field' => 'extra_decree_date'
-        ),
+        ),*/
     );
 
     public $today_table_headers = array(
@@ -186,7 +186,7 @@ class Controller_Front_Material extends Controller_Front
             ->find_all()->count();
 
         $materials_view = View::factory('front/materials_table');
-        $materials_view->caption = "Сообщения в журнале";
+        $materials_view->caption = "Сообщения в книге";
         $materials_view->datas = $materials;
         $materials_view->t_headers = $this->materials_headers;
         $materials_view->total_materials = $total_items;
@@ -304,7 +304,7 @@ class Controller_Front_Material extends Controller_Front
         if(count($this->session->get('filters')) > 0)
             $filter_button->success = 'success';
         $this->template->filter_button = $filter_button;
-        $this->template->debug = Debug::vars($this->session->as_array());
+        $this->template->debug = Debug::vars($this->session, Request::$current->referrer());
 	}
 
     public function action_info()
@@ -541,7 +541,7 @@ class Controller_Front_Material extends Controller_Front
                         $view->failure_causes = $failure_causes->as_array('id', 'text');
 
                         $view->legend = "Форма редактирования материала";
-                        $view->sub_menus = $this->back_menu;
+                        $view->sub_menus = Help::real_back_path_menu();
                         $view->error = $exc->errors('validation');
                     }
                 }
@@ -558,7 +558,7 @@ class Controller_Front_Material extends Controller_Front
                     $view->failure_causes = $failure_causes->as_array('id', 'text');
 
                     $view->legend = "Форма редактирования материала";
-                    $view->sub_menus = $this->back_menu;
+                    $view->sub_menus = Help::real_back_path_menu();
                 }
             }
             else

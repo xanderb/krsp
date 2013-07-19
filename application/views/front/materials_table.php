@@ -115,7 +115,7 @@ if(isset($total_materials) AND isset($badges))
                     <td><?=$data->source->text?></td>
                     <td class="word-wrap">
                         <a class="plot" href="#cur" rel="popover" data-content="<?=$data->plot?>" data-original-title="Краткая фабула">
-                            <?php echo mb_substr($data->plot, 0, 50).(strlen($data->plot) > 50 ? '&hellip;' : NULL); ?>
+                            <?php echo mb_substr($data->plot, 0, 100).(strlen($data->plot) > 100 ? '&hellip;' : NULL); ?>
                         </a>
                     </td>
                     <td><?=$data->article_id?></td>
@@ -134,15 +134,15 @@ if(isset($total_materials) AND isset($badges))
                         ?>
                         </ul>
                     </td>
-                    <td><?=$data->decree->text?></td>
+                    <?php /*<td><?=$data->decree->text?></td>*/ ?>
                     <td><?=!is_null($data->decree_date)? date('d.m.Y H:i:s', strtotime($data->decree_date)) : ''?></td>
                     <td><?=isset($data->period->days) ? $data->period->days.' дня(ей)' : ''?></td>
-                    <td><?=$data->failure_cause->text?></td>
+                    <?php /*<td><?=$data->failure_cause->text?></td>
                     <td><?=!is_null($data->decree_cancel_date)? date('d.m.Y H:i:s', strtotime($data->decree_cancel_date)) : ''?></td>
                     <td><?=$data->extra_inv->name?></td>
                     <td><?=isset($data->extra_period->days) ? $data->extra_period->days.' дня(ей)' : ''?></td>
                     <td><?=$data->extra_decree->text?></td>
-                    <td><?=!is_null($data->extra_decree_date)? date('d.m.Y H:i:s', strtotime($data->extra_decree_date)) : ''?></td>
+                    <td><?=!is_null($data->extra_decree_date)? date('d.m.Y H:i:s', strtotime($data->extra_decree_date)) : ''?></td> */?>
                 </tr>
                 <?php
             }

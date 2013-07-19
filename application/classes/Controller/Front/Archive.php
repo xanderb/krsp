@@ -69,10 +69,10 @@ class Controller_Front_Archive extends Controller_Front
             'text' => 'Характеристика',
             'field' => 'characteristic'
         ),
-        array(
+        /*array(
             'text' => 'Решение',
             'field' => 'decree'
-        ),
+        ),*/
         array(
             'text' => 'Дата принятия решения',
             'field' => 'decree_date'
@@ -81,7 +81,7 @@ class Controller_Front_Archive extends Controller_Front
             'text' => 'Срок рассмотрения',
             'field' => 'period'
         ),
-        array(
+        /*array(
             'text' => 'Причина отказа',
             'field' => 'failure_cause'
         ),
@@ -104,7 +104,7 @@ class Controller_Front_Archive extends Controller_Front
         array(
             'text' => '(ДОП) Дата принятия решения',
             'field' => 'extra_decree_date'
-        ),
+        ),*/
     );
 
     public function action_index()
