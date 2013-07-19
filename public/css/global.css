@@ -94,6 +94,7 @@ tr.table-header th {
 }
 .table tr td.first {
     min-width: 40%;
+    width: 40%;
     background-image: url("../img/dotted.png");
     background-repeat: repeat-x;
     background-position: 0 18px;

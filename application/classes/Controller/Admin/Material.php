@@ -155,7 +155,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
         $content->total_materials = $total_items;
         $content->badges = $this->badges;
         if(ceil($total_items / $this->config->items_per_page) > 1){
-            $content->paginator = Help::render_paginator('material', $this->back_menu[0]['href'], $page, $total_items); //добавление постраничной навигации
+            //$content->paginator = Help::render_paginator('material', $this->back_menu[0]['href'], $page, $total_items); //добавление постраничной навигации
         }
 
 
@@ -178,7 +178,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
 
         //Получение списков для формы
         $sources = ORM::factory('source')->find_all();
-        $articles = ORM::factory('article')->find_all();
+        //$articles = ORM::factory('article')->find_all();
         $investigators = ORM::factory('investigator')->find_all();
         $chars = ORM::factory('characteristic')->find_all();
         $decrees = ORM::factory('decree')->find_all();
@@ -236,7 +236,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
                 $material_form->material = $new_material;
 
                 $material_form->sources = $sources->as_array('id', 'text');
-                $material_form->articles = $articles->as_array('id', 'value');
+                //$material_form->articles = $articles->as_array('id', 'value');
                 $material_form->investigators = $investigators->as_array('id', 'name');
                 $material_form->chars = $chars;
                 $material_form->decrees = $decrees->as_array('id', 'text');
@@ -252,7 +252,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
             $material_form = View::factory('/back/edit_material');
 
             $material_form->sources = $sources->as_array('id', 'text');
-            $material_form->articles = $articles->as_array('id', 'value');
+            //$material_form->articles = $articles->as_array('id', 'value');
             $material_form->investigators = $investigators->as_array('id', 'name');
             $material_form->chars = $chars;
             $material_form->decrees = $decrees->as_array('id', 'text');
@@ -282,7 +282,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
             $material_info = ORM_Log::factory('material', $id);
             //Получение списков для формы
             $sources = ORM::factory('source')->find_all();
-            $articles = ORM::factory('article')->find_all();
+            //$articles = ORM::factory('article')->find_all();
             $investigators = ORM::factory('investigator')->find_all();
             $chars = ORM::factory('characteristic')->find_all();
             $decrees = ORM::factory('decree')->find_all();
@@ -338,7 +338,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
                     $material_form->material = $material_info;
 
                     $material_form->sources = $sources->as_array('id', 'text');
-                    $material_form->articles = $articles->as_array('id', 'value');
+                    //$material_form->articles = $articles->as_array('id', 'value');
                     $material_form->investigators = $investigators->as_array('id', 'name');
                     $material_form->chars = $chars;
                     $material_form->decrees = $decrees->as_array('id', 'text');
@@ -356,7 +356,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
                 $content = View::factory('/back/edit_material');
                 $content->material = $material_info;
                 $content->sources = $sources->as_array('id', 'text');
-                $content->articles = $articles->as_array('id', 'value');
+                //$content->articles = $articles->as_array('id', 'value');
                 $content->investigators = $investigators->as_array('id', 'name');
                 $content->chars = $chars;
                 $content->decrees = $decrees->as_array('id', 'text');

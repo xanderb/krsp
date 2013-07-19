@@ -80,7 +80,7 @@ if(isset($total_materials) AND isset($badges))
                             <?php echo mb_substr($data->plot, 0, 50).(strlen($data->plot) > 50 ? '&hellip;' : NULL); ?>
                         </a>
                     </td>
-                    <td><abbr class="ttd" rel="tooltip" title="<?=$data->article->text?>"><?=$data->article->value?></abbr></td>
+                    <td><?=$data->article_id?></td>
                     <td><?=$data->inv->name?></td>
                     <td>
                         <?php

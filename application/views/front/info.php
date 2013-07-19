@@ -66,7 +66,7 @@
                     </tr>
                     <tr>
                         <td class="first"><span>Статья УК</span></td>
-                        <td><?=$material->article->value.' - '.$material->article->text?></td>
+                        <td><?=$material->article_id?></td>
                     </tr>
                     <tr>
                         <td class="first"><span>Следователь</span></td>

@@ -145,19 +145,15 @@ echo Form::hidden('id', (isset($material)) ? $material->id: NULL);?>
             )?>
             <span id="error-plot" class="text-error"></span>
         </dd>
-        <dt><?=Form::label('article', '<span class="text-error tt" rel="tooltip" title="Поле обязательно для заполнения">Статья *</span>')?></dt>
+        <dt><?=Form::label('article', 'Статья')?></dt>
         <dd>
-            <?=Help::select(
+            <?=Form::input(
                 'article_id',
-                (isset($articles) ? $articles : NULL),
-                (isset($material) ? $material->article->id : NULL),
+                (isset($material) ? $material->article_id : NULL),
                 array(
-                    'id'    => 'article',
+                    'id' => 'article',
                     'class' => 'span2',
-                    'disabled'  => (isset($material->article->id) ? 'disabled' : NULL),
-                ),
-                array(
-                    '' => 'Выберите статью'
+                    'disabled'  => (isset($material->article_id) ? 'disabled' : NULL),
                 )
             )?>
             <span id="error-article" class="text-error"></span>
@@ -255,7 +251,7 @@ echo Form::hidden('id', (isset($material)) ? $material->id: NULL);?>
                 array(
                     'id'    => 'period',
                     'class' => 'span2',
-                    'disabled'  => (isset($material->period->id) ? 'disabled' : NULL),
+                    //'disabled'  => (isset($material->period->id) ? 'disabled' : NULL),
                 ),
                 array(
                     '' => 'Выберите срок рассмотрения'
@@ -328,7 +324,7 @@ echo Form::hidden('id', (isset($material)) ? $material->id: NULL);?>
                 array(
                     'id'    => 'extra_period',
                     'class' => 'span2',
-                    'disabled'  => (isset($material->extra_period->id) ? 'disabled' : NULL),
+                    //'disabled'  => (isset($material->extra_period->id) ? 'disabled' : NULL),
                 ),
                 array(
                     '' => 'Выберите срок рассмотрения для ДОП'

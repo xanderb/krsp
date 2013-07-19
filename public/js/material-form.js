@@ -28,13 +28,13 @@ $(function(){
             $('#error-period').html('');
         }
 
-        if(!not_empty_text(article)){
+        /*if(!not_empty_text(article)){
             $(article).css('border', '1px solid red');
             $('#error-article').html('Ошибка! Необходимо выбрать статью');
         }else{
             $(article).css('border', '1px solid green');
             $('#error-article').html('');
-        }
+        }*/
 
         if($('#edit-cause').length > '0'){
             var ecause = $('#edit-cause');
@@ -64,10 +64,10 @@ $(function(){
         }else if(!not_empty_text(period)){
             fields();
             return false;
-        }else if(!not_empty_text(article)){
+        }else /*if(!not_empty_text(article)){
             fields();
             return false;
-        }else{
+        }else*/{
             return true;
         }
     }
@@ -90,9 +90,9 @@ $(function(){
     $('#plot').keyup(function(){
         fields();
     });
-    $('#article').change(function(){
+    /*$('#article').change(function(){
         fields();
-    });
+    });*/
     $('#period').change(function(){
         fields();
     });

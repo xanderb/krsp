@@ -137,52 +137,42 @@ if(isset($sources))
 if(isset($articles))
 {
     ?>
-    <fieldset id="article-select">
+    <fieldset id="article-input">
         <legend>Статьи УК РФ</legend>
         <div class="row-fluid">
-            <div class="span7">
+            <div class="span5 toin">
                 <?php
+                echo Form::label('articles', 'Поиск по статье');
                 if(isset($filters['articles']) AND is_array($filters['articles']) AND count($filters['articles']) > 0){
                     foreach($filters['articles'] as $k_filter => $filter)
                     {
-                        echo Help::select(
+
+                        echo Form::input(
                             'articles[]',
-                            $articles,
-                            $filter,
+                            isset($filters['articles'][$k_filter]) ? $filters['articles'][$k_filter] : NULL,
                             array(
-                                'class' => 'article-select block',
-                                'id' => ($k_filter == 0 ? 'first-article-select' : '')
-                            ),
-                            array('' => '=Статьи УК РФ='),
-                            TRUE
+                                'class' => 'span6 article-input',
+                                'id' => ($k_filter == 0 ? 'first-article-input' : '')
+                            )
                         );
                     }
-                    echo Help::select(
+
+                }
+                else
+                {
+                    echo Form::input(
                         'articles[]',
-                        $articles,
-                        NULL,
-                        array(
-                            'class' => 'article-select block',
-                        ),
-                        array('' => '=Статьи УК РФ='),
-                        TRUE
-                    );
-                }else{
-                    echo Help::select(
-                        'articles[]',
-                        $articles,
                         isset($filters['articles'][0]) ? $filters['articles'][0] : NULL,
                         array(
-                            'class' => 'article-select block',
-                            'id' => 'first-article-select',
-                        ),
-                        array('' => '=Статьи УК РФ='),
-                        TRUE
+                            'class' => 'span6 article-input',
+                            'id' => 'first-article-input',
+                        )
                     );
                 }
                 ?>
+
             </div>
-            <div class="span5">
+            <div class="span5 offset2">
                 <?=Form::label('null-articles', 'Сообщения без статьи')?>
                 <?=Form::checkbox(
                     'articles',

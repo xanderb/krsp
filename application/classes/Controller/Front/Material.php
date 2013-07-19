@@ -152,8 +152,8 @@ class Controller_Front_Material extends Controller_Front
             $materials
             ->add_filters($this->session->get('filters'))
             ->add_sort(isset($sort['materials']) ? $sort['materials'] : NULL)
-            ->limit($this->config->items_per_page)
-            ->offset((isset($page) ? ($page-1)*$this->config->items_per_page : 0))
+            //->limit($this->config->items_per_page)
+            //->offset((isset($page) ? ($page-1)*$this->config->items_per_page : 0))
             ->find_all();
         $total_items = ORM_Log::factory('material')
             ->where('archive', '=', '0')
@@ -175,7 +175,7 @@ class Controller_Front_Material extends Controller_Front
 
 
         if(ceil($total_items / $this->config->items_per_page) > 1){
-            $materials_view->paginator = Help::render_paginator('material', '', $page, $total_items); //добавление постраничной навигации
+            //$materials_view->paginator = Help::render_paginator('material', '', $page, $total_items); //добавление постраничной навигации
         }
 
         //Таблица сообщений актуальных сегодня
@@ -268,7 +268,10 @@ class Controller_Front_Material extends Controller_Front
         $grid->right_content = $fail_table;
 
         $this->template->body = $grid;
-        $this->template->filter_button = View::factory('front/filter_button');
+        $filter_button = View::factory('front/filter_button');
+        if(count($this->session->get('filters')) > 0)
+            $filter_button->success = 'success';
+        $this->template->filter_button = $filter_button;
         $this->template->debug = Debug::vars($this->session->as_array());
 	}
 
@@ -283,7 +286,7 @@ class Controller_Front_Material extends Controller_Front
             $view->auth = $this->auth;
             $view->user = $this->user;
             $view->roles = $this->config->auth_required;
-            $view->back_path = URL::site(Request::$current->referrer());
+            $view->back_path = '/';
             $view->back_path_text = "Назад";
         }
         else
@@ -308,7 +311,7 @@ class Controller_Front_Material extends Controller_Front
         {
             //Получение списков для формы
             $sources = ORM::factory('source')->find_all();
-            $articles = ORM::factory('article')->find_all();
+            //$articles = ORM::factory('article')->find_all();
             $investigators = ORM::factory('investigator')->find_all();
             $chars = ORM::factory('characteristic')->find_all();
             $decrees = ORM::factory('decree')->find_all();
@@ -367,7 +370,7 @@ class Controller_Front_Material extends Controller_Front
                     $material_form->material = $new_material;
 
                     $material_form->sources = $sources->as_array('id', 'text');
-                    $material_form->articles = $articles->as_array('id', 'value');
+                    //$material_form->articles = $articles->as_array('id', 'value');
                     $material_form->investigators = $investigators->as_array('id', 'name');
                     $material_form->chars = $chars;
                     $material_form->decrees = $decrees->as_array('id', 'text');
@@ -385,7 +388,7 @@ class Controller_Front_Material extends Controller_Front
                 $material_form = View::factory('/front/edit_material');
 
                 $material_form->sources = $sources->as_array('id', 'text');
-                $material_form->articles = $articles->as_array('id', 'value');
+                //$material_form->articles = $articles->as_array('id', 'value');
                 $material_form->investigators = $investigators->as_array('id', 'name');
                 $material_form->chars = $chars;
                 $material_form->decrees = $decrees->as_array('id', 'text');
@@ -432,7 +435,7 @@ class Controller_Front_Material extends Controller_Front
                 $material = ORM_Log::factory('material', $id);
                 //Получение списков для формы
                 $sources = ORM::factory('source')->find_all();
-                $articles = ORM::factory('article')->find_all();
+                //$articles = ORM::factory('article')->find_all();
                 $investigators = ORM::factory('investigator')->find_all();
                 $chars = ORM::factory('characteristic')->find_all();
                 $decrees = ORM::factory('decree')->find_all();
@@ -494,7 +497,7 @@ class Controller_Front_Material extends Controller_Front
                         $view->material = $material;
 
                         $view->sources = $sources->as_array('id', 'text');
-                        $view->articles = $articles->as_array('id', 'value');
+                        //$view->articles = $articles->as_array('id', 'value');
                         $view->investigators = $investigators->as_array('id', 'name');
                         $view->chars = $chars;
                         $view->decrees = $decrees->as_array('id', 'text');
@@ -511,7 +514,7 @@ class Controller_Front_Material extends Controller_Front
                     $view = View::factory('/front/edit_material');
                     $view->material = $material;
                     $view->sources = $sources->as_array('id', 'text');
-                    $view->articles = $articles->as_array('id', 'value');
+                    //$view->articles = $articles->as_array('id', 'value');
                     $view->investigators = $investigators->as_array('id', 'name');
                     $view->chars = $chars;
                     $view->decrees = $decrees->as_array('id', 'text');

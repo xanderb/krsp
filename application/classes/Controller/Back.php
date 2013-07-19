@@ -28,10 +28,10 @@ class Controller_Back extends Controller_Core
             'text' => 'Источники',
             'href' => '/admin/source/'
         ),
-        array(
+        /*array(
             'text' => 'Статьи УК',
             'href' => '/admin/article/'
-        ),
+        ),*/
         array(
             'text' => 'Следователи',
             'href' => '/admin/sled/'

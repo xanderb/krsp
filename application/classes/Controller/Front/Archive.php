@@ -124,8 +124,8 @@ class Controller_Front_Archive extends Controller_Front
             $materials
                 ->add_filters($this->session->get('filters'))
                 ->add_sort(isset($sort['materials']) ? $sort['materials'] : NULL)
-                ->limit($this->config->items_per_page)
-                ->offset((isset($page) ? ($page-1)*$this->config->items_per_page : 0))
+                //->limit($this->config->items_per_page)
+                //->offset((isset($page) ? ($page-1)*$this->config->items_per_page : 0))
                 ->find_all();
         $total_items = ORM_Log::factory('material')
             ->where('archive', '=', '1')

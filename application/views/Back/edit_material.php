@@ -139,18 +139,14 @@ echo Form::hidden('id', (isset($material)) ? $material->id: NULL);?>
             )?>
             <span id="error-plot" class="text-error"></span>
         </dd>
-        <dt><?=Form::label('article', '<span class="text-error tt" rel="tooltip" title="Поле обязательно для заполнения">Статья *</span>')?></dt>
+        <dt><?=Form::label('article', 'Статья')?></dt>
         <dd>
-            <?=Help::select(
+            <?=Form::input(
                 'article_id',
-                (isset($articles) ? $articles : NULL),
-                (isset($material) ? $material->article->id : NULL),
+                (isset($material) ? $material->article_id : NULL),
                 array(
-                    'id'    => 'article',
-                    'class' => 'span2'
-                ),
-                array(
-                    '' => 'Выберите статью'
+                    'id' => 'article',
+                    'class' => 'span2',
                 )
             )?>
             <span id="error-article" class="text-error"></span>

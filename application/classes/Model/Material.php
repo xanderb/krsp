@@ -16,10 +16,6 @@ class Model_Material extends ORM_Log
             'model'         => 'source',
             'foreign_key'   => 'source_id'
         ),
-        'article'           => array(
-            'model'         => 'article',
-            'foreign_key'   => 'article_id'
-        ),
         'inv'      => array(
             'model'         => 'investigator',
             'foreign_key'   => 'investigator_id'
@@ -221,7 +217,13 @@ class Model_Material extends ORM_Log
                         break;
                     case 'articles':
                         if(is_array($values))
-                            $this->and_where('article_id', 'IN', $values);
+                        {
+                            $this->and_where_open();
+                            foreach($values as $value){
+                                $this->or_where('article_id', 'LIKE', '%'.$value.'%');
+                            }
+                            $this->and_where_close();
+                        }
                         else
                             $this->and_where('article_id', '=', NULL);
                         break;

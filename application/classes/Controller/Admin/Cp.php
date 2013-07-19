@@ -45,7 +45,7 @@ class Controller_Admin_Cp extends Controller_Back
         $content = View::factory('/back/control_panel_content');
         $content->cp_menu = $this->cp_menu;
         $content->user_table = Model_User::render_table();
-        $content->material_table = Model_Material::render_table();
+        //$content->material_table = Model_Material::render_table();
 
         $admin_view->content = $content;
         $this->template->body = $admin_view;

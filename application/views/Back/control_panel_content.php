@@ -29,7 +29,7 @@
     </div>
 </div>
 <div class="row-fluid">
-    <div class="span3 offset9">
+    <div class="span3">
         <?=(isset($user_table) ? $user_table : NULL)?>
     </div>
 </div>

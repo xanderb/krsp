@@ -17,12 +17,20 @@ $(function(){
             $(obj).unbind('change');
         }
     }
+    function universal_input(obj, text_obj, append_text){
+        var value = $(obj).val();
+        if(value != ''){
+            var exemp = $(text_obj).clone().removeAttr('id').val('').bind('keyup', function(e){ universal_input(this, text_obj, append_text); });
+            $(append_text).append(exemp);
+            $(obj).unbind('keyup');
+        }
+    }
 
     $('.source-select').change(function(e){
         universal_select(this, '#first-source-select', 'fieldset#source-select div.row-fluid');
     });
-    $('.article-select').change(function(e){
-        universal_select(this, '#first-article-select', 'fieldset#article-select div.row-fluid');
+    $('.article-input').keyup(function(e){
+        universal_input(this, '#first-article-input', 'fieldset#article-input div.row-fluid div.toin');
     });
     $('.invest-select').change(function(e){
         universal_select(this, '#first-invest-select', 'fieldset#invest-select div.row-fluid');

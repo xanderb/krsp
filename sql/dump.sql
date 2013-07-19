@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Июл 01 2013 г., 19:03
+-- Время создания: Июл 19 2013 г., 13:24
 -- Версия сервера: 5.5.28
 -- Версия PHP: 5.3.17
 
@@ -26,6 +26,7 @@ SET time_zone = "+00:00";
 -- Структура таблицы `articles`
 --
 
+DROP TABLE IF EXISTS `articles`;
 CREATE TABLE IF NOT EXISTS `articles` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `value` varchar(50) NOT NULL,
@@ -48,6 +49,7 @@ INSERT INTO `articles` (`id`, `value`, `text`, `sort`) VALUES
 -- Структура таблицы `characteristics`
 --
 
+DROP TABLE IF EXISTS `characteristics`;
 CREATE TABLE IF NOT EXISTS `characteristics` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `value` int(10) unsigned NOT NULL,
@@ -72,6 +74,7 @@ INSERT INTO `characteristics` (`id`, `value`, `text`, `sort`) VALUES
 -- Структура таблицы `decrees`
 --
 
+DROP TABLE IF EXISTS `decrees`;
 CREATE TABLE IF NOT EXISTS `decrees` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `value` int(10) unsigned NOT NULL,
@@ -85,8 +88,8 @@ CREATE TABLE IF NOT EXISTS `decrees` (
 --
 
 INSERT INTO `decrees` (`id`, `value`, `text`, `sort`) VALUES
-(1, 1, 'Отправить в суд', 1),
-(2, 2, 'Отправить в прокуратуру', 2);
+(1, 1, 'Приобщить к делу', 1),
+(2, 2, 'Отказать в возбуждении дела', 2);
 
 -- --------------------------------------------------------
 
@@ -94,6 +97,7 @@ INSERT INTO `decrees` (`id`, `value`, `text`, `sort`) VALUES
 -- Структура таблицы `failure_causes`
 --
 
+DROP TABLE IF EXISTS `failure_causes`;
 CREATE TABLE IF NOT EXISTS `failure_causes` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `value` int(10) unsigned NOT NULL,
@@ -118,6 +122,7 @@ INSERT INTO `failure_causes` (`id`, `value`, `text`, `sort`) VALUES
 -- Структура таблицы `investigators`
 --
 
+DROP TABLE IF EXISTS `investigators`;
 CREATE TABLE IF NOT EXISTS `investigators` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(250) NOT NULL,
@@ -140,13 +145,14 @@ INSERT INTO `investigators` (`id`, `name`, `position`, `sort`) VALUES
 -- Структура таблицы `materials`
 --
 
+DROP TABLE IF EXISTS `materials`;
 CREATE TABLE IF NOT EXISTS `materials` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `krsp_num` int(10) unsigned DEFAULT NULL,
   `registration_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `source_id` int(10) unsigned DEFAULT NULL,
   `plot` text NOT NULL,
-  `article_id` int(10) unsigned NOT NULL,
+  `article_id` varchar(50) DEFAULT NULL,
   `investigator_id` int(10) unsigned DEFAULT NULL,
   `decree_id` int(10) unsigned DEFAULT NULL,
   `decree_date` timestamp NULL DEFAULT NULL,
@@ -178,21 +184,24 @@ CREATE TABLE IF NOT EXISTS `materials` (
   KEY `failure_cause_5` (`failure_cause_id`),
   KEY `user_id` (`user_id`),
   KEY `user_id_2` (`user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=10 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 --
 -- Дамп данных таблицы `materials`
 --
 
 INSERT INTO `materials` (`id`, `krsp_num`, `registration_date`, `source_id`, `plot`, `article_id`, `investigator_id`, `decree_id`, `decree_date`, `period_id`, `failure_cause_id`, `decree_cancel_date`, `extra_investigator_id`, `extra_period_id`, `extra_decree_id`, `extra_decree_date`, `archive`, `user_id`, `add_date`) VALUES
-(1, 1, '2013-05-01 19:55:44', 4, 'Это наша коротенькая текстовая фабула, Которая должна для тестов быть просто ГИГАНТСКОЙ. Длинноесловобезпробеловнеобходимодляпроверкипереносасловвтаблице', 1, 1, 1, '2013-04-28 20:00:00', 2, 1, '2013-05-01 04:00:00', 1, 6, 1, '2013-05-22 20:00:00', 0, 1, NULL),
-(2, 123, '2013-05-08 22:00:06', 5, 'Тестовая фабула', 1, 1, 1, '2013-05-23 20:00:00', 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL),
-(3, 12, '2013-05-11 11:05:43', 5, 'Совсем кратенькая фабула', 1, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL),
-(4, NULL, '2013-05-11 11:11:35', 4, 'Совсем коротенькая фабула', 1, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL),
-(5, 15, '2013-05-07 20:00:00', 5, 'Сообщение актуальное сегодня по ДОП', 1, 1, 2, '2013-05-16 20:00:00', 5, 2, '2013-06-17 20:00:00', 1, 1, NULL, NULL, 0, 1, NULL),
-(6, NULL, '2013-06-18 20:00:00', NULL, 'Краткая проверочная фабула', 4, 1, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL),
-(7, NULL, '2013-05-31 20:00:00', 6, 'Тест краткой фабулы с <strong>HTML</strong> кодом', 4, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL),
-(9, NULL, '2013-06-09 20:00:00', 6, 'Проверка на заполняемость новых полей БД из админки', 4, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 4, '2013-06-24 11:33:33');
+(1, 1, '2013-05-01 19:55:44', 4, 'Это наша коротенькая текстовая фабула, Которая должна для тестов быть просто ГИГАНТСКОЙ. Длинноесловобезпробеловнеобходимодляпроверкипереносасловвтаблице', '105', 1, 1, '2013-04-28 20:00:00', 2, 1, '2013-05-01 04:00:00', 1, 6, 1, '2013-05-22 20:00:00', 0, 1, NULL),
+(2, 123, '2013-05-08 22:00:06', 5, 'Тестовая фабула', '105', 1, 1, '2013-05-23 20:00:00', 2, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL),
+(3, 12, '2013-05-11 11:05:43', 5, 'Совсем кратенькая фабула', '105', NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL),
+(4, NULL, '2013-05-11 11:11:35', 4, 'Совсем коротенькая фабула', '105', NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL),
+(5, 15, '2013-05-07 20:00:00', 5, 'Сообщение актуальное сегодня по ДОП', '105', 1, 2, '2013-05-16 20:00:00', 5, 2, '2013-06-17 20:00:00', 1, 1, NULL, NULL, 0, 1, NULL),
+(6, NULL, '2013-06-18 20:00:00', NULL, 'Краткая проверочная фабула', '228', 1, 1, '2013-07-01 20:00:00', 1, NULL, '2013-07-18 20:00:00', NULL, NULL, NULL, NULL, 0, 1, NULL),
+(7, NULL, '2013-05-31 20:00:00', 6, 'Тест краткой фабулы с <strong>HTML</strong> кодом', '228', NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL),
+(9, 5641, '2013-06-09 20:00:00', 6, 'Проверка на заполняемость новых полей БД из админки', '228', NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL, 0, 4, '2013-06-24 11:33:33'),
+(10, NULL, '2013-07-19 07:07:46', NULL, 'Тестовое сообщение для проверки текстовой версии введения статьи УК', '110.1', 1, NULL, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, '2013-07-19 07:07:46'),
+(11, NULL, '2013-07-19 07:40:17', NULL, 'Второй тест введения статьи вручную', '224', NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, '2013-07-19 07:40:17'),
+(12, 540, '2013-07-17 20:00:00', 5, 'Тест текстовой статьи из АДМИНКИ', '228', 2, NULL, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, '2013-07-19 09:04:17');
 
 -- --------------------------------------------------------
 
@@ -200,6 +209,7 @@ INSERT INTO `materials` (`id`, `krsp_num`, `registration_date`, `source_id`, `pl
 -- Структура таблицы `materials_characteristics`
 --
 
+DROP TABLE IF EXISTS `materials_characteristics`;
 CREATE TABLE IF NOT EXISTS `materials_characteristics` (
   `material_id` int(10) unsigned NOT NULL,
   `characteristic_id` int(10) unsigned NOT NULL,
@@ -212,14 +222,12 @@ CREATE TABLE IF NOT EXISTS `materials_characteristics` (
 --
 
 INSERT INTO `materials_characteristics` (`material_id`, `characteristic_id`) VALUES
-(2, 2),
 (1, 4),
 (4, 4),
 (5, 3),
-(6, 2),
-(6, 3),
-(9, 3),
-(9, 4);
+(10, 3),
+(10, 4),
+(12, 5);
 
 -- --------------------------------------------------------
 
@@ -227,6 +235,7 @@ INSERT INTO `materials_characteristics` (`material_id`, `characteristic_id`) VAL
 -- Структура таблицы `periods`
 --
 
+DROP TABLE IF EXISTS `periods`;
 CREATE TABLE IF NOT EXISTS `periods` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `days` int(10) unsigned NOT NULL,
@@ -252,6 +261,7 @@ INSERT INTO `periods` (`id`, `days`, `sort`) VALUES
 -- Структура таблицы `roles`
 --
 
+DROP TABLE IF EXISTS `roles`;
 CREATE TABLE IF NOT EXISTS `roles` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
@@ -275,6 +285,7 @@ INSERT INTO `roles` (`id`, `name`, `description`) VALUES
 -- Структура таблицы `roles_users`
 --
 
+DROP TABLE IF EXISTS `roles_users`;
 CREATE TABLE IF NOT EXISTS `roles_users` (
   `user_id` int(10) unsigned NOT NULL,
   `role_id` int(10) unsigned NOT NULL,
@@ -301,6 +312,7 @@ INSERT INTO `roles_users` (`user_id`, `role_id`) VALUES
 -- Структура таблицы `sources`
 --
 
+DROP TABLE IF EXISTS `sources`;
 CREATE TABLE IF NOT EXISTS `sources` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `value` int(10) unsigned NOT NULL,
@@ -324,6 +336,7 @@ INSERT INTO `sources` (`id`, `value`, `text`, `sort`) VALUES
 -- Структура таблицы `update_logs`
 --
 
+DROP TABLE IF EXISTS `update_logs`;
 CREATE TABLE IF NOT EXISTS `update_logs` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `table` varchar(250) NOT NULL COMMENT 'таблица в которой произошли изменения',
@@ -336,7 +349,7 @@ CREATE TABLE IF NOT EXISTS `update_logs` (
   `client_info` text COMMENT 'Информация о пользовательском компьютере, с которого произошло изменение',
   `cause` text COMMENT 'Причина изменения поля',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=38 ;
 
 --
 -- Дамп данных таблицы `update_logs`
@@ -370,7 +383,17 @@ INSERT INTO `update_logs` (`id`, `table`, `id_obj`, `field`, `prev_value`, `post
 (24, 'materials', 6, 'registration_date', '2013-06-11 00:00:00', '2013-06-19 00:00:00', '2013-06-21 07:05:32', '127.0.0.1', 'a:37:{s:15:"REDIRECT_STATUS";s:3:"200";s:9:"HTTP_HOST";s:6:"kohana";s:15:"HTTP_USER_AGENT";s:72:"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:21.0) Gecko/20100101 Firefox/21.0";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:20:"HTTP_ACCEPT_LANGUAGE";s:35:"ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:12:"HTTP_REFERER";s:35:"http://kohana/admin/material/edit/6";s:11:"HTTP_COOKIE";s:112:"PTB_visible=false; PTB_visible_item=null; PTB_visible_tab=ptb_tab_sqldefault; session=opmnt6onenv18cao1hbenqrsk4";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:12:"CONTENT_TYPE";s:33:"application/x-www-form-urlencoded";s:14:"CONTENT_LENGTH";s:3:"459";s:4:"PATH";s:532:"C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;%CommonProgramFiles%\\Microsoft Shared\\Windows Live;I:\\Server\\PHP\\;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Program Files\\TortoiseSVN\\bin;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Common Files\\Acronis\\SnapAPI\\;I:\\3d Max\\backburner\\;C:\\Program Files (x86)\\Common Files\\Autodesk Shared\\;C:\\Program Files\\Common Files\\Autodesk Shared\\;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live";s:10:"SystemRoot";s:10:"C:\\Windows";s:7:"COMSPEC";s:27:"C:\\Windows\\system32\\cmd.exe";s:7:"PATHEXT";s:53:".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC";s:6:"WINDIR";s:10:"C:\\Windows";s:16:"SERVER_SIGNATURE";s:0:"";s:15:"SERVER_SOFTWARE";s:32:"Apache/2.2.22 (Win32) PHP/5.3.17";s:11:"SERVER_NAME";s:6:"kohana";s:11:"SERVER_ADDR";s:9:"127.0.0.1";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:9:"127.0.0.1";s:13:"DOCUMENT_ROOT";s:23:"I:/Server/vhosts/kohana";s:12:"SERVER_ADMIN";s:19:"admin@profigames.ru";s:15:"SCRIPT_FILENAME";s:33:"I:/Server/vhosts/kohana/index.php";s:11:"REMOTE_PORT";s:5:"57596";s:12:"REDIRECT_URL";s:22:"/admin/material/edit/6";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:4:"POST";s:12:"QUERY_STRING";s:0:"";s:11:"REQUEST_URI";s:22:"/admin/material/edit/6";s:11:"SCRIPT_NAME";s:10:"/index.php";s:9:"PATH_INFO";s:22:"/admin/material/edit/6";s:15:"PATH_TRANSLATED";s:57:"redirect:\\index.php\\admin\\material\\edit\\6\\material\\edit\\6";s:8:"PHP_SELF";s:32:"/index.php/admin/material/edit/6";s:12:"REQUEST_TIME";i:1371798331;}', 'тест'),
 (25, 'materials', 7, 'period_id', '1', '5', '2013-06-21 07:06:04', '127.0.0.1', 'a:37:{s:15:"REDIRECT_STATUS";s:3:"200";s:9:"HTTP_HOST";s:6:"kohana";s:15:"HTTP_USER_AGENT";s:72:"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:21.0) Gecko/20100101 Firefox/21.0";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:20:"HTTP_ACCEPT_LANGUAGE";s:35:"ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:12:"HTTP_REFERER";s:35:"http://kohana/admin/material/edit/7";s:11:"HTTP_COOKIE";s:112:"PTB_visible=false; PTB_visible_item=null; PTB_visible_tab=ptb_tab_sqldefault; session=opmnt6onenv18cao1hbenqrsk4";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:12:"CONTENT_TYPE";s:33:"application/x-www-form-urlencoded";s:14:"CONTENT_LENGTH";s:3:"472";s:4:"PATH";s:532:"C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;%CommonProgramFiles%\\Microsoft Shared\\Windows Live;I:\\Server\\PHP\\;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Program Files\\TortoiseSVN\\bin;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Common Files\\Acronis\\SnapAPI\\;I:\\3d Max\\backburner\\;C:\\Program Files (x86)\\Common Files\\Autodesk Shared\\;C:\\Program Files\\Common Files\\Autodesk Shared\\;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live";s:10:"SystemRoot";s:10:"C:\\Windows";s:7:"COMSPEC";s:27:"C:\\Windows\\system32\\cmd.exe";s:7:"PATHEXT";s:53:".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC";s:6:"WINDIR";s:10:"C:\\Windows";s:16:"SERVER_SIGNATURE";s:0:"";s:15:"SERVER_SOFTWARE";s:32:"Apache/2.2.22 (Win32) PHP/5.3.17";s:11:"SERVER_NAME";s:6:"kohana";s:11:"SERVER_ADDR";s:9:"127.0.0.1";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:9:"127.0.0.1";s:13:"DOCUMENT_ROOT";s:23:"I:/Server/vhosts/kohana";s:12:"SERVER_ADMIN";s:19:"admin@profigames.ru";s:15:"SCRIPT_FILENAME";s:33:"I:/Server/vhosts/kohana/index.php";s:11:"REMOTE_PORT";s:5:"57722";s:12:"REDIRECT_URL";s:22:"/admin/material/edit/7";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:4:"POST";s:12:"QUERY_STRING";s:0:"";s:11:"REQUEST_URI";s:22:"/admin/material/edit/7";s:11:"SCRIPT_NAME";s:10:"/index.php";s:9:"PATH_INFO";s:22:"/admin/material/edit/7";s:15:"PATH_TRANSLATED";s:57:"redirect:\\index.php\\admin\\material\\edit\\7\\material\\edit\\7";s:8:"PHP_SELF";s:32:"/index.php/admin/material/edit/7";s:12:"REQUEST_TIME";i:1371798362;}', 'тест'),
 (26, 'materials', 1, 'archive', 'Пустое значение', '1', '2013-06-27 07:06:31', '127.0.0.1', 'a:35:{s:15:"REDIRECT_STATUS";s:3:"200";s:9:"HTTP_HOST";s:6:"kohana";s:15:"HTTP_USER_AGENT";s:72:"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:20:"HTTP_ACCEPT_LANGUAGE";s:35:"ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:12:"HTTP_REFERER";s:28:"http://kohana/admin/material";s:11:"HTTP_COOKIE";s:112:"PTB_visible=false; PTB_visible_item=null; PTB_visible_tab=ptb_tab_sqldefault; session=o8uqipqjhd8its0n7bmpjr0s60";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:4:"PATH";s:532:"C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;%CommonProgramFiles%\\Microsoft Shared\\Windows Live;I:\\Server\\PHP\\;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Program Files\\TortoiseSVN\\bin;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Common Files\\Acronis\\SnapAPI\\;I:\\3d Max\\backburner\\;C:\\Program Files (x86)\\Common Files\\Autodesk Shared\\;C:\\Program Files\\Common Files\\Autodesk Shared\\;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live";s:10:"SystemRoot";s:10:"C:\\Windows";s:7:"COMSPEC";s:27:"C:\\Windows\\system32\\cmd.exe";s:7:"PATHEXT";s:53:".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC";s:6:"WINDIR";s:10:"C:\\Windows";s:16:"SERVER_SIGNATURE";s:0:"";s:15:"SERVER_SOFTWARE";s:32:"Apache/2.2.22 (Win32) PHP/5.3.17";s:11:"SERVER_NAME";s:6:"kohana";s:11:"SERVER_ADDR";s:9:"127.0.0.1";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:9:"127.0.0.1";s:13:"DOCUMENT_ROOT";s:23:"I:/Server/vhosts/kohana";s:12:"SERVER_ADMIN";s:19:"admin@profigames.ru";s:15:"SCRIPT_FILENAME";s:33:"I:/Server/vhosts/kohana/index.php";s:11:"REMOTE_PORT";s:5:"62383";s:12:"REDIRECT_URL";s:25:"/admin/material/archive/1";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:3:"GET";s:12:"QUERY_STRING";s:0:"";s:11:"REQUEST_URI";s:25:"/admin/material/archive/1";s:11:"SCRIPT_NAME";s:10:"/index.php";s:9:"PATH_INFO";s:25:"/admin/material/archive/1";s:15:"PATH_TRANSLATED";s:63:"redirect:\\index.php\\admin\\material\\archive\\1\\material\\archive\\1";s:8:"PHP_SELF";s:35:"/index.php/admin/material/archive/1";s:12:"REQUEST_TIME";i:1372316790;}', 'Исправление опечатки'),
-(27, 'materials', 1, 'archive', '1', '0', '2013-06-27 07:21:12', '127.0.0.1', 'a:35:{s:15:"REDIRECT_STATUS";s:3:"200";s:9:"HTTP_HOST";s:6:"kohana";s:15:"HTTP_USER_AGENT";s:72:"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:20:"HTTP_ACCEPT_LANGUAGE";s:35:"ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:12:"HTTP_REFERER";s:27:"http://kohana/admin/archive";s:11:"HTTP_COOKIE";s:112:"PTB_visible=false; PTB_visible_item=null; PTB_visible_tab=ptb_tab_sqldefault; session=o8uqipqjhd8its0n7bmpjr0s60";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:4:"PATH";s:532:"C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;%CommonProgramFiles%\\Microsoft Shared\\Windows Live;I:\\Server\\PHP\\;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Program Files\\TortoiseSVN\\bin;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Common Files\\Acronis\\SnapAPI\\;I:\\3d Max\\backburner\\;C:\\Program Files (x86)\\Common Files\\Autodesk Shared\\;C:\\Program Files\\Common Files\\Autodesk Shared\\;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live";s:10:"SystemRoot";s:10:"C:\\Windows";s:7:"COMSPEC";s:27:"C:\\Windows\\system32\\cmd.exe";s:7:"PATHEXT";s:53:".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC";s:6:"WINDIR";s:10:"C:\\Windows";s:16:"SERVER_SIGNATURE";s:0:"";s:15:"SERVER_SOFTWARE";s:32:"Apache/2.2.22 (Win32) PHP/5.3.17";s:11:"SERVER_NAME";s:6:"kohana";s:11:"SERVER_ADDR";s:9:"127.0.0.1";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:9:"127.0.0.1";s:13:"DOCUMENT_ROOT";s:23:"I:/Server/vhosts/kohana";s:12:"SERVER_ADMIN";s:19:"admin@profigames.ru";s:15:"SCRIPT_FILENAME";s:33:"I:/Server/vhosts/kohana/index.php";s:11:"REMOTE_PORT";s:5:"64747";s:12:"REDIRECT_URL";s:25:"/admin/archive/material/1";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:3:"GET";s:12:"QUERY_STRING";s:0:"";s:11:"REQUEST_URI";s:25:"/admin/archive/material/1";s:11:"SCRIPT_NAME";s:10:"/index.php";s:9:"PATH_INFO";s:25:"/admin/archive/material/1";s:15:"PATH_TRANSLATED";s:63:"redirect:\\index.php\\admin\\archive\\material\\1\\archive\\material\\1";s:8:"PHP_SELF";s:35:"/index.php/admin/archive/material/1";s:12:"REQUEST_TIME";i:1372317671;}', 'Исправление опечатки');
+(27, 'materials', 1, 'archive', '1', '0', '2013-06-27 07:21:12', '127.0.0.1', 'a:35:{s:15:"REDIRECT_STATUS";s:3:"200";s:9:"HTTP_HOST";s:6:"kohana";s:15:"HTTP_USER_AGENT";s:72:"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:20:"HTTP_ACCEPT_LANGUAGE";s:35:"ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:12:"HTTP_REFERER";s:27:"http://kohana/admin/archive";s:11:"HTTP_COOKIE";s:112:"PTB_visible=false; PTB_visible_item=null; PTB_visible_tab=ptb_tab_sqldefault; session=o8uqipqjhd8its0n7bmpjr0s60";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:4:"PATH";s:532:"C:\\Program Files (x86)\\NVIDIA Corporation\\PhysX\\Common;%CommonProgramFiles%\\Microsoft Shared\\Windows Live;I:\\Server\\PHP\\;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Program Files\\TortoiseSVN\\bin;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files (x86)\\Common Files\\Acronis\\SnapAPI\\;I:\\3d Max\\backburner\\;C:\\Program Files (x86)\\Common Files\\Autodesk Shared\\;C:\\Program Files\\Common Files\\Autodesk Shared\\;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;C:\\Program Files\\Common Files\\Microsoft Shared\\Windows Live";s:10:"SystemRoot";s:10:"C:\\Windows";s:7:"COMSPEC";s:27:"C:\\Windows\\system32\\cmd.exe";s:7:"PATHEXT";s:53:".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC";s:6:"WINDIR";s:10:"C:\\Windows";s:16:"SERVER_SIGNATURE";s:0:"";s:15:"SERVER_SOFTWARE";s:32:"Apache/2.2.22 (Win32) PHP/5.3.17";s:11:"SERVER_NAME";s:6:"kohana";s:11:"SERVER_ADDR";s:9:"127.0.0.1";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:9:"127.0.0.1";s:13:"DOCUMENT_ROOT";s:23:"I:/Server/vhosts/kohana";s:12:"SERVER_ADMIN";s:19:"admin@profigames.ru";s:15:"SCRIPT_FILENAME";s:33:"I:/Server/vhosts/kohana/index.php";s:11:"REMOTE_PORT";s:5:"64747";s:12:"REDIRECT_URL";s:25:"/admin/archive/material/1";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:3:"GET";s:12:"QUERY_STRING";s:0:"";s:11:"REQUEST_URI";s:25:"/admin/archive/material/1";s:11:"SCRIPT_NAME";s:10:"/index.php";s:9:"PATH_INFO";s:25:"/admin/archive/material/1";s:15:"PATH_TRANSLATED";s:63:"redirect:\\index.php\\admin\\archive\\material\\1\\archive\\material\\1";s:8:"PHP_SELF";s:35:"/index.php/admin/archive/material/1";s:12:"REQUEST_TIME";i:1372317671;}', 'Исправление опечатки'),
+(28, 'materials', 9, 'krsp_num', 'Пустое значение', '5641', '2013-07-08 09:07:54', '127.0.0.1', 'a:37:{s:15:"REDIRECT_STATUS";s:3:"200";s:9:"HTTP_HOST";s:6:"kohana";s:15:"HTTP_USER_AGENT";s:72:"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:20:"HTTP_ACCEPT_LANGUAGE";s:35:"ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:12:"HTTP_REFERER";s:29:"http://kohana/material/edit/9";s:11:"HTTP_COOKIE";s:116:"session=lbg3insvu88pj546b12nfi1gv5; PTB_visible=false; PTB_visible_item=null; PTB_visible_tab=ptb_tab_custom_default";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:12:"CONTENT_TYPE";s:33:"application/x-www-form-urlencoded";s:14:"CONTENT_LENGTH";s:3:"181";s:4:"PATH";s:142:"D:\\server\\PHP\\;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;D:\\server\\MySQL 5.5.28\\bin;";s:10:"SystemRoot";s:10:"C:\\Windows";s:7:"COMSPEC";s:27:"C:\\Windows\\system32\\cmd.exe";s:7:"PATHEXT";s:53:".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC";s:6:"WINDIR";s:10:"C:\\Windows";s:16:"SERVER_SIGNATURE";s:77:"<address>Apache/2.2.22 (Win32) PHP/5.3.17 Server at kohana Port 80</address>\n";s:15:"SERVER_SOFTWARE";s:32:"Apache/2.2.22 (Win32) PHP/5.3.17";s:11:"SERVER_NAME";s:6:"kohana";s:11:"SERVER_ADDR";s:9:"127.0.0.1";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:9:"127.0.0.1";s:13:"DOCUMENT_ROOT";s:22:"D:/server/hosts/kohana";s:12:"SERVER_ADMIN";s:19:"admin@profigames.ru";s:15:"SCRIPT_FILENAME";s:32:"D:/server/hosts/kohana/index.php";s:11:"REMOTE_PORT";s:5:"51687";s:12:"REDIRECT_URL";s:16:"/material/edit/9";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:4:"POST";s:12:"QUERY_STRING";s:0:"";s:11:"REQUEST_URI";s:16:"/material/edit/9";s:11:"SCRIPT_NAME";s:10:"/index.php";s:9:"PATH_INFO";s:16:"/material/edit/9";s:15:"PATH_TRANSLATED";s:42:"redirect:\\index.php\\material\\edit\\9\\edit\\9";s:8:"PHP_SELF";s:26:"/index.php/material/edit/9";s:12:"REQUEST_TIME";i:1373274474;}', 'Исправление опечатки'),
+(29, 'materials', 6, 'decree_date', 'Пустое значение', '2013-07-02 00:00:00', '2013-07-18 05:23:23', '127.0.0.1', 'a:37:{s:15:"REDIRECT_STATUS";s:3:"200";s:9:"HTTP_HOST";s:6:"kohana";s:15:"HTTP_USER_AGENT";s:72:"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:20:"HTTP_ACCEPT_LANGUAGE";s:35:"ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:12:"HTTP_REFERER";s:29:"http://kohana/material/edit/6";s:11:"HTTP_COOKIE";s:112:"PTB_visible_tab=ptb_tab_sqldefault; PTB_visible=false; PTB_visible_item=null; session=lk56c5tmnntpv2intpaseqgav0";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:12:"CONTENT_TYPE";s:33:"application/x-www-form-urlencoded";s:14:"CONTENT_LENGTH";s:3:"181";s:4:"PATH";s:142:"D:\\server\\PHP\\;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;D:\\server\\MySQL 5.5.28\\bin;";s:10:"SystemRoot";s:10:"C:\\Windows";s:7:"COMSPEC";s:27:"C:\\Windows\\system32\\cmd.exe";s:7:"PATHEXT";s:53:".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC";s:6:"WINDIR";s:10:"C:\\Windows";s:16:"SERVER_SIGNATURE";s:77:"<address>Apache/2.2.22 (Win32) PHP/5.3.17 Server at kohana Port 80</address>\n";s:15:"SERVER_SOFTWARE";s:32:"Apache/2.2.22 (Win32) PHP/5.3.17";s:11:"SERVER_NAME";s:6:"kohana";s:11:"SERVER_ADDR";s:9:"127.0.0.1";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:9:"127.0.0.1";s:13:"DOCUMENT_ROOT";s:22:"D:/server/hosts/kohana";s:12:"SERVER_ADMIN";s:19:"admin@profigames.ru";s:15:"SCRIPT_FILENAME";s:32:"D:/server/hosts/kohana/index.php";s:11:"REMOTE_PORT";s:5:"51741";s:12:"REDIRECT_URL";s:16:"/material/edit/6";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:4:"POST";s:12:"QUERY_STRING";s:0:"";s:11:"REQUEST_URI";s:16:"/material/edit/6";s:11:"SCRIPT_NAME";s:10:"/index.php";s:9:"PATH_INFO";s:16:"/material/edit/6";s:15:"PATH_TRANSLATED";s:42:"redirect:\\index.php\\material\\edit\\6\\edit\\6";s:8:"PHP_SELF";s:26:"/index.php/material/edit/6";s:12:"REQUEST_TIME";i:1374125003;}', 'Исправление опечатки'),
+(30, 'materials', 6, 'decree_cancel_date', 'Пустое значение', '2013-07-19 00:00:00', '2013-07-18 05:27:06', '127.0.0.1', 'a:37:{s:15:"REDIRECT_STATUS";s:3:"200";s:9:"HTTP_HOST";s:6:"kohana";s:15:"HTTP_USER_AGENT";s:72:"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:20:"HTTP_ACCEPT_LANGUAGE";s:35:"ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:12:"HTTP_REFERER";s:29:"http://kohana/material/edit/6";s:11:"HTTP_COOKIE";s:112:"PTB_visible_tab=ptb_tab_sqldefault; PTB_visible=false; PTB_visible_item=null; session=lk56c5tmnntpv2intpaseqgav0";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:12:"CONTENT_TYPE";s:33:"application/x-www-form-urlencoded";s:14:"CONTENT_LENGTH";s:3:"168";s:4:"PATH";s:142:"D:\\server\\PHP\\;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;D:\\server\\MySQL 5.5.28\\bin;";s:10:"SystemRoot";s:10:"C:\\Windows";s:7:"COMSPEC";s:27:"C:\\Windows\\system32\\cmd.exe";s:7:"PATHEXT";s:53:".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC";s:6:"WINDIR";s:10:"C:\\Windows";s:16:"SERVER_SIGNATURE";s:77:"<address>Apache/2.2.22 (Win32) PHP/5.3.17 Server at kohana Port 80</address>\n";s:15:"SERVER_SOFTWARE";s:32:"Apache/2.2.22 (Win32) PHP/5.3.17";s:11:"SERVER_NAME";s:6:"kohana";s:11:"SERVER_ADDR";s:9:"127.0.0.1";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:9:"127.0.0.1";s:13:"DOCUMENT_ROOT";s:22:"D:/server/hosts/kohana";s:12:"SERVER_ADMIN";s:19:"admin@profigames.ru";s:15:"SCRIPT_FILENAME";s:32:"D:/server/hosts/kohana/index.php";s:11:"REMOTE_PORT";s:5:"51828";s:12:"REDIRECT_URL";s:16:"/material/edit/6";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:4:"POST";s:12:"QUERY_STRING";s:0:"";s:11:"REQUEST_URI";s:16:"/material/edit/6";s:11:"SCRIPT_NAME";s:10:"/index.php";s:9:"PATH_INFO";s:16:"/material/edit/6";s:15:"PATH_TRANSLATED";s:42:"redirect:\\index.php\\material\\edit\\6\\edit\\6";s:8:"PHP_SELF";s:26:"/index.php/material/edit/6";s:12:"REQUEST_TIME";i:1374125225;}', 'Исправление опечатки'),
+(31, 'materials', 6, 'decree_id', 'Пустое значение', '1', '2013-07-18 05:30:45', '127.0.0.1', 'a:37:{s:15:"REDIRECT_STATUS";s:3:"200";s:9:"HTTP_HOST";s:6:"kohana";s:15:"HTTP_USER_AGENT";s:72:"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:20:"HTTP_ACCEPT_LANGUAGE";s:35:"ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:12:"HTTP_REFERER";s:29:"http://kohana/material/edit/6";s:11:"HTTP_COOKIE";s:112:"PTB_visible_tab=ptb_tab_sqldefault; PTB_visible=false; PTB_visible_item=null; session=lk56c5tmnntpv2intpaseqgav0";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:12:"CONTENT_TYPE";s:33:"application/x-www-form-urlencoded";s:14:"CONTENT_LENGTH";s:3:"139";s:4:"PATH";s:142:"D:\\server\\PHP\\;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;D:\\server\\MySQL 5.5.28\\bin;";s:10:"SystemRoot";s:10:"C:\\Windows";s:7:"COMSPEC";s:27:"C:\\Windows\\system32\\cmd.exe";s:7:"PATHEXT";s:53:".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC";s:6:"WINDIR";s:10:"C:\\Windows";s:16:"SERVER_SIGNATURE";s:77:"<address>Apache/2.2.22 (Win32) PHP/5.3.17 Server at kohana Port 80</address>\n";s:15:"SERVER_SOFTWARE";s:32:"Apache/2.2.22 (Win32) PHP/5.3.17";s:11:"SERVER_NAME";s:6:"kohana";s:11:"SERVER_ADDR";s:9:"127.0.0.1";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:9:"127.0.0.1";s:13:"DOCUMENT_ROOT";s:22:"D:/server/hosts/kohana";s:12:"SERVER_ADMIN";s:19:"admin@profigames.ru";s:15:"SCRIPT_FILENAME";s:32:"D:/server/hosts/kohana/index.php";s:11:"REMOTE_PORT";s:5:"51844";s:12:"REDIRECT_URL";s:16:"/material/edit/6";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:4:"POST";s:12:"QUERY_STRING";s:0:"";s:11:"REQUEST_URI";s:16:"/material/edit/6";s:11:"SCRIPT_NAME";s:10:"/index.php";s:9:"PATH_INFO";s:16:"/material/edit/6";s:15:"PATH_TRANSLATED";s:42:"redirect:\\index.php\\material\\edit\\6\\edit\\6";s:8:"PHP_SELF";s:26:"/index.php/material/edit/6";s:12:"REQUEST_TIME";i:1374125445;}', 'Исправление опечатки'),
+(32, 'materials', 10, 'period_id', '4', '5', '2013-07-19 07:11:24', '127.0.0.1', 'a:37:{s:15:"REDIRECT_STATUS";s:3:"200";s:9:"HTTP_HOST";s:6:"kohana";s:15:"HTTP_USER_AGENT";s:72:"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:20:"HTTP_ACCEPT_LANGUAGE";s:35:"ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:12:"HTTP_REFERER";s:30:"http://kohana/material/edit/10";s:11:"HTTP_COOKIE";s:112:"PTB_visible_tab=ptb_tab_sqldefault; PTB_visible=false; PTB_visible_item=null; session=7adjtso5esktlpn6vb5n745ag1";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:12:"CONTENT_TYPE";s:33:"application/x-www-form-urlencoded";s:14:"CONTENT_LENGTH";s:3:"212";s:4:"PATH";s:142:"D:\\server\\PHP\\;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;D:\\server\\MySQL 5.5.28\\bin;";s:10:"SystemRoot";s:10:"C:\\Windows";s:7:"COMSPEC";s:27:"C:\\Windows\\system32\\cmd.exe";s:7:"PATHEXT";s:53:".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC";s:6:"WINDIR";s:10:"C:\\Windows";s:16:"SERVER_SIGNATURE";s:77:"<address>Apache/2.2.22 (Win32) PHP/5.3.17 Server at kohana Port 80</address>\n";s:15:"SERVER_SOFTWARE";s:32:"Apache/2.2.22 (Win32) PHP/5.3.17";s:11:"SERVER_NAME";s:6:"kohana";s:11:"SERVER_ADDR";s:9:"127.0.0.1";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:9:"127.0.0.1";s:13:"DOCUMENT_ROOT";s:22:"D:/server/hosts/kohana";s:12:"SERVER_ADMIN";s:19:"admin@profigames.ru";s:15:"SCRIPT_FILENAME";s:32:"D:/server/hosts/kohana/index.php";s:11:"REMOTE_PORT";s:5:"57361";s:12:"REDIRECT_URL";s:17:"/material/edit/10";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:4:"POST";s:12:"QUERY_STRING";s:0:"";s:11:"REQUEST_URI";s:17:"/material/edit/10";s:11:"SCRIPT_NAME";s:10:"/index.php";s:9:"PATH_INFO";s:17:"/material/edit/10";s:15:"PATH_TRANSLATED";s:44:"redirect:\\index.php\\material\\edit\\10\\edit\\10";s:8:"PHP_SELF";s:27:"/index.php/material/edit/10";s:12:"REQUEST_TIME";i:1374217883;}', 'Исправление опечатки'),
+(33, 'materials', 5, 'archive', 'Пустое значение', '1', '2013-07-19 08:44:12', '127.0.0.1', 'a:35:{s:15:"REDIRECT_STATUS";s:3:"200";s:9:"HTTP_HOST";s:6:"kohana";s:15:"HTTP_USER_AGENT";s:72:"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:20:"HTTP_ACCEPT_LANGUAGE";s:35:"ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:12:"HTTP_REFERER";s:29:"http://kohana/admin/material/";s:11:"HTTP_COOKIE";s:125:"PTB_visible_tab=ptb_tab_sqldefault; PTB_visible=false; PTB_visible_item=ptb_data_cont_sql; session=7adjtso5esktlpn6vb5n745ag1";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:4:"PATH";s:142:"D:\\server\\PHP\\;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;D:\\server\\MySQL 5.5.28\\bin;";s:10:"SystemRoot";s:10:"C:\\Windows";s:7:"COMSPEC";s:27:"C:\\Windows\\system32\\cmd.exe";s:7:"PATHEXT";s:53:".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC";s:6:"WINDIR";s:10:"C:\\Windows";s:16:"SERVER_SIGNATURE";s:77:"<address>Apache/2.2.22 (Win32) PHP/5.3.17 Server at kohana Port 80</address>\n";s:15:"SERVER_SOFTWARE";s:32:"Apache/2.2.22 (Win32) PHP/5.3.17";s:11:"SERVER_NAME";s:6:"kohana";s:11:"SERVER_ADDR";s:9:"127.0.0.1";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:9:"127.0.0.1";s:13:"DOCUMENT_ROOT";s:22:"D:/server/hosts/kohana";s:12:"SERVER_ADMIN";s:19:"admin@profigames.ru";s:15:"SCRIPT_FILENAME";s:32:"D:/server/hosts/kohana/index.php";s:11:"REMOTE_PORT";s:5:"58266";s:12:"REDIRECT_URL";s:25:"/admin/material/archive/5";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:3:"GET";s:12:"QUERY_STRING";s:0:"";s:11:"REQUEST_URI";s:25:"/admin/material/archive/5";s:11:"SCRIPT_NAME";s:10:"/index.php";s:9:"PATH_INFO";s:25:"/admin/material/archive/5";s:15:"PATH_TRANSLATED";s:63:"redirect:\\index.php\\admin\\material\\archive\\5\\material\\archive\\5";s:8:"PHP_SELF";s:35:"/index.php/admin/material/archive/5";s:12:"REQUEST_TIME";i:1374223451;}', 'Исправление опечатки'),
+(34, 'materials', 12, 'krsp_num', 'Пустое значение', '540', '2013-07-19 09:06:38', '127.0.0.1', 'a:37:{s:15:"REDIRECT_STATUS";s:3:"200";s:9:"HTTP_HOST";s:6:"kohana";s:15:"HTTP_USER_AGENT";s:72:"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:20:"HTTP_ACCEPT_LANGUAGE";s:35:"ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:12:"HTTP_REFERER";s:36:"http://kohana/admin/material/edit/12";s:11:"HTTP_COOKIE";s:125:"PTB_visible_tab=ptb_tab_sqldefault; PTB_visible=false; PTB_visible_item=ptb_data_cont_sql; session=7adjtso5esktlpn6vb5n745ag1";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:12:"CONTENT_TYPE";s:33:"application/x-www-form-urlencoded";s:14:"CONTENT_LENGTH";s:3:"537";s:4:"PATH";s:142:"D:\\server\\PHP\\;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;D:\\server\\MySQL 5.5.28\\bin;";s:10:"SystemRoot";s:10:"C:\\Windows";s:7:"COMSPEC";s:27:"C:\\Windows\\system32\\cmd.exe";s:7:"PATHEXT";s:53:".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC";s:6:"WINDIR";s:10:"C:\\Windows";s:16:"SERVER_SIGNATURE";s:77:"<address>Apache/2.2.22 (Win32) PHP/5.3.17 Server at kohana Port 80</address>\n";s:15:"SERVER_SOFTWARE";s:32:"Apache/2.2.22 (Win32) PHP/5.3.17";s:11:"SERVER_NAME";s:6:"kohana";s:11:"SERVER_ADDR";s:9:"127.0.0.1";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:9:"127.0.0.1";s:13:"DOCUMENT_ROOT";s:22:"D:/server/hosts/kohana";s:12:"SERVER_ADMIN";s:19:"admin@profigames.ru";s:15:"SCRIPT_FILENAME";s:32:"D:/server/hosts/kohana/index.php";s:11:"REMOTE_PORT";s:5:"58827";s:12:"REDIRECT_URL";s:23:"/admin/material/edit/12";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:4:"POST";s:12:"QUERY_STRING";s:0:"";s:11:"REQUEST_URI";s:23:"/admin/material/edit/12";s:11:"SCRIPT_NAME";s:10:"/index.php";s:9:"PATH_INFO";s:23:"/admin/material/edit/12";s:15:"PATH_TRANSLATED";s:59:"redirect:\\index.php\\admin\\material\\edit\\12\\material\\edit\\12";s:8:"PHP_SELF";s:33:"/index.php/admin/material/edit/12";s:12:"REQUEST_TIME";i:1374224798;}', 'Тест ннннада!'),
+(35, 'materials', 12, 'article_id', '228.1', '228', '2013-07-19 09:06:38', '127.0.0.1', 'a:37:{s:15:"REDIRECT_STATUS";s:3:"200";s:9:"HTTP_HOST";s:6:"kohana";s:15:"HTTP_USER_AGENT";s:72:"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:20:"HTTP_ACCEPT_LANGUAGE";s:35:"ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:12:"HTTP_REFERER";s:36:"http://kohana/admin/material/edit/12";s:11:"HTTP_COOKIE";s:125:"PTB_visible_tab=ptb_tab_sqldefault; PTB_visible=false; PTB_visible_item=ptb_data_cont_sql; session=7adjtso5esktlpn6vb5n745ag1";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:12:"CONTENT_TYPE";s:33:"application/x-www-form-urlencoded";s:14:"CONTENT_LENGTH";s:3:"537";s:4:"PATH";s:142:"D:\\server\\PHP\\;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;D:\\server\\MySQL 5.5.28\\bin;";s:10:"SystemRoot";s:10:"C:\\Windows";s:7:"COMSPEC";s:27:"C:\\Windows\\system32\\cmd.exe";s:7:"PATHEXT";s:53:".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC";s:6:"WINDIR";s:10:"C:\\Windows";s:16:"SERVER_SIGNATURE";s:77:"<address>Apache/2.2.22 (Win32) PHP/5.3.17 Server at kohana Port 80</address>\n";s:15:"SERVER_SOFTWARE";s:32:"Apache/2.2.22 (Win32) PHP/5.3.17";s:11:"SERVER_NAME";s:6:"kohana";s:11:"SERVER_ADDR";s:9:"127.0.0.1";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:9:"127.0.0.1";s:13:"DOCUMENT_ROOT";s:22:"D:/server/hosts/kohana";s:12:"SERVER_ADMIN";s:19:"admin@profigames.ru";s:15:"SCRIPT_FILENAME";s:32:"D:/server/hosts/kohana/index.php";s:11:"REMOTE_PORT";s:5:"58827";s:12:"REDIRECT_URL";s:23:"/admin/material/edit/12";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:4:"POST";s:12:"QUERY_STRING";s:0:"";s:11:"REQUEST_URI";s:23:"/admin/material/edit/12";s:11:"SCRIPT_NAME";s:10:"/index.php";s:9:"PATH_INFO";s:23:"/admin/material/edit/12";s:15:"PATH_TRANSLATED";s:59:"redirect:\\index.php\\admin\\material\\edit\\12\\material\\edit\\12";s:8:"PHP_SELF";s:33:"/index.php/admin/material/edit/12";s:12:"REQUEST_TIME";i:1374224798;}', 'Тест ннннада!'),
+(36, 'materials', 12, 'period_id', '4', '5', '2013-07-19 09:06:38', '127.0.0.1', 'a:37:{s:15:"REDIRECT_STATUS";s:3:"200";s:9:"HTTP_HOST";s:6:"kohana";s:15:"HTTP_USER_AGENT";s:72:"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:20:"HTTP_ACCEPT_LANGUAGE";s:35:"ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:12:"HTTP_REFERER";s:36:"http://kohana/admin/material/edit/12";s:11:"HTTP_COOKIE";s:125:"PTB_visible_tab=ptb_tab_sqldefault; PTB_visible=false; PTB_visible_item=ptb_data_cont_sql; session=7adjtso5esktlpn6vb5n745ag1";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:12:"CONTENT_TYPE";s:33:"application/x-www-form-urlencoded";s:14:"CONTENT_LENGTH";s:3:"537";s:4:"PATH";s:142:"D:\\server\\PHP\\;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;D:\\server\\MySQL 5.5.28\\bin;";s:10:"SystemRoot";s:10:"C:\\Windows";s:7:"COMSPEC";s:27:"C:\\Windows\\system32\\cmd.exe";s:7:"PATHEXT";s:53:".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC";s:6:"WINDIR";s:10:"C:\\Windows";s:16:"SERVER_SIGNATURE";s:77:"<address>Apache/2.2.22 (Win32) PHP/5.3.17 Server at kohana Port 80</address>\n";s:15:"SERVER_SOFTWARE";s:32:"Apache/2.2.22 (Win32) PHP/5.3.17";s:11:"SERVER_NAME";s:6:"kohana";s:11:"SERVER_ADDR";s:9:"127.0.0.1";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:9:"127.0.0.1";s:13:"DOCUMENT_ROOT";s:22:"D:/server/hosts/kohana";s:12:"SERVER_ADMIN";s:19:"admin@profigames.ru";s:15:"SCRIPT_FILENAME";s:32:"D:/server/hosts/kohana/index.php";s:11:"REMOTE_PORT";s:5:"58827";s:12:"REDIRECT_URL";s:23:"/admin/material/edit/12";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:4:"POST";s:12:"QUERY_STRING";s:0:"";s:11:"REQUEST_URI";s:23:"/admin/material/edit/12";s:11:"SCRIPT_NAME";s:10:"/index.php";s:9:"PATH_INFO";s:23:"/admin/material/edit/12";s:15:"PATH_TRANSLATED";s:59:"redirect:\\index.php\\admin\\material\\edit\\12\\material\\edit\\12";s:8:"PHP_SELF";s:33:"/index.php/admin/material/edit/12";s:12:"REQUEST_TIME";i:1374224798;}', 'Тест ннннада!'),
+(37, 'materials', 5, 'archive', '1', '0', '2013-07-19 09:18:34', '127.0.0.1', 'a:35:{s:15:"REDIRECT_STATUS";s:3:"200";s:9:"HTTP_HOST";s:6:"kohana";s:15:"HTTP_USER_AGENT";s:72:"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:20:"HTTP_ACCEPT_LANGUAGE";s:35:"ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:12:"HTTP_REFERER";s:27:"http://kohana/admin/archive";s:11:"HTTP_COOKIE";s:125:"PTB_visible_tab=ptb_tab_sqldefault; PTB_visible=false; PTB_visible_item=ptb_data_cont_sql; session=7adjtso5esktlpn6vb5n745ag1";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:4:"PATH";s:142:"D:\\server\\PHP\\;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;D:\\server\\MySQL 5.5.28\\bin;";s:10:"SystemRoot";s:10:"C:\\Windows";s:7:"COMSPEC";s:27:"C:\\Windows\\system32\\cmd.exe";s:7:"PATHEXT";s:53:".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC";s:6:"WINDIR";s:10:"C:\\Windows";s:16:"SERVER_SIGNATURE";s:77:"<address>Apache/2.2.22 (Win32) PHP/5.3.17 Server at kohana Port 80</address>\n";s:15:"SERVER_SOFTWARE";s:32:"Apache/2.2.22 (Win32) PHP/5.3.17";s:11:"SERVER_NAME";s:6:"kohana";s:11:"SERVER_ADDR";s:9:"127.0.0.1";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:9:"127.0.0.1";s:13:"DOCUMENT_ROOT";s:22:"D:/server/hosts/kohana";s:12:"SERVER_ADMIN";s:19:"admin@profigames.ru";s:15:"SCRIPT_FILENAME";s:32:"D:/server/hosts/kohana/index.php";s:11:"REMOTE_PORT";s:5:"58894";s:12:"REDIRECT_URL";s:25:"/admin/archive/material/5";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:3:"GET";s:12:"QUERY_STRING";s:0:"";s:11:"REQUEST_URI";s:25:"/admin/archive/material/5";s:11:"SCRIPT_NAME";s:10:"/index.php";s:9:"PATH_INFO";s:25:"/admin/archive/material/5";s:15:"PATH_TRANSLATED";s:63:"redirect:\\index.php\\admin\\archive\\material\\5\\archive\\material\\5";s:8:"PHP_SELF";s:35:"/index.php/admin/archive/material/5";s:12:"REQUEST_TIME";i:1374225513;}', 'Исправление опечатки');
 
 -- --------------------------------------------------------
 
@@ -378,6 +401,7 @@ INSERT INTO `update_logs` (`id`, `table`, `id_obj`, `field`, `prev_value`, `post
 -- Структура таблицы `users`
 --
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `email` varchar(254) NOT NULL,
@@ -395,7 +419,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `username`, `password`, `logins`, `last_login`) VALUES
-(1, 'admin@profigames.ru', 'admin', '73305ab73d1f554b47f637078432c8ab9e3d6b1ad49f666a7f86fee916ccc7e5', 100, 1372314562),
+(1, 'admin@profigames.ru', 'admin', '73305ab73d1f554b47f637078432c8ab9e3d6b1ad49f666a7f86fee916ccc7e5', 111, 1374211067),
 (2, 'test@test.ru', 'non_admin', '0839799a01b3530c8dcce4cbffb403dc334c08249612871f836c2d195303d32b', 4, 1369832396),
 (4, 's_admin@profi.ru', 's_admin', 'b7ab319e32814acb0ad0fda9a6cb06052d815cd7db9d1ee27986b1a6ac8e0f66', 1, 1372073563);
 
@@ -405,6 +429,7 @@ INSERT INTO `users` (`id`, `email`, `username`, `password`, `logins`, `last_logi
 -- Структура таблицы `user_tokens`
 --
 
+DROP TABLE IF EXISTS `user_tokens`;
 CREATE TABLE IF NOT EXISTS `user_tokens` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned NOT NULL,
@@ -434,7 +459,6 @@ INSERT INTO `user_tokens` (`id`, `user_id`, `user_agent`, `token`, `created`, `e
 --
 ALTER TABLE `materials`
   ADD CONSTRAINT `materials_ibfk_10` FOREIGN KEY (`source_id`) REFERENCES `sources` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `materials_ibfk_11` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `materials_ibfk_12` FOREIGN KEY (`investigator_id`) REFERENCES `investigators` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `materials_ibfk_13` FOREIGN KEY (`decree_id`) REFERENCES `decrees` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `materials_ibfk_14` FOREIGN KEY (`period_id`) REFERENCES `periods` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
