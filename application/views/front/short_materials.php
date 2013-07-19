@@ -71,17 +71,58 @@ if(isset($caption)){
         foreach($datas as $data){
             ?>
             <tr class="js-row">
-                <td class="js-id hid"><?=$data->id?></td>
-                <td><?=$data->krsp_num?></td>
-                <td><?=date('d.m.Y', strtotime($data->registration_date))?></td>
-                <td><?=isset($data->period->days) ? $data->period->days.' дня(ей)' : ''?></td>
-                <td class="word-wrap">
-                    <a class="plot" href="#cur" rel="popover" data-content="<?=$data->plot?>" data-original-title="Краткая фабула">
-                        <?php echo mb_substr($data->plot, 0, 50).(strlen($data->plot) > 50 ? '&hellip;' : NULL); ?>
-                    </a>
-                </td>
+                <?php
+                if(isset($type))
+                {
+                    switch($type){
+                        case 'today':
+                            ?>
+                            <td class="js-id hid"><?=$data->id?></td>
+                            <td><?=$data->inv->name?></td>
+                            <td><?=$data->krsp_num?></td>
+                            <td class="word-wrap">
+                                <a class="plot" href="#cur" rel="popover" data-content="<?=$data->plot?>" data-original-title="Краткая фабула">
+                                    <?php echo mb_substr($data->plot, 0, 50).(strlen($data->plot) > 50 ? '&hellip;' : NULL); ?>
+                                </a>
+                            </td>
+                            <td><?=isset($data->period->days) ? $data->period->days.' дня(ей)' : ''?></td>
+                            <?php
+                            break;
+                        case 'fail':
+                            ?>
+                            <td class="js-id hid"><?=$data->id?></td>
+                            <td><?=$data->inv->name?></td>
+                            <td><?=$data->krsp_num?></td>
+                            <td class="word-wrap">
+                                <a class="plot" href="#cur" rel="popover" data-content="<?=$data->plot?>" data-original-title="Краткая фабула">
+                                    <?php echo mb_substr($data->plot, 0, 50).(strlen($data->plot) > 50 ? '&hellip;' : NULL); ?>
+                                </a>
+                            </td>
+                            <td>
+                                <?=date('d.m.Y', strtotime($data->registration_date) + ($data->period->days * 86400));?>
+                            </td>
+                            <td><?=isset($data->period->days) ? $data->period->days.' дня(ей)' : ''?></td>
+                            <?php
+                            break;
+                    }
+                }
+                else
+                {
+                  ?>
+                    <td class="js-id hid"><?=$data->id?></td>
+                    <td><?=$data->krsp_num?></td>
+                    <td><?=date('d.m.Y', strtotime($data->registration_date))?></td>
+                    <td><?=isset($data->period->days) ? $data->period->days.' дня(ей)' : ''?></td>
+                    <td class="word-wrap">
+                        <a class="plot" href="#cur" rel="popover" data-content="<?=$data->plot?>" data-original-title="Краткая фабула">
+                            <?php echo mb_substr($data->plot, 0, 50).(strlen($data->plot) > 50 ? '&hellip;' : NULL); ?>
+                        </a>
+                    </td>
 
-                <td><?=$data->inv->name?></td>
+                    <td><?=$data->inv->name?></td>
+                <?php
+                }
+                ?>
             </tr>
         <?php
         }

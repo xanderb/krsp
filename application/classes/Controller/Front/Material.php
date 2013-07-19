@@ -114,25 +114,49 @@ class Controller_Front_Material extends Controller_Front
             'field' => 'id'
         ),
         array(
+            'text' => 'Следователь',
+            'field' => 'investigator'
+        ),
+        array(
             'text' => 'КРСП',
             'field' => 'krsp_num'
-        ),
-        array(
-            'text' => 'Дата регистрации',
-            'field' => 'registration_date'
-        ),
-        array(
-            'text' => 'Срок рассмотрения',
-            'field' => 'period'
         ),
         array(
             'text' => 'Краткая фабула',
             'field' => 'plot'
         ),
         array(
+            'text' => 'Срок рассмотрения',
+            'field' => 'period'
+        ),
+    );
+    public $fail_table_headers = array(
+        array(
+            'text'  => 'ID',
+            'field' => 'id'
+        ),
+        array(
             'text' => 'Следователь',
             'field' => 'investigator'
         ),
+        array(
+            'text' => 'КРСП',
+            'field' => 'krsp_num'
+        ),
+        array(
+            'text' => 'Краткая фабула',
+            'field' => 'plot'
+        ),
+        array(
+            'text' => 'Когда истек срок',
+            'field' => 'fail_date'
+        ),
+        array(
+            'text' => 'Срок рассмотрения',
+            'field' => 'period'
+        ),
+
+
     );
 
 	public function action_index()
@@ -196,6 +220,9 @@ class Controller_Front_Material extends Controller_Front
                 ->and_where(DB::expr('material.decree_cancel_date + INTERVAL ep.days DAY'), '<=', $today.' 23:59:59')
                 ->and_where('extra_decree_id', '=', NULL)
             ->or_where_close()
+            ->join(array('investigators', 'jt'), 'LEFT OUTER')
+            ->on('investigator_id', '=', 'jt.id')
+            ->order_by('jt.name', 'ASC')
             ->find_all();
         /*$today_mess = DB::query(
             Database::SELECT,
@@ -212,6 +239,7 @@ class Controller_Front_Material extends Controller_Front
         $today_table->caption = 'Сообщения срок рассмотрения которых заканчивается сегодня';
         $today_table->caption_type = 'invert';
         $today_table->total_materials = $today_mess->count();
+        $today_table->type = 'today';
         $today_table->badges = array(
             array(
                 'text' => 'Всего актуальных сегодня сообщений',
@@ -235,6 +263,9 @@ class Controller_Front_Material extends Controller_Front
                 ->and_where(DB::expr('material.decree_cancel_date + INTERVAL ep.days DAY'), '<', $today.' 00:00:00')
                 ->and_where('extra_decree_id', '=', NULL)
             ->or_where_close()
+            ->join(array('investigators', 'jt'), 'LEFT OUTER')
+            ->on('investigator_id', '=', 'jt.id')
+            ->order_by('jt.name', 'ASC')
             ->find_all();
         /*$today_mess = DB::query(
             Database::SELECT,
@@ -247,10 +278,11 @@ class Controller_Front_Material extends Controller_Front
 
         $fail_table = View::factory('front/short_materials');
         $fail_table->datas = $fail_mess;
-        $fail_table->t_headers = $this->today_table_headers;
+        $fail_table->t_headers = $this->fail_table_headers;
         $fail_table->caption = 'Просроченные сообщения';
         $fail_table->caption_type = 'danger';
         $fail_table->total_materials = $fail_mess->count();
+        $fail_table->type = 'fail';
         $fail_table->badges = array(
             array(
                 'text' => 'Всего просроченных сообщений',

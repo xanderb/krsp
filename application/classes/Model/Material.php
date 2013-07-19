@@ -321,7 +321,7 @@ class Model_Material extends ORM_Log
         );
         if(is_null($sort))
         {
-            $this->order_by('registration_date', 'DESC');
+            $this->order_by('add_date', 'DESC');
         }
         else
         {
