@@ -190,7 +190,7 @@ echo Form::hidden('id', (isset($material)) ? $material->id: NULL);?>
                             isset($material) AND $material->has('characteristic', $char->id) ? TRUE : FALSE,
                             array(
                                 'id'    => 'char'.$char->id,
-                                'disabled'  => (isset($material) AND $material->has('characteristic', $char->id)) ? 'disabled' : NULL,
+                                //'disabled'  => (isset($material) AND $material->has('characteristic', $char->id)) ? 'disabled' : NULL,
                             )
                         )
                             .' '

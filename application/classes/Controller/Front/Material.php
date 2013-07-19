@@ -482,9 +482,13 @@ class Controller_Front_Material extends Controller_Front
                     try
                     {
                         $material->save();
-                        $material->remove('characteristic');
-                        if(count($chars_array) > 0)
-                            $material->add('characteristic', $chars_array);
+                        if(!is_null($chars_array))
+                        {
+                            $material->remove('characteristic');
+                            if(count($chars_array) > 0)
+                                $material->add('characteristic', $chars_array);
+                        }
+
 
                         $view = View::factory('/back/accept');
                         $view->message = 'Запись успешно изменена';
