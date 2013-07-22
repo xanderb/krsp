@@ -2,6 +2,12 @@ html, body{
     height: 100%;
     position: relative;
 }
+header{
+    padding: 10px 0;
+}
+.center{
+    text-align: center;
+}
 .sub_menu{
     margin: 10px 0;
     padding: 10px;

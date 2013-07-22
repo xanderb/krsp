@@ -23,7 +23,7 @@
     ?>
 </head>
 <body>
-<?php ProfilerToolbar::render(true); //TODO сделать включаемой/отключаемой из админки?>
+<?php //ProfilerToolbar::render(true); //TODO сделать включаемой/отключаемой из админки?>
 <?php
 if(isset($filter_button)){
     echo $filter_button;
@@ -33,14 +33,17 @@ if(isset($filter_button)){
 <div class="wrapper">
     <div class="container-fluid" id="main_container">
         <header class="row-fluid">
-            <div class="top_line span1 offset9">
+            <div class="top_line span3">
                 <?php
                 if(isset($to_main)){
                     echo $to_main;
                 }
                 ?>
             </div>
-            <div class="top_line span2">
+            <div class="top_line span3 offset3">
+                <?=isset($top_search) ? $top_search : NULL?>
+            </div>
+            <div class="top_line span3">
                 <?php
                 if(isset($userinfo)){
                     echo $userinfo;

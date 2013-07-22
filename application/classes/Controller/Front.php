@@ -34,12 +34,15 @@ class Controller_Front extends Controller_Core
             $user_info->roles = $roles;
             $top_nav = View::factory('main/global_nav');
             $top_nav->user = $this->auth;
+            $this->template->top_search = View::factory('main/plot_search');
+            $this->template->userinfo = $user_info;
+            $this->template->to_main = $top_nav;
         }else{
-            $user_info = 'Данных по пользователю нет';
-            $top_nav = '';
+            /*$user_info = 'Данных по пользователю нет';
+            $top_nav = '';*/
         }
-        $this->template->userinfo = $user_info;
-        $this->template->to_main = $top_nav;
+
+
 
         if($this->auth->logged_in() == 0){
             $login_form = View::factory('front/auth/login');
