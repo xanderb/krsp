@@ -122,3 +122,16 @@ td.first span {
 .hid{
     display: none;
 }
+.print-table{
+    margin: 10px 0;
+}
+
+/*Стили для печати*/
+@media print{
+    header, footer, .btn, #ptb{
+        height: 1px;
+        margin-left: -50000px;
+        overflow: hidden;
+        display: none;
+    }
+}

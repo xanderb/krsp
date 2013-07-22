@@ -18,13 +18,39 @@ class Controller_Front_Material extends Controller_Front
         array(
             'href'  => '/material/add',
             'text'  => 'Добавить сообщение',
-            'type'  => 'n'
+            'type'  => 'n',
+            'tooltip' => 'tt',
+            'title' => 'Регистрация нового сообщения'
+        ),
+        array(
+            'href'  => '/filter/decree_date/null',
+            'text'  => 'В производстве',
+            'type'  => 'n',
+            'tooltip' => 'tt',
+            'title' => 'Сообщения находящиеся в производстве у следователей'
         ),
         array(
             'href'  => '/archive/',
             'text'  => 'Архив сообщений',
             'type'  => 'n',
-            'class' => 'btn-info'
+            'class' => 'btn-inverse',
+            'tooltip' => 'tt',
+            'title' => 'Архивные сообщения'
+        ),
+
+    );
+    public $today_sub_menu = array(
+        array(
+            'href'  => '/print/today',
+            'text'  => '<i class="icon-print"></i> Распечатать',
+            'type'  => 'n'
+        ),
+    );
+    public $fail_sub_menu = array(
+        array(
+            'href'  => '/print/fail',
+            'text'  => '<i class="icon-print"></i> Распечатать',
+            'type'  => 'n'
         ),
     );
 
@@ -234,6 +260,7 @@ class Controller_Front_Material extends Controller_Front
                   AND m.registration_date + INTERVAL p.days DAY <= '{$today} 23:59:59'")->execute();*/
 
         $today_table = View::factory('front/short_materials');
+        $today_table->sub_menus = $this->today_sub_menu;
         $today_table->datas = $today_mess;
         $today_table->t_headers = $this->today_table_headers;
         $today_table->caption = 'Сообщения срок рассмотрения которых заканчивается сегодня';
@@ -277,6 +304,7 @@ class Controller_Front_Material extends Controller_Front
                   AND m.registration_date + INTERVAL p.days DAY <= '{$today} 23:59:59'")->execute();*/
 
         $fail_table = View::factory('front/short_materials');
+        $fail_table->sub_menus = $this->fail_sub_menu;
         $fail_table->datas = $fail_mess;
         $fail_table->t_headers = $this->fail_table_headers;
         $fail_table->caption = 'Просроченные сообщения';
@@ -573,6 +601,73 @@ class Controller_Front_Material extends Controller_Front
 
         $this->template->body = $view;
         $this->template->debug = Debug::vars(isset($post_values) ? $post_values : NULL);
+    }
+
+    public function action_print()
+    {
+        $type = Request::$current->param('type');
+        if(isset($type))
+        {
+            $view = View::factory('front/print_table');
+            $today = date('Y-m-d', time());
+            switch($type){
+                case 'today':
+                    $data = ORM_Log::factory('material')
+                        ->join(array('periods', 'p'), 'LEFT OUTER')
+                        ->on('period_id', '=', 'p.id')
+                        ->join( array('periods', 'ep'), 'LEFT OUTER')
+                        ->on('extra_period_id', '=', 'ep.id')
+                        ->where_open()
+                        ->where(DB::expr('material.registration_date + INTERVAL p.days DAY'), '>=', $today.' 00:00:00')
+                        ->and_where(DB::expr('material.registration_date + INTERVAL p.days DAY'), '<=', $today.' 23:59:59')
+                        ->and_where('decree_id', '=', NULL)
+                        ->where_close()
+                        ->or_where_open()
+                        ->where('failure_cause_id', '!=', NULL)
+                        ->and_where(DB::expr('material.decree_cancel_date + INTERVAL ep.days DAY'), '>=', $today.' 00:00:00')
+                        ->and_where(DB::expr('material.decree_cancel_date + INTERVAL ep.days DAY'), '<=', $today.' 23:59:59')
+                        ->and_where('extra_decree_id', '=', NULL)
+                        ->or_where_close()
+                        ->join(array('investigators', 'jt'), 'LEFT OUTER')
+                        ->on('investigator_id', '=', 'jt.id')
+                        ->order_by('jt.name', 'ASC')
+                        ->find_all();
+                    $view->datas = $data;
+                    $view->t_headers = $this->today_table_headers;
+                    break;
+                case 'fail':
+                    $data = ORM_Log::factory('material')
+                        ->join(array('periods', 'p'), 'LEFT OUTER')
+                        ->on('period_id', '=', 'p.id')
+                        ->join( array('periods', 'ep'), 'LEFT OUTER')
+                        ->on('extra_period_id', '=', 'ep.id')
+                        ->where_open()
+                        ->where(DB::expr('material.registration_date + INTERVAL p.days DAY'), '<', $today.' 00:00:00')
+                        ->and_where('decree_id', '=', NULL)
+                        ->where_close()
+                        ->or_where_open()
+                        ->where('failure_cause_id', '!=', NULL)
+                        ->and_where(DB::expr('material.decree_cancel_date + INTERVAL ep.days DAY'), '<', $today.' 00:00:00')
+                        ->and_where('extra_decree_id', '=', NULL)
+                        ->or_where_close()
+                        ->join(array('investigators', 'jt'), 'LEFT OUTER')
+                        ->on('investigator_id', '=', 'jt.id')
+                        ->order_by('jt.name', 'ASC')
+                        ->find_all();
+                    $view->datas = $data;
+                    $view->t_headers = $this->fail_table_headers;
+                    break;
+                default:
+                    Controller::redirect('');
+            }
+            $view->type = $type;
+            $this->template->body = $view;
+        }
+        else
+        {
+            Controller::redirect('');
+        }
+
     }
 
 }

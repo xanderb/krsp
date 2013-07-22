@@ -12,10 +12,13 @@ if(isset($sub_menus)){
         <?php
         foreach($sub_menus as $item){
             ?>
-            <a class="btn <?=isset($item['class']) ? $item['class'] : NULL?> <?php
-            if($item['type'] == 'y')
-                echo 'js-p';
-            ?>" href="<?=$item['href']?>"><?=$item['text']?></a>
+            <a
+                class="btn <?=isset($item['class']) ? $item['class'] : NULL?> <?=isset($item['type']) AND ($item['type'] == 'y') ? 'js-p' : NULL ?><?=isset($item['tooltip'])? ' '.$item['tooltip'] : NULL?>"
+                href="<?=$item['href']?>"
+                <?=isset($item['title']) ? 'title="'.$item['title'].'"' : NULL?>
+                >
+                <?=$item['text']?>
+            </a>
         <?php
         }
         ?>
@@ -135,7 +138,7 @@ if(isset($total_materials) AND isset($badges))
                         </ul>
                     </td>
                     <?php /*<td><?=$data->decree->text?></td>*/ ?>
-                    <td><?=!is_null($data->decree_date)? date('d.m.Y H:i:s', strtotime($data->decree_date)) : ''?></td>
+                    <td><?=!is_null($data->decree_date)? date('d.m.Y', strtotime($data->decree_date)) : ''?></td>
                     <td><?=isset($data->period->days) ? $data->period->days.' дня(ей)' : ''?></td>
                     <?php /*<td><?=$data->failure_cause->text?></td>
                     <td><?=!is_null($data->decree_cancel_date)? date('d.m.Y H:i:s', strtotime($data->decree_cancel_date)) : ''?></td>

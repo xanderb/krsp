@@ -23,6 +23,18 @@ Route::set('logout', 'logout')
         'controller' => 'reg',
         'action'     => 'logout',
     ));
+Route::set('prints', 'print(/<type>)')
+    ->defaults(array(
+        'directory'  => 'front',
+        'controller' => 'material',
+        'action'     => 'print',
+    ));
+Route::set('get_filters', 'filter/<var>/<val>')
+    ->defaults(array(
+        'directory'  => 'front',
+        'controller' => 'filter',
+        'action'     => 'change',
+    ));
 Route::set('filters', 'filter/<action>(/<filter>(/<filter_item>))')
     ->defaults(array(
         'directory'  => 'front',

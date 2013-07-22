@@ -69,9 +69,9 @@
 
   <div id="ptb_err">
     <div class="head">
-      <div class="type"><?php echo $type;?> <span class="typeCode">[ <?php echo $code;?> ]</span></div>
+      <div class="type"><?php echo isset($type)?$type:NULL;?> <span class="typeCode">[ <?php echo $code;?> ]</span></div>
       <div class="message">
-      <?php if($type == 'Database_Exception'):?>
+      <?php if(isset($type) AND $type == 'Database_Exception'):?>
       <?php
         $start = UTF8::strpos($message,'[ ');
         $end   = UTF8::strpos($message,' ]');

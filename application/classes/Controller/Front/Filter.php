@@ -82,6 +82,18 @@ class Controller_Front_Filter extends Controller_Front
             }
             $this->session->set('filters', $filters);
         }
+        else
+        {
+            $f_var = Request::$current->param('var');
+            $f_val = Request::$current->param('val');
+            if(isset($f_var) AND isset($f_val))
+            {
+                $filters = array(
+                    $f_var => $f_val,
+                );
+                $this->session->set('filters', $filters);
+            }
+        }
         //$this->template->debug = Debug::vars($_POST);
         Controller::redirect(URL::site(Request::$current->referrer()));
     }
