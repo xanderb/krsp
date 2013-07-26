@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: localhost
--- Время создания: Июл 19 2013 г., 16:08
+-- Время создания: Июл 26 2013 г., 11:03
 -- Версия сервера: 5.5.28
 -- Версия PHP: 5.3.17
 
@@ -192,7 +192,6 @@ INSERT INTO `materials` (`id`, `krsp_num`, `registration_date`, `source_id`, `pl
 (5, 15, '2013-05-07 20:00:00', 5, 'Сообщение актуальное сегодня по ДОП', '105', 1, 2, '2013-05-16 20:00:00', 5, 2, '2013-06-17 20:00:00', 1, 1, NULL, NULL, 0, 1, NULL),
 (6, NULL, '2013-06-18 20:00:00', NULL, 'Краткая проверочная фабула', '228', 1, 1, '2013-07-01 20:00:00', 1, NULL, '2013-07-18 20:00:00', NULL, NULL, NULL, NULL, 0, 1, NULL),
 (7, NULL, '2013-05-31 20:00:00', 6, 'Тест краткой фабулы с <strong>HTML</strong> кодом', '228', 1, NULL, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, NULL),
-(9, 5641, '2013-06-09 20:00:00', 6, 'Проверка на заполняемость новых полей БД из админки', '228', NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 4, '2013-06-24 11:33:33'),
 (10, NULL, '2013-07-19 07:07:46', NULL, 'Тестовое сообщение для проверки текстовой версии введения статьи УК', '110.1', 1, NULL, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, '2013-07-19 07:07:46'),
 (11, NULL, '2013-07-19 07:40:17', NULL, 'Второй тест введения статьи вручную', '224', NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, '2013-07-19 07:40:17'),
 (12, 540, '2013-07-17 20:00:00', 5, 'Тест текстовой статьи из АДМИНКИ', '228', 2, NULL, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, 1, '2013-07-19 09:04:17');
@@ -220,11 +219,34 @@ INSERT INTO `materials_characteristics` (`material_id`, `characteristic_id`) VAL
 (10, 3),
 (10, 4),
 (12, 5),
-(9, 2),
-(9, 4),
 (4, 4),
 (3, 2),
 (3, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `options`
+--
+
+CREATE TABLE IF NOT EXISTS `options` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `param` varchar(200) NOT NULL,
+  `value` text NOT NULL,
+  `default` text NOT NULL,
+  `label` varchar(255) DEFAULT NULL,
+  `type` varchar(128) NOT NULL DEFAULT 'checkbox',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `param` (`param`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+
+--
+-- Дамп данных таблицы `options`
+--
+
+INSERT INTO `options` (`id`, `param`, `value`, `default`, `label`, `type`) VALUES
+(1, 'profiler', '1', '0', 'Включение/отключение профайлера', 'checkbox'),
+(2, 'debug', '1', '0', 'Показывать отладочный блок', 'checkbox');
 
 -- --------------------------------------------------------
 
@@ -263,7 +285,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `description` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_name` (`name`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Дамп данных таблицы `roles`
@@ -272,7 +294,8 @@ CREATE TABLE IF NOT EXISTS `roles` (
 INSERT INTO `roles` (`id`, `name`, `description`) VALUES
 (1, 'login', 'Права, требуемые для авторизации в приложении. Добавляются новым пользователям в автоматическом режиме'),
 (2, 'admin', 'Для пользователей, имеющих доступ в административную панель. Роль позволяет добавлять и изменять что угодно в приложении и просматривать логи изменений в материалах'),
-(3, 'editor', 'Права дающие возможность редактировать сообщения в Front-End и некоторые другие мелкие привилегии. Роль между admin и login');
+(3, 'editor', 'Права дающие возможность редактировать сообщения в Front-End и некоторые другие мелкие привилегии. Роль между admin и login'),
+(4, 'sadmin', '(Только для учеток поддерживающих приложение или обновляющих его!)\nРоль, позволяющая совершать манипуляции с программными параметрами в администраторской панели.');
 
 -- --------------------------------------------------------
 
@@ -294,11 +317,13 @@ CREATE TABLE IF NOT EXISTS `roles_users` (
 INSERT INTO `roles_users` (`user_id`, `role_id`) VALUES
 (1, 1),
 (2, 1),
-(4, 1),
+(5, 1),
 (1, 2),
-(4, 2),
+(5, 2),
 (1, 3),
-(4, 3);
+(2, 3),
+(5, 3),
+(5, 4);
 
 -- --------------------------------------------------------
 
@@ -341,7 +366,7 @@ CREATE TABLE IF NOT EXISTS `update_logs` (
   `client_info` text COMMENT 'Информация о пользовательском компьютере, с которого произошло изменение',
   `cause` text COMMENT 'Причина изменения поля',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=41 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=42 ;
 
 --
 -- Дамп данных таблицы `update_logs`
@@ -389,6 +414,8 @@ INSERT INTO `update_logs` (`id`, `table`, `id_obj`, `field`, `prev_value`, `post
 (38, 'materials', 9, 'period_id', '1', '2', '2013-07-19 09:26:47', '127.0.0.1', 'a:37:{s:15:"REDIRECT_STATUS";s:3:"200";s:9:"HTTP_HOST";s:6:"kohana";s:15:"HTTP_USER_AGENT";s:72:"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:20:"HTTP_ACCEPT_LANGUAGE";s:35:"ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:12:"HTTP_REFERER";s:29:"http://kohana/material/edit/9";s:11:"HTTP_COOKIE";s:125:"PTB_visible_tab=ptb_tab_sqldefault; PTB_visible=false; PTB_visible_item=ptb_data_cont_sql; session=7adjtso5esktlpn6vb5n745ag1";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:12:"CONTENT_TYPE";s:33:"application/x-www-form-urlencoded";s:14:"CONTENT_LENGTH";s:3:"179";s:4:"PATH";s:142:"D:\\server\\PHP\\;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;D:\\server\\MySQL 5.5.28\\bin;";s:10:"SystemRoot";s:10:"C:\\Windows";s:7:"COMSPEC";s:27:"C:\\Windows\\system32\\cmd.exe";s:7:"PATHEXT";s:53:".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC";s:6:"WINDIR";s:10:"C:\\Windows";s:16:"SERVER_SIGNATURE";s:77:"<address>Apache/2.2.22 (Win32) PHP/5.3.17 Server at kohana Port 80</address>\n";s:15:"SERVER_SOFTWARE";s:32:"Apache/2.2.22 (Win32) PHP/5.3.17";s:11:"SERVER_NAME";s:6:"kohana";s:11:"SERVER_ADDR";s:9:"127.0.0.1";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:9:"127.0.0.1";s:13:"DOCUMENT_ROOT";s:22:"D:/server/hosts/kohana";s:12:"SERVER_ADMIN";s:19:"admin@profigames.ru";s:15:"SCRIPT_FILENAME";s:32:"D:/server/hosts/kohana/index.php";s:11:"REMOTE_PORT";s:5:"59020";s:12:"REDIRECT_URL";s:16:"/material/edit/9";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:4:"POST";s:12:"QUERY_STRING";s:0:"";s:11:"REQUEST_URI";s:16:"/material/edit/9";s:11:"SCRIPT_NAME";s:10:"/index.php";s:9:"PATH_INFO";s:16:"/material/edit/9";s:15:"PATH_TRANSLATED";s:42:"redirect:\\index.php\\material\\edit\\9\\edit\\9";s:8:"PHP_SELF";s:26:"/index.php/material/edit/9";s:12:"REQUEST_TIME";i:1374226007;}', 'Исправление опечатки'),
 (39, 'materials', 9, 'period_id', '2', '4', '2013-07-19 09:34:27', '127.0.0.1', 'a:37:{s:15:"REDIRECT_STATUS";s:3:"200";s:9:"HTTP_HOST";s:6:"kohana";s:15:"HTTP_USER_AGENT";s:72:"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:20:"HTTP_ACCEPT_LANGUAGE";s:35:"ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:12:"HTTP_REFERER";s:29:"http://kohana/material/edit/9";s:11:"HTTP_COOKIE";s:125:"PTB_visible_tab=ptb_tab_sqldefault; PTB_visible=false; PTB_visible_item=ptb_data_cont_sql; session=7adjtso5esktlpn6vb5n745ag1";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:12:"CONTENT_TYPE";s:33:"application/x-www-form-urlencoded";s:14:"CONTENT_LENGTH";s:3:"179";s:4:"PATH";s:142:"D:\\server\\PHP\\;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;D:\\server\\MySQL 5.5.28\\bin;";s:10:"SystemRoot";s:10:"C:\\Windows";s:7:"COMSPEC";s:27:"C:\\Windows\\system32\\cmd.exe";s:7:"PATHEXT";s:53:".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC";s:6:"WINDIR";s:10:"C:\\Windows";s:16:"SERVER_SIGNATURE";s:77:"<address>Apache/2.2.22 (Win32) PHP/5.3.17 Server at kohana Port 80</address>\n";s:15:"SERVER_SOFTWARE";s:32:"Apache/2.2.22 (Win32) PHP/5.3.17";s:11:"SERVER_NAME";s:6:"kohana";s:11:"SERVER_ADDR";s:9:"127.0.0.1";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:9:"127.0.0.1";s:13:"DOCUMENT_ROOT";s:22:"D:/server/hosts/kohana";s:12:"SERVER_ADMIN";s:19:"admin@profigames.ru";s:15:"SCRIPT_FILENAME";s:32:"D:/server/hosts/kohana/index.php";s:11:"REMOTE_PORT";s:5:"59096";s:12:"REDIRECT_URL";s:16:"/material/edit/9";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:4:"POST";s:12:"QUERY_STRING";s:0:"";s:11:"REQUEST_URI";s:16:"/material/edit/9";s:11:"SCRIPT_NAME";s:10:"/index.php";s:9:"PATH_INFO";s:16:"/material/edit/9";s:15:"PATH_TRANSLATED";s:42:"redirect:\\index.php\\material\\edit\\9\\edit\\9";s:8:"PHP_SELF";s:26:"/index.php/material/edit/9";s:12:"REQUEST_TIME";i:1374226466;}', 'Исправление опечатки'),
 (40, 'materials', 7, 'investigator_id', 'Пустое значение', '1', '2013-07-19 10:10:20', '127.0.0.1', 'a:37:{s:15:"REDIRECT_STATUS";s:3:"200";s:9:"HTTP_HOST";s:6:"kohana";s:15:"HTTP_USER_AGENT";s:72:"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:22.0) Gecko/20100101 Firefox/22.0";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:20:"HTTP_ACCEPT_LANGUAGE";s:35:"ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3";s:20:"HTTP_ACCEPT_ENCODING";s:13:"gzip, deflate";s:12:"HTTP_REFERER";s:29:"http://kohana/material/edit/7";s:11:"HTTP_COOKIE";s:125:"PTB_visible_tab=ptb_tab_sqldefault; PTB_visible=false; PTB_visible_item=ptb_data_cont_sql; session=7adjtso5esktlpn6vb5n745ag1";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:12:"CONTENT_TYPE";s:33:"application/x-www-form-urlencoded";s:14:"CONTENT_LENGTH";s:3:"190";s:4:"PATH";s:142:"D:\\server\\PHP\\;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;D:\\server\\MySQL 5.5.28\\bin;";s:10:"SystemRoot";s:10:"C:\\Windows";s:7:"COMSPEC";s:27:"C:\\Windows\\system32\\cmd.exe";s:7:"PATHEXT";s:53:".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC";s:6:"WINDIR";s:10:"C:\\Windows";s:16:"SERVER_SIGNATURE";s:77:"<address>Apache/2.2.22 (Win32) PHP/5.3.17 Server at kohana Port 80</address>\n";s:15:"SERVER_SOFTWARE";s:32:"Apache/2.2.22 (Win32) PHP/5.3.17";s:11:"SERVER_NAME";s:6:"kohana";s:11:"SERVER_ADDR";s:9:"127.0.0.1";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:9:"127.0.0.1";s:13:"DOCUMENT_ROOT";s:22:"D:/server/hosts/kohana";s:12:"SERVER_ADMIN";s:19:"admin@profigames.ru";s:15:"SCRIPT_FILENAME";s:32:"D:/server/hosts/kohana/index.php";s:11:"REMOTE_PORT";s:5:"59406";s:12:"REDIRECT_URL";s:16:"/material/edit/7";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:4:"POST";s:12:"QUERY_STRING";s:0:"";s:11:"REQUEST_URI";s:16:"/material/edit/7";s:11:"SCRIPT_NAME";s:10:"/index.php";s:9:"PATH_INFO";s:16:"/material/edit/7";s:15:"PATH_TRANSLATED";s:42:"redirect:\\index.php\\material\\edit\\7\\edit\\7";s:8:"PHP_SELF";s:26:"/index.php/material/edit/7";s:12:"REQUEST_TIME";i:1374228620;}', 'Исправление опечатки');
+INSERT INTO `update_logs` (`id`, `table`, `id_obj`, `field`, `prev_value`, `post_value`, `date_update`, `ip`, `client_info`, `cause`) VALUES
+(41, 'materials', 9, 'period_id', '4', '6', '2013-07-22 08:41:41', '127.0.0.1', 'a:39:{s:15:"REDIRECT_STATUS";s:3:"200";s:9:"HTTP_HOST";s:6:"kohana";s:15:"HTTP_CONNECTION";s:10:"keep-alive";s:14:"CONTENT_LENGTH";s:3:"207";s:18:"HTTP_CACHE_CONTROL";s:9:"max-age=0";s:11:"HTTP_ACCEPT";s:63:"text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8";s:11:"HTTP_ORIGIN";s:13:"http://kohana";s:15:"HTTP_USER_AGENT";s:126:"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.72 Safari/537.36 OPR/15.0.1147.148";s:12:"CONTENT_TYPE";s:33:"application/x-www-form-urlencoded";s:12:"HTTP_REFERER";s:29:"http://kohana/material/edit/9";s:20:"HTTP_ACCEPT_ENCODING";s:17:"gzip,deflate,sdch";s:20:"HTTP_ACCEPT_LANGUAGE";s:35:"ru-RU,ru;q=0.8,en-US;q=0.6,en;q=0.4";s:11:"HTTP_COOKIE";s:34:"session=46oi13nf204tq6jkqf5vkgjdq3";s:4:"PATH";s:142:"D:\\server\\PHP\\;C:\\Windows\\system32;C:\\Windows;C:\\Windows\\System32\\Wbem;C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\;D:\\server\\MySQL 5.5.28\\bin;";s:10:"SystemRoot";s:10:"C:\\Windows";s:7:"COMSPEC";s:27:"C:\\Windows\\system32\\cmd.exe";s:7:"PATHEXT";s:53:".COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC";s:6:"WINDIR";s:10:"C:\\Windows";s:16:"SERVER_SIGNATURE";s:77:"<address>Apache/2.2.22 (Win32) PHP/5.3.17 Server at kohana Port 80</address>\n";s:15:"SERVER_SOFTWARE";s:32:"Apache/2.2.22 (Win32) PHP/5.3.17";s:11:"SERVER_NAME";s:6:"kohana";s:11:"SERVER_ADDR";s:9:"127.0.0.1";s:11:"SERVER_PORT";s:2:"80";s:11:"REMOTE_ADDR";s:9:"127.0.0.1";s:13:"DOCUMENT_ROOT";s:22:"D:/server/hosts/kohana";s:12:"SERVER_ADMIN";s:19:"admin@profigames.ru";s:15:"SCRIPT_FILENAME";s:32:"D:/server/hosts/kohana/index.php";s:11:"REMOTE_PORT";s:5:"64806";s:12:"REDIRECT_URL";s:16:"/material/edit/9";s:17:"GATEWAY_INTERFACE";s:7:"CGI/1.1";s:15:"SERVER_PROTOCOL";s:8:"HTTP/1.1";s:14:"REQUEST_METHOD";s:4:"POST";s:12:"QUERY_STRING";s:0:"";s:11:"REQUEST_URI";s:16:"/material/edit/9";s:11:"SCRIPT_NAME";s:10:"/index.php";s:9:"PATH_INFO";s:16:"/material/edit/9";s:15:"PATH_TRANSLATED";s:42:"redirect:\\index.php\\material\\edit\\9\\edit\\9";s:8:"PHP_SELF";s:26:"/index.php/material/edit/9";s:12:"REQUEST_TIME";i:1374482501;}', 'Исправление опечатки');
 
 -- --------------------------------------------------------
 
@@ -406,16 +433,16 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_username` (`username`),
   UNIQUE KEY `uniq_email` (`email`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
 -- Дамп данных таблицы `users`
 --
 
 INSERT INTO `users` (`id`, `email`, `username`, `password`, `logins`, `last_login`) VALUES
-(1, 'admin@profigames.ru', 'admin', '73305ab73d1f554b47f637078432c8ab9e3d6b1ad49f666a7f86fee916ccc7e5', 111, 1374211067),
-(2, 'test@test.ru', 'non_admin', '0839799a01b3530c8dcce4cbffb403dc334c08249612871f836c2d195303d32b', 4, 1369832396),
-(4, 's_admin@profi.ru', 's_admin', 'b7ab319e32814acb0ad0fda9a6cb06052d815cd7db9d1ee27986b1a6ac8e0f66', 1, 1372073563);
+(1, 'admin@profigames.ru', 'admin', '73305ab73d1f554b47f637078432c8ab9e3d6b1ad49f666a7f86fee916ccc7e5', 123, 1374811956),
+(2, 'test@test.ru', 'editor', 'b7ab319e32814acb0ad0fda9a6cb06052d815cd7db9d1ee27986b1a6ac8e0f66', 5, 1374471975),
+(5, 'xander-2005@mail.ru', 'xanderb', '73305ab73d1f554b47f637078432c8ab9e3d6b1ad49f666a7f86fee916ccc7e5', 1, 1374822073);
 
 -- --------------------------------------------------------
 
