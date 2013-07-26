@@ -66,12 +66,22 @@ class Controller_Back extends Controller_Core
 
     );
 
+    public $sadmin_menu = array(
+        array(
+            'text' => 'Параметры',
+            'href' => '/admin/option',
+            'type' => 'btn-info'
+        )
+    );
+
 
     public function before(){
         parent::before();
         $this->template->page_title = $this->page_title;
         $this->template->styles = $this->styles;
         $this->template->scripts = $this->scripts;
+        $profiler = Model_Option::getParam('profiler');
+        $debug = Model_Option::getParam('debug');
 
         if(isset($this->auth) AND isset($this->user)){
             $roles = $this->user->roles->find_all();
@@ -81,9 +91,11 @@ class Controller_Back extends Controller_Core
             $top_nav = View::factory('main/global_nav');
             $top_nav->user = $this->auth;
             $top_nav->is_admin = TRUE;
+            $this->template->profiler_opt = $profiler;
+            $this->template->debug_opt = $debug;
         }else{
-            $user_info = 'Данных по пользователю нет';
-            $top_nav = '';
+           /* $user_info = 'Данных по пользователю нет';
+            $top_nav = '';*/
         }
         $this->template->userinfo = $user_info;
         $this->template->to_main = $top_nav;

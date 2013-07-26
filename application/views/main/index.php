@@ -23,7 +23,10 @@
     ?>
 </head>
 <body>
-<?php //ProfilerToolbar::render(true); //TODO сделать включаемой/отключаемой из админки?>
+<?php
+    if(isset($profiler_opt))
+        ProfilerToolbar::render($profiler_opt->value);
+?>
 <?php
 if(isset($filter_button)){
     echo $filter_button;
@@ -64,10 +67,13 @@ if(isset($filter_button)){
     </div>
 </footer>
 <?php
-if(isset($debug)){   //Сделать отключаемым через админку (таблица БД опций)
-    ?>
-    <div class="debug alert alert-info"><?=$debug?></div>
+if(isset($debug_opt) AND $debug_opt->value)
+{
+    if(isset($debug)){
+        ?>
+        <div class="debug alert alert-info"><?=$debug?></div>
     <?php
+    }
 }
 ?>
 

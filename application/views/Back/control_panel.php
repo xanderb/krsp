@@ -33,6 +33,24 @@
             </div>
         <?php
         }
+
+        if(isset($sadmin_menu) AND $auth->logged_in('sadmin'))
+        {
+            ?>
+            <div class="btn-group">
+                <?php
+                foreach($sadmin_menu as $menu)
+                {
+                    ?>
+                    <a class="btn <?=isset($menu['type']) ? $menu['type'] : NULL ?>" href="<?=$menu['href']?>">
+                        <?=$menu['text']?>
+                    </a>
+                    <?php
+                }
+                ?>
+            </div>
+            <?php
+        }
     ?>
     </div>
 

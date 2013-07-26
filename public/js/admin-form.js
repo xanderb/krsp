@@ -216,14 +216,14 @@ $(function(){
         var description_value = $("#role-description").val();
         if(!role_name(name_value)){
             $('#role-name').css('border', '1px solid red');
-            $('#error-name').html('Ошибка! Значение должно быть числом');
+            $('#error-name').html('Ошибка! Название роли должно быть заполнено');
         }else{
             $('#role-name').css('border', '1px solid green');
             $('#error-name').html('');
         }
         if(!role_desc(description_value)){
             $("#role-description").css('border', '1px solid red');
-            $('#error-description').html('Ошибка! Решение по делу должно быть заполнено');
+            $('#error-description').html('Ошибка! Описание роли должно быть заполнено');
         }else{
             $("#role-description").css('border', '1px solid green');
             $('#error-description').html('');

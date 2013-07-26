@@ -125,6 +125,9 @@ td.first span {
 .print-table{
     margin: 10px 0;
 }
+input.opt_input+button, textarea.opt_textarea+button {
+    margin-top: -10px;
+}
 
 /*Стили для печати*/
 @media print{

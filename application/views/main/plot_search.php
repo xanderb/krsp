@@ -25,7 +25,7 @@ echo Form::input(
     array(
         'id' => 'search_plot',
         'class' => 'search-query span12',
-        'placeholder' => 'Поиск'
+        'placeholder' => 'Поиск по фабуле'
     )
 )
     .

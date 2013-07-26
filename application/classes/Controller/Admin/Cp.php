@@ -41,6 +41,9 @@ class Controller_Admin_Cp extends Controller_Back
         $admin_view = View::factory('back/control_panel');
         $admin_view->admin_menus = $this->menus;
         $admin_view->user_menus = $this->user_menu;
+        $admin_view->sadmin_menu = $this->sadmin_menu;
+        $admin_view->user = $this->user;
+        $admin_view->auth = $this->auth;
 
         $content = View::factory('/back/control_panel_content');
         $content->cp_menu = $this->cp_menu;
