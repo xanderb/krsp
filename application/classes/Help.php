@@ -179,11 +179,24 @@ class Help
     {
         return array(
             array(
-                'text' => '<i class="icon-arrow-left"></i> Вернуться на главную',
+                'text' => '<i class="icon-arrow-left"></i> Вернуться назад',
                 'href' => Request::$current->referrer(),
                 'type' => 'n'
             )
         );
 
+    }
+
+    public static function array_to_string($obj)
+    {
+        $text = "[";
+        foreach($obj as $val)
+        {
+            $text .= '"'.$val.'",';
+        }
+        $text = substr($text, 0, strlen($text) - 1);
+        $text .= "]";
+
+        return $text;
     }
 }

@@ -385,10 +385,10 @@ class Controller_Front_Material extends Controller_Front
                 $new_material->values(
                     array(
                         'krsp_num' => (Arr::get($_POST, 'krsp_num', NULL) == '' ? NULL : Arr::get($_POST, 'krsp_num', NULL)),
-                        'source_id' => (Arr::get($_POST, 'source_id', NULL) == '' ? NULL : Arr::get($_POST, 'source_id', NULL)),
+                        //'source_id' => (Arr::get($_POST, 'source_id', NULL) == '' ? NULL : Arr::get($_POST, 'source_id', NULL)),
                         'plot' => (Arr::get($_POST, 'plot', NULL) == '' ? NULL : Arr::get($_POST, 'plot', NULL)),
                         'article_id' => (Arr::get($_POST, 'article_id', NULL) == '' ? NULL : Arr::get($_POST, 'article_id', NULL)),
-                        'investigator_id' => (Arr::get($_POST, 'investigator_id', NULL) == '' ? NULL : Arr::get($_POST, 'investigator_id', NULL)),
+                        //'investigator_id' => (Arr::get($_POST, 'investigator_id', NULL) == '' ? NULL : Arr::get($_POST, 'investigator_id', NULL)),
                         'decree_id' => (Arr::get($_POST, 'decree_id', NULL) == '' ? NULL : Arr::get($_POST, 'decree_id', NULL)),
                         'period_id' => (Arr::get($_POST, 'period_id', NULL) == '' ? NULL : Arr::get($_POST, 'period_id', NULL)),
                         'failure_cause_id' => (Arr::get($_POST, 'failure_cause_id', NULL) == '' ? NULL : Arr::get($_POST, 'failure_cause_id', NULL)),
@@ -398,6 +398,23 @@ class Controller_Front_Material extends Controller_Front
                         'user_id' => $this->user->id,
                     )
                 );
+                /*Отдельная выборка значений для полей с автодополнением*/
+                $source_text = Arr::get($_POST, 'source_id', NULL);
+                if(!is_null($source_text))
+                {
+                    $source = ORM::factory('source')->where('text', '=', $source_text)->find();
+                    $new_material->source_id = $source->id;
+                }
+
+                $investigator_text = Arr::get($_POST, 'investigator_id', NULL);
+                if(!is_null($investigator_text))
+                {
+                    $inv = ORM::factory('investigator')->where('name', '=', $investigator_text)->find();
+                    $new_material->investigator_id = $inv->id;
+                }
+
+                //***********************************************************//
+
                 if(Arr::get($_POST, 'registration_date', NULL) != ''){
                     $new_material->registration_date = Help::datepicker_to_timestamp(Arr::get($_POST, 'registration_date', NULL));
                 }
@@ -430,8 +447,10 @@ class Controller_Front_Material extends Controller_Front
                     $material_form->material = $new_material;
 
                     $material_form->sources = $sources->as_array('id', 'text');
+                    $material_form->sources_text = Help::array_to_string($sources->as_array('id', 'text'));
                     //$material_form->articles = $articles->as_array('id', 'value');
                     $material_form->investigators = $investigators->as_array('id', 'name');
+                    $material_form->inv_text = Help::array_to_string($investigators->as_array('id', 'name'));
                     $material_form->chars = $chars;
                     $material_form->decrees = $decrees->as_array('id', 'text');
                     $material_form->periods = $periods->as_array('id', 'days');
@@ -448,8 +467,10 @@ class Controller_Front_Material extends Controller_Front
                 $material_form = View::factory('/front/edit_material');
 
                 $material_form->sources = $sources->as_array('id', 'text');
+                $material_form->sources_text = Help::array_to_string($sources->as_array('id', 'text'));
                 //$material_form->articles = $articles->as_array('id', 'value');
                 $material_form->investigators = $investigators->as_array('id', 'name');
+                $material_form->inv_text = Help::array_to_string($investigators->as_array('id', 'name'));
                 $material_form->chars = $chars;
                 $material_form->decrees = $decrees->as_array('id', 'text');
                 $material_form->periods = $periods->as_array('id', 'days');
@@ -525,6 +546,21 @@ class Controller_Front_Material extends Controller_Front
                         }
                     }
                     $material->values($post_values);
+                    /*Отдельная выборка значений для полей с автодополнением*/
+                    $source_text = Arr::get($_POST, 'source_id', NULL);
+                    if(!is_null($source_text))
+                    {
+                        $source = ORM::factory('source')->where('text', '=', $source_text)->find();
+                        $material->source_id = $source->id;
+                    }
+
+                    $investigator_text = Arr::get($_POST, 'investigator_id', NULL);
+                    if(!is_null($investigator_text))
+                    {
+                        $inv = ORM::factory('investigator')->where('name', '=', $investigator_text)->find();
+                        $material->investigator_id = $inv->id;
+                    }
+                    //***********************************************************//
                     if(Arr::get($_POST, 'registration_date', NULL) != ''){
                         $material->registration_date = Help::datepicker_to_timestamp(Arr::get($_POST, 'registration_date', NULL));
                     }
@@ -561,8 +597,10 @@ class Controller_Front_Material extends Controller_Front
                         $view->material = $material;
 
                         $view->sources = $sources->as_array('id', 'text');
+                        $view->sources_text = Help::array_to_string($sources->as_array('id', 'text'));
                         //$view->articles = $articles->as_array('id', 'value');
                         $view->investigators = $investigators->as_array('id', 'name');
+                        $view->inv_text = Help::array_to_string($investigators->as_array('id', 'name'));
                         $view->chars = $chars;
                         $view->decrees = $decrees->as_array('id', 'text');
                         $view->periods = $periods->as_array('id', 'days');
@@ -578,8 +616,10 @@ class Controller_Front_Material extends Controller_Front
                     $view = View::factory('/front/edit_material');
                     $view->material = $material;
                     $view->sources = $sources->as_array('id', 'text');
+                    $view->sources_text = Help::array_to_string($sources->as_array('id', 'text'));
                     //$view->articles = $articles->as_array('id', 'value');
                     $view->investigators = $investigators->as_array('id', 'name');
+                    $view->inv_text = Help::array_to_string($investigators->as_array('id', 'name'));
                     $view->chars = $chars;
                     $view->decrees = $decrees->as_array('id', 'text');
                     $view->periods = $periods->as_array('id', 'days');

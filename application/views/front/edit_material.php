@@ -118,7 +118,7 @@ echo Form::hidden('id', (isset($material)) ? $material->id: NULL);?>
             </div>
         </dd>
         <dt><?=Form::label('source', 'Источник сообщения')?></dt>
-        <dd><?=Help::select(
+        <dd><?php /*echo Help::select(
                 'source_id',
                 (isset($sources) ? $sources : NULL),
                 (isset($material) ? $material->source->id : NULL),
@@ -130,7 +130,21 @@ echo Form::hidden('id', (isset($material)) ? $material->id: NULL);?>
                 array(
                     '' => 'Выберите источник'
                 )
-            )?></dd>
+            )*/
+            echo Form::input(
+                'source_id',
+                (isset($material) ? $material->source->text : NULL),
+                array(
+                    'id' => 'source',
+                    'class' => 'span2',
+                    'disabled' => (isset($material->source->text) ? 'disabled' : NULL),
+                    'placeholder' => 'Введите источник сообщения',
+                    'data-provide' => 'typeahead',
+                    'data-items' => '6',
+                    'data-source' => isset($sources_text) ? $sources_text : ''
+                )
+            )
+            ?></dd>
         <dt><?=Form::label('plot', '<span class="text-error tt" rel="tooltip" title="Поле обязательно для заполнения">Краткая фабула *</span>')?></dt>
         <dd>
             <?=Form::textarea(
@@ -160,7 +174,7 @@ echo Form::hidden('id', (isset($material)) ? $material->id: NULL);?>
         </dd>
         <dt><?=Form::label('investigator', 'Следователь')?></dt>
         <dd>
-            <?=Help::select(
+            <?php /*echo Help::select(
                 'investigator_id',
                 (isset($investigators) ? $investigators : NULL),
                 (isset($material) ? $material->inv->id : NULL),
@@ -172,7 +186,21 @@ echo Form::hidden('id', (isset($material)) ? $material->id: NULL);?>
                 array(
                     '' => 'Выберите следователя'
                 )
-            )?>
+            )*/
+            echo Form::input(
+                'investigator_id',
+                (isset($material) ? $material->inv->name : NULL),
+                array(
+                    'id' => 'source',
+                    'class' => 'span2',
+                    'disabled' => (isset($material->inv->name) ? 'disabled' : NULL),
+                    'placeholder' => 'Введите следователя',
+                    'data-provide' => 'typeahead',
+                    'data-items' => '6',
+                    'data-source' => isset($inv_text) ? $inv_text : ''
+                )
+            )
+            ?>
         </dd>
 
         <dt><?=Form::label('', 'Характеристика материалов')?></dt>

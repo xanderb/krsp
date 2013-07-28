@@ -97,7 +97,7 @@ echo Form::hidden('id', (isset($material)) ? $material->id: NULL);?>
                 )
             )?></dd>
 
-        <dt><?=Form::label('registration_date', 'Дата регистрации материала')?></dt>
+        <dt><?=Form::label('registration_date', 'Дата регистрации сообщения')?></dt>
         <dd>
             <div class="input-append">
             <?=Form::input(
@@ -167,7 +167,7 @@ echo Form::hidden('id', (isset($material)) ? $material->id: NULL);?>
             )?>
         </dd>
 
-        <dt><?=Form::label('', 'Характеристика материалов')?></dt>
+        <dt><?=Form::label('', 'Характеристика сообщений')?></dt>
         <dd>
             <?php
             if(isset($chars))

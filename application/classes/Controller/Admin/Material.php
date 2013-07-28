@@ -10,7 +10,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
 {
     public $badges = array(
         array(
-            'text'  => 'Всего материалов в базе',
+            'text'  => 'Всего сообщений в базе',
             'class' => 'badge-info'
         ),
     );
@@ -161,7 +161,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
 
         /*Рендер шаблона админка*/
         $cp = View::factory('/back/control_panel');
-        $cp->p_title = "Материалы дел";
+        $cp->p_title = "Сообщения";
         $cp->admin_menus = $this->menu_to_cp;
         $cp->content = $content;
 
@@ -228,7 +228,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
                 $content = View::factory('/back/accept');
                 $content->message = 'Новая запись успешно добавлена';
                 $content->back_path = '/admin/material';
-                $content->back_path_text = 'Вернуться назад к списку материалов';
+                $content->back_path_text = 'Вернуться назад к списку сообщений';
             }
             catch(ORM_Validation_Exception $exc)
             {
@@ -243,7 +243,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
                 $material_form->periods = $periods->as_array('id', 'days');
                 $material_form->failure_causes = $failure_causes->as_array('id', 'text');
 
-                $material_form->legend = "Форма создания материала";
+                $material_form->legend = "Форма создания сообщения";
                 $material_form->sub_menus = $this->back_menu;
                 $material_form->error = $exc->errors('validation');
                 $content = $material_form;
@@ -259,12 +259,12 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
             $material_form->periods = $periods->as_array('id', 'days');
             $material_form->failure_causes = $failure_causes->as_array('id', 'text');
 
-            $material_form->legend = "Форма создания материала";
+            $material_form->legend = "Форма создания сообщения";
             $material_form->sub_menus = $this->back_menu;
             $content = $material_form;
         }
         $admin_view = View::factory('/back/control_panel');
-        $admin_view->p_title = 'Добавление материала';
+        $admin_view->p_title = 'Добавление сообщения';
         $admin_view->content = $content;
         $this->template->body = $admin_view;
     }
@@ -330,7 +330,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
                     $content = View::factory('/back/accept');
                     $content->message = 'Запись успешно изменена';
                     $content->back_path = '/admin/material';
-                    $content->back_path_text = 'Вернуться назад к списку материалов';
+                    $content->back_path_text = 'Вернуться назад к списку сообщений';
                 }
                 catch(ORM_Validation_Exception $exc)
                 {
@@ -345,7 +345,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
                     $material_form->periods = $periods->as_array('id', 'days');
                     $material_form->failure_causes = $failure_causes->as_array('id', 'text');
 
-                    $material_form->legend = "Форма редактирования материала";
+                    $material_form->legend = "Форма редактирования сообщения";
                     $material_form->sub_menus = $this->back_menu;
                     $material_form->error = $exc->errors('validation');
                     $content = $material_form;
@@ -363,7 +363,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
                 $content->periods = $periods->as_array('id', 'days');
                 $content->failure_causes = $failure_causes->as_array('id', 'text');
 
-                $content->legend = "Форма редактирования материала";
+                $content->legend = "Форма редактирования сообщения";
                 $content->sub_menus = $this->back_menu;
             }
         }
@@ -376,7 +376,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
         }
 
         $admin_view = View::factory('/back/control_panel');
-        $admin_view->p_title = 'Редактирование материалов';
+        $admin_view->p_title = 'Редактирование сообщения';
         $admin_view->content = $content;
         $this->template->body = $admin_view;
     }
@@ -395,14 +395,14 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
                 {
                     $deleted_material->delete();
                     $content = View::factory('back/accept');
-                    $content->message = 'Материал успешно удален';
+                    $content->message = 'Сообщение успешно удален';
                     $content->back_path = '/admin/material';
-                    $content->back_path_text = 'Вернуться назад к списку материалов';
+                    $content->back_path_text = 'Вернуться назад к списку сообщений';
                 }
                 catch(Database_Exception $e)
                 {
                     $content = View::factory('/back/error');
-                    $content->message = "Произошла ошибка во время удаления материала: <br>".$e->getMessage();
+                    $content->message = "Произошла ошибка во время удаления сообщения: <br>".$e->getMessage();
                     $content->back_path = '/admin/material';
                     $content->back_path_text = 'Вернуться назад';
                 }
@@ -415,7 +415,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
                 $content->back_path_text = "Вернуться назад";
                 $content->id = $id;
                 $content->delete_text =
-                    "Удалить материал - "
+                    "Удалить Сообщение - "
                     .($deleted_material->krsp_num ? '№'
                     .$deleted_material->krsp_num : 'Номер не задан')
                     .' от '
@@ -431,7 +431,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
         }
 
         $admin_view = View::factory('/back/control_panel');
-        $admin_view->p_title = 'Удаление материалов';
+        $admin_view->p_title = 'Удаление сообщения';
         $admin_view->content = $content;
         $this->template->body = $admin_view;
     }
@@ -447,14 +447,14 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
             {
                 $material->save();
                 $content = View::factory('back/accept');
-                $content->message = 'Материал успешно переведен в архив';
+                $content->message = 'Сообщение успешно переведено в архив';
                 $content->back_path = '/admin/material';
-                $content->back_path_text = 'Вернуться назад к списку материалов';
+                $content->back_path_text = 'Вернуться назад к списку сообщений';
             }
             catch(ORM_Validation_Exception $exp)
             {
                 $content = View::factory('/back/error');
-                $content->message = "Произошла ошибка во время перевода материала в архив: <br>".$exp->getMessage();
+                $content->message = "Произошла ошибка во время перевода сообщения в архив: <br>".$exp->getMessage();
                 $content->back_path = '/admin/material';
                 $content->back_path_text = 'Вернуться назад';
             }
@@ -462,12 +462,12 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
         else
         {
             $content = View::factory('/back/error');
-            $content->message = 'Необходимо выбрать материал для перевода в архив';
+            $content->message = 'Необходимо выбрать сообщение для перевода в архив';
             $content->back_path = '/admin/material';
             $content->back_path_text = 'Вернуться назад';
         }
         $admin_view = View::factory('/back/control_panel');
-        $admin_view->p_title = 'Перевод материалов в архив';
+        $admin_view->p_title = 'Перевод сообщений в архив';
         $admin_view->content = $content;
         $this->template->body = $admin_view;
     }

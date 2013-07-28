@@ -20,17 +20,17 @@ class Controller_Admin_Cp extends Controller_Back
 
     public $cp_menu = array(
         array(
-            'text' => 'Материалы',
+            'text' => 'Сообщения',
             'href' => '/admin/material/',
             'class' => 'btn-info'
         ),
         array(
-            'text'  => 'Архив материалов',
+            'text'  => 'Архив сообщений',
             'href'  => '/admin/archive',
             'class' => 'btn-info'
         ),
         /*array(
-            'text'  => 'Логи изменений материалов',
+            'text'  => 'Логи изменений сообщений',
             'href'  => '/admin/log',
             'class' => 'btn-info'
         ),*/
