@@ -20,10 +20,6 @@ class Model_Material extends ORM_Log
             'model'         => 'investigator',
             'foreign_key'   => 'investigator_id'
         ),
-        'extra_inv'    => array(
-            'model'         => 'investigator',
-            'foreign_key'   => 'extra_investigator_id'
-        ),
         'failure_cause'     => array(
             'model'         => 'fcause',
             'foreign_key'   => 'failure_cause_id'
@@ -32,18 +28,12 @@ class Model_Material extends ORM_Log
             'model'         => 'period',
             'foreign_key'   => 'period_id'
         ),
-        'extra_period'      => array(
-            'model'         => 'period',
-            'foreign_key'   => 'extra_period_id'
-        ),
+
         'decree'            => array(
             'model'         => 'decree',
             'foreign_key'   => 'decree_id'
         ),
-        'extra_decree'      => array(
-            'model'         => 'decree',
-            'foreign_key'   => 'extra_decree_id'
-        ),
+
         'user'              => array(
             'model'         => 'user',
             'foreign_key'   => 'user_id'
@@ -126,6 +116,10 @@ class Model_Material extends ORM_Log
         'characteristic'         => array(
             'model'         => 'characteristic',
             'through'       => 'materials_characteristics'
+        ),
+        'extra'     => array(
+            'model'         => 'extra',
+            'foreign_key'   => 'material_id'
         ),
     );
 

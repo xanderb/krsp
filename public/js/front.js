@@ -119,7 +119,7 @@ $(function(){
         $(this).addClass('success').css('cursor', 'pointer');
     }, function(e){
         $(this).removeClass('success');
-    }).find('td').not('.word-wrap').click(function(e){
+    }).find('td').click(function(e){
         var id = $(this).parent().find('.js-id').html();
             //alert('сработало. id = '+id);
         location.href = "/material/info/"+id;

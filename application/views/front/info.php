@@ -88,26 +88,7 @@
                         <td class="first"><span>Причина отказа</span></td>
                         <td><?=$material->failure_cause->text?></td>
                     </tr>
-                    <tr>
-                        <td class="first"><span>Дата отмены решения</span></td>
-                        <td><?=strtotime($material->decree_cancel_date) > 0 ? date('d.m.Y H:i:s', strtotime($material->decree_cancel_date)) : ''?></td>
-                    </tr>
-                    <tr>
-                        <td class="first"><span>(ДОП) Следователь</span></td>
-                        <td><?=$material->extra_inv->name?></td>
-                    </tr>
-                    <tr>
-                        <td class="first"><span>(ДОП) Срок рассмотрения</span></td>
-                        <td><?=isset($material->extra_period->days) ? $material->extra_period->days.' дня(ей)' : ''?></td>
-                    </tr>
-                    <tr>
-                        <td class="first"><span>(ДОП) Решение по сообщению</span></td>
-                        <td><?=$material->extra_decree->text?></td>
-                    </tr>
-                    <tr>
-                        <td class="first"><span>(ДОП) Дата принятия решения</span></td>
-                        <td><?=strtotime($material->extra_decree_date) > 0 ? date('d.m.Y H:i:s', strtotime($material->extra_decree_date)) : ''?></td>
-                    </tr>
+
                     <?php
                 }
                 ?>

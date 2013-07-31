@@ -7,7 +7,7 @@
  */
 $(function(){
     $('.plot').popover({
-        trigger: 'click',
+        trigger: 'hover',
         html: 'true'
     });
     $('.tt').tooltip();

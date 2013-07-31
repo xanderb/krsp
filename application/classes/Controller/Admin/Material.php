@@ -113,7 +113,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
             'text' => 'Причина отказа',
             'field' => 'failure_cause'
         ),
-        array(
+        /*array(
             'text' => 'Дата отмены решения',
             'field' => 'decree_cancel_date'
         ),
@@ -132,7 +132,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
         array(
             'text' => '(ДОП) Дата принятия решения',
             'field' => 'extra_decree_date'
-        ),
+        ),*/
     );
 
     public function action_index()
@@ -149,7 +149,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
             ->find_all();
         $content = View::factory('/back/materials_table');
         $content->t_headers = $this->t_headers;
-        $content->caption = "Материалы";
+        $content->caption = "Сообщения";
         $content->datas = $materials;
         $content->sub_admin_menus = $this->sub_menus;
         $content->total_materials = $total_items;

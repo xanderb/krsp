@@ -305,7 +305,8 @@ echo Form::hidden('id', (isset($material)) ? $material->id: NULL);?>
             )?>
         </dd>
 
-        <dt>
+       <?php
+      /*<dt>
             <?=Form::label(
                 'decree_cancel_date',
                 'Дата отмены решения')?>
@@ -398,7 +399,8 @@ echo Form::hidden('id', (isset($material)) ? $material->id: NULL);?>
             </div>
         </dd>
     </dl>
-
+*/
+       ?>
 
     <div class="form-actions">
         <?php

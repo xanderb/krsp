@@ -264,6 +264,7 @@ echo Form::hidden('id', (isset($material)) ? $material->id: NULL);?>
             )?>
         </dd>
 
+<?php /*
         <dt>
             <?=Form::label(
                 'decree_cancel_date',
@@ -351,7 +352,7 @@ echo Form::hidden('id', (isset($material)) ? $material->id: NULL);?>
                  <span class="add-on"><i class="icon-calendar"></i></span>
             </div>
         </dd>
-        <?php
+        <?php */
         if(Request::$current->action() == 'edit'){
             ?>
             <dt>
@@ -363,7 +364,7 @@ echo Form::hidden('id', (isset($material)) ? $material->id: NULL);?>
                     (!is_null(Arr::get($_POST, 'edit-cause', NULL)) ? Arr::get($_POST, 'edit-cause', NULL) : ''),
                     array(
                         'id'    => 'edit-cause',
-                        'class' => 'span2',
+                        'class' => 'span3',
                         'row'   => '4'
                     )
                 )?>
