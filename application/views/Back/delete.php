@@ -1,12 +1,13 @@
 <script type="text/javascript">
     $(function(){
        $('button#delete').click(function($e){
-           if(confirm('Вы действительно хотите удалить значение?')){
+           /*if(confirm('Вы действительно хотите удалить значение?')){
                 return true;
            }else{
                 document.location.href = "<?=$back_path?>";
                 return false;
-           }
+           }*/
+           return true;
        });
     });
 </script>

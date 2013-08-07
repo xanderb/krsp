@@ -31,7 +31,7 @@ class Controller_Front_Archive extends Controller_Front
     public $sub_menu = array(
         array(
             'href'  => '/',
-            'text'  => 'Сообщения',
+            'text'  => '<i class="icon-th-list"></i> Сообщения',
             'type'  => 'n'
         ),
     );
@@ -116,20 +116,20 @@ class Controller_Front_Archive extends Controller_Front
 
         $page = Request::$current->param('page');
 
-        $filters = Help::render_filter_form();
+        $filters = Model_Archive::render_filter_form('select');
         $sort = $this->session->get('sort');
 
         $materials = ORM_Log::factory('material')->where('archive', '=', '1');
         $materials =
             $materials
-                ->add_filters($this->session->get('filters'))
+                ->add_filters($this->session->get('archive_filters'))
                 ->add_sort(isset($sort['materials']) ? $sort['materials'] : NULL)
                 //->limit($this->config->items_per_page)
                 //->offset((isset($page) ? ($page-1)*$this->config->items_per_page : 0))
                 ->find_all();
         $total_items = ORM_Log::factory('material')
             ->where('archive', '=', '1')
-            ->add_filters($this->session->get('filters'))
+            ->add_filters($this->session->get('archive_filters'))
             ->add_sort(isset($sort['materials']) ? $sort['materials'] : NULL)
             ->find_all()->count();
 
@@ -146,9 +146,9 @@ class Controller_Front_Archive extends Controller_Front
 
 
 
-        if(ceil($total_items / $this->config->items_per_page) > 1){
+        /*if(ceil($total_items / $this->config->items_per_page) > 1){
             $materials_view->paginator = Help::render_paginator('material', '', $page, $total_items); //добавление постраничной навигации
-        }
+        }*/
 
         //Таблица сообщений актуальных сегодня
         /*$today = date('Y-m-d', time());
@@ -227,7 +227,10 @@ class Controller_Front_Archive extends Controller_Front
 
         $this->template->body = $grid;
         $this->template->filter_button = View::factory('front/filter_button');
-        //$this->template->debug = Debug::vars();
+        if(count($this->session->get('archive_filters')) > 0)
+            $this->template->filter_button->success = TRUE;
+
+        $this->template->debug = Debug::vars($this->session);
     }
 
 

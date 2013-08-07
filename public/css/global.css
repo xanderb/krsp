@@ -128,7 +128,9 @@ td.first span {
 input.opt_input+button, textarea.opt_textarea+button {
     margin-top: -10px;
 }
-
+.article-input{
+    margin-right: 3px;
+}
 /*Стили для печати*/
 @media print{
     header, footer, .btn, #ptb{

@@ -32,7 +32,7 @@ class Controller_Admin_Archive extends Controller_Back
         ),
         array(
             'href'  => '/admin/material',
-            'text'  => '<i class="icon-list-alt icon-white"></i> Материалы',
+            'text'  => '<i class="icon-th-list icon-white"></i> Материалы',
             'class' => 'btn-info'
         )
     );
@@ -83,10 +83,10 @@ class Controller_Admin_Archive extends Controller_Back
             'text' => 'Характеристика',
             'field' => 'characteristic'
         ),
-        array(
+       /* array(
             'text' => 'Решение',
             'field' => 'decree'
-        ),
+        ),*/
         array(
             'text' => 'Дата принятия решения',
             'field' => 'decree_date'
@@ -99,7 +99,7 @@ class Controller_Admin_Archive extends Controller_Back
             'text' => 'Причина отказа',
             'field' => 'failure_cause'
         ),
-        array(
+        /*array(
             'text' => 'Дата отмены решения',
             'field' => 'decree_cancel_date'
         ),
@@ -118,7 +118,7 @@ class Controller_Admin_Archive extends Controller_Back
         array(
             'text' => '(ДОП) Дата принятия решения',
             'field' => 'extra_decree_date'
-        ),
+        ),*/
     );
 
     public function action_index()

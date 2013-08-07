@@ -75,10 +75,6 @@ class Model_Material extends ORM_Log
             'field' => 'characteristic'
         ),
         array(
-            'text' => 'Решение',
-            'field' => 'decree'
-        ),
-        array(
             'text' => 'Дата принятия решения',
             'field' => 'decree_date'
         ),
@@ -90,26 +86,7 @@ class Model_Material extends ORM_Log
             'text' => 'Причина отказа',
             'field' => 'failure_cause'
         ),
-        array(
-            'text' => 'Дата отмены решения',
-            'field' => 'decree_cancel_date'
-        ),
-        array(
-            'text' => '(ДОП) Следователь',
-            'field' => 'extra_investigator'
-        ),
-        array(
-            'text' => '(ДОП) Срок рассмотрения',
-            'field' => 'extra_period'
-        ),
-        array(
-            'text' => '(ДОП) Решение',
-            'field' => 'extra_decree'
-        ),
-        array(
-            'text' => '(ДОП) Дата принятия решения',
-            'field' => 'extra_decree_date'
-        ),
+
     );
 
     protected $_has_many = array(
@@ -136,11 +113,13 @@ class Model_Material extends ORM_Log
     {
         return array(
             'krsp_num'  => array(
-                array('digit'),
-                array(array($this, 'unique'), array('krsp_num', ':value'))
+                array('digit')
             ),
             'registration_date' => array(
                 array('date')
+            ),
+            'period_id' => array(
+                array('not_empty')
             ),
             'plot'  => array(
                 array('not_empty')
@@ -220,7 +199,7 @@ class Model_Material extends ORM_Log
                         {
                             $this->and_where_open();
                             foreach($values as $value){
-                                $this->or_where('article_id', 'LIKE', '%'.$value.'%');
+                                $this->or_where('article_id', '=', $value);
                             }
                             $this->and_where_close();
                         }
@@ -358,5 +337,48 @@ class Model_Material extends ORM_Log
 
         }
         return $this;
+    }
+
+    public static function render_filter_form($type = 'select')
+    {
+        $session = Session::instance();
+        $post_filters = $session->get('filters');
+        if($type == 'checkbox')
+        {
+            $sources = ORM::factory('source')->order_by('sort')->find_all();
+            $articles = ORM::factory('article')-> order_by('sort')->find_all();
+
+            $filters = View::factory('front/filters');
+        }
+        elseif($type == 'select')
+        {
+            $sources = ORM::factory('source')->order_by('sort')->find_all()->as_array('id', 'text');
+            $articles_value = ORM::factory('article')-> order_by('sort')->find_all()->as_array('id', 'value');
+            $articles_text = ORM::factory('article')-> order_by('sort')->find_all()->as_array('id', 'text');
+            foreach($articles_value as $key => $value){
+                $articles[$key] = $value.' - '.$articles_text[$key];
+            }
+            $investigators = ORM::factory('investigator')->order_by('sort')->find_all()->as_array('id', 'name');
+            $decrees = ORM::factory('decree')->order_by('sort')->find_all()->as_array('id', 'text');
+            $periods = ORM::factory('period')->order_by('sort')->find_all()->as_array('id', 'days');
+            $chars = ORM::factory('characteristic')->order_by('sort')->find_all()->as_array('id', 'text');
+            $failure_causes = ORM::factory('fcause')->order_by('sort')->find_all()->as_array('id', 'text');
+
+
+            $filters = View::factory('front/select_filters');
+        }
+
+        $filters->filters = $post_filters;
+        $filters->action = '/filter/change';
+        $filters->sources = $sources;
+        //$filters->articles = $articles;
+        $filters->invs = $investigators;
+        $filters->decrees = $decrees;
+        $filters->periods = $periods;
+        $filters->chars = $chars;
+        $filters->failure_causes = $failure_causes;
+        $filters->clear_filters = '/filter/alldelete/filters';
+
+        return $filters;
     }
 }

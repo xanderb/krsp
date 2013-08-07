@@ -65,6 +65,62 @@
         </div>
     </div>
 </fieldset>
+<fieldset id="article-input">
+    <legend>Статьи УК РФ</legend>
+    <div class="row-fluid">
+        <div class="span6 toin">
+            <?php
+            echo Form::label('articles', 'Поиск по статье');
+            if(isset($filters['articles']) AND is_array($filters['articles']) AND count($filters['articles']) > 0){
+                foreach($filters['articles'] as $k_filter => $filter)
+                {
+
+                    echo Form::input(
+                        'articles[]',
+                        isset($filters['articles'][$k_filter]) ? $filters['articles'][$k_filter] : NULL,
+                        array(
+                            'class' => 'span4 article-input',
+                            'id' => ($k_filter == 0 ? 'first-article-input' : '')
+                        )
+                    );
+                }
+                echo Form::input(
+                    'articles[]',
+                    NULL,
+                    array(
+                        'class' => 'span4 article-input',
+                        'id' => ''
+                    )
+                );
+            }
+            else
+            {
+                echo Form::input(
+                    'articles[]',
+                    isset($filters['articles'][0]) ? $filters['articles'][0] : NULL,
+                    array(
+                        'class' => 'span4 article-input',
+                        'id' => 'first-article-input',
+                    )
+                );
+            }
+            ?>
+
+        </div>
+        <div class="span5 offset1">
+            <?=Form::label('null-articles', 'Сообщения без статьи')?>
+            <?=Form::checkbox(
+                'articles',
+                'NULL',
+                isset($filters['articles']) AND !is_array($filters['articles']) ? TRUE : FALSE,
+                array(
+                    'class' => 'null_check',
+                    'id' => 'null-articles'
+                )
+            )?>
+        </div>
+    </div>
+</fieldset>
 <fieldset>
     <legend>Дата регистрации сообщения</legend>
     <?=Form::label('registration_date', 'Фильтрация по дате регистрации сообщения')?>
@@ -151,60 +207,6 @@ if(isset($sources))
 <?php
 }
 
-if(isset($articles))
-{
-    ?>
-    <fieldset id="article-input">
-        <legend>Статьи УК РФ</legend>
-        <div class="row-fluid">
-            <div class="span5 toin">
-                <?php
-                echo Form::label('articles', 'Поиск по статье');
-                if(isset($filters['articles']) AND is_array($filters['articles']) AND count($filters['articles']) > 0){
-                    foreach($filters['articles'] as $k_filter => $filter)
-                    {
-
-                        echo Form::input(
-                            'articles[]',
-                            isset($filters['articles'][$k_filter]) ? $filters['articles'][$k_filter] : NULL,
-                            array(
-                                'class' => 'span6 article-input',
-                                'id' => ($k_filter == 0 ? 'first-article-input' : '')
-                            )
-                        );
-                    }
-
-                }
-                else
-                {
-                    echo Form::input(
-                        'articles[]',
-                        isset($filters['articles'][0]) ? $filters['articles'][0] : NULL,
-                        array(
-                            'class' => 'span6 article-input',
-                            'id' => 'first-article-input',
-                        )
-                    );
-                }
-                ?>
-
-            </div>
-            <div class="span5 offset2">
-                <?=Form::label('null-articles', 'Сообщения без статьи')?>
-                <?=Form::checkbox(
-                    'articles',
-                    'NULL',
-                    isset($filters['articles']) AND !is_array($filters['articles']) ? TRUE : FALSE,
-                    array(
-                        'class' => 'null_check',
-                        'id' => 'null-articles'
-                    )
-                )?>
-            </div>
-        </div>
-    </fieldset>
-<?php
-}
 if(isset($invs))
 {
     ?>
@@ -550,7 +552,7 @@ if(isset($failure_causes))
 
 <?php
 }
-?>
+/*?>
 <fieldset>
     <legend>Дата отмены решения</legend>
     <div class="row-fluid">
@@ -804,10 +806,11 @@ if(isset($decrees))
         </div>
     </div>
 </fieldset>
+<?php */ ?>
 </div>
 <div class="modal-footer">
     <button class="btn" data-dismiss="modal">Закрыть</button>
-    <a class="btn btn-danger" href="/filter/alldelete">Сбросить фильтры</a>
+    <a class="btn btn-danger" href="<?=isset($clear_filters) ? $clear_filters : '/filter/alldelete'?>">Сбросить фильтры</a>
     <button class="btn btn-primary" name="filter-submit" id="filter-submit">Сохранить</button>
 </div>
 <?=Form::close()?>

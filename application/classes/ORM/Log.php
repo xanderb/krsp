@@ -49,7 +49,7 @@ class ORM_Log extends ORM {
                 'post_value'    =>  $this->_object[$column],
                 'ip'            =>  $_SERVER['REMOTE_ADDR'],
                 'client_info'   =>  serialize($_SERVER),
-                'cause'         =>  (!is_null(Arr::get($_POST, 'edit-cause', NULL)) ? Arr::get($_POST, 'edit-cause', NULL) : 'Исправление опечатки')
+                'cause'         =>  (!is_null(Arr::get($_POST, 'edit-cause', NULL)) ? Arr::get($_POST, 'edit-cause', NULL) : 'Добавление информации')
             );
             $log->values($log_values)->save();
         }

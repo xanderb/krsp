@@ -6,9 +6,22 @@
  * Time: 9:12
  * To change this template use File | Settings | File Templates.
  */
+$controller = Request::$current->controller();
+switch($controller)
+{
+    case 'Material':
+        $form_action = 'filter/change';
+        break;
+    case 'Archive':
+        $form_action = 'filter/change/archive_filters';
+        break;
+    default:
+        $form_action = 'filter/change';
+}
+//echo Debug::vars($controller);
 
 echo Form::open(
-    URL::site('filter/change'),
+    URL::site($form_action),
     array(
         'method'    => 'POST',
         'id'        => 'plot_search_form',

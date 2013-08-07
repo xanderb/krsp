@@ -23,6 +23,14 @@ class Controller_Front_Material extends Controller_Front
             'title' => 'Регистрация нового сообщения'
         ),
         array(
+            'href'  => '/extra/',
+            'text'  => 'ДОПы',
+            'type'  => 'n',
+            'class' => 'btn-inverse',
+            'tooltip' => 'tt',
+            'title' => 'ДОПы сообщений'
+        ),
+        array(
             'href'  => '/filter/decree_date/null',
             'text'  => 'В производстве',
             'type'  => 'n',
@@ -194,7 +202,7 @@ class Controller_Front_Material extends Controller_Front
 
         $page = Request::$current->param('page');
 
-        $filters = Help::render_filter_form();
+        $filters = Model_Material::render_filter_form('select');
         $sort = $this->session->get('sort');
 
         $materials = ORM_Log::factory('material')->where('archive', '=', '0');

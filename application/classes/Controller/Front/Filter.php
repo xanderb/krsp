@@ -23,16 +23,18 @@ class Controller_Front_Filter extends Controller_Front
 
     public function action_alldelete()
     {
-        $this->session->delete('filters');
+        $type = Request::$current->param('type', 'filters');
+        $this->session->delete($type);
         Controller::redirect(URL::site(Request::$current->referrer()));
     }
 
     public function action_change()
     {
+        $type = Request::$current->param('type', 'filters');
 
         if(isset($_POST['filter-submit']) OR (isset($_POST['krsp_num']) AND !empty($_POST['krsp_num'])))
         {
-            $this->session->delete('filters');
+            $this->session->delete($type);
             $prefilters = array(
                 'krsp_num'  => Arr::get($_POST, 'krsp_num', array()),
                 'registration_date' => Arr::get($_POST, 'registration_date', array()),
@@ -80,7 +82,7 @@ class Controller_Front_Filter extends Controller_Front
                 }
 
             }
-            $this->session->set('filters', $filters);
+            $this->session->set($type, $filters);
         }
         else
         {
@@ -91,7 +93,7 @@ class Controller_Front_Filter extends Controller_Front
                 $filters = array(
                     $f_var => $f_val,
                 );
-                $this->session->set('filters', $filters);
+                $this->session->set($type, $filters);
             }
         }
         //$this->template->debug = Debug::vars($_POST);

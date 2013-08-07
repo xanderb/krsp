@@ -1,54 +1,42 @@
 <?php
 /**
  * Created by JetBrains PhpStorm.
- * User: xanderb
- * Date: 29.07.13
- * Time: 13:37
+ * User: XanderB
+ * Date: 06.08.13
+ * Time: 22:11
  * To change this template use File | Settings | File Templates.
  */
 
-class Controller_Admin_Extra extends Controller_Back implements Controller_Admin_Crud
+class Controller_Front_Extra extends Controller_Front
 {
     public $back_menu = array(
         array(
             'text' => '<i class="icon-arrow-left"></i> Вернуться назад',
-            'href' => '/admin/extra',
+            'href' => '/extra',
             'type' => 'n'
         ),
 
     );
 
-    public $menu_to_cp = array(
-        array(
-            'href'  => '/admin/',
-            'text'  => '<i class="icon-arrow-left icon-white"></i> Вернуться в контрольную панель'
-        ),
-        array(
-            'href'  => '/admin/extra',
-            'text'  => '<i class="icon-folder-open icon-white"></i> ДОПы',
-            'class'  => 'btn-info'
-        ),
-        array(
-            'href'  => '/admin/material',
-            'text'  => '<i class="icon-folder-open icon-white"></i> Сообщения',
-            'class' => 'btn-info'
-        )
-    );
-
     public $sub_menus = array(
         array(
+            'text'  => '<i class="icon-th-list"></i> Сообщения',
+            'href'  => '/',
+            'type'  => 'n'
+        ),
+        array(
             'text'  => '<i class="icon-plus"></i> Добавить',
-            'href'  => '/admin/extra/add',
+            'href'  => '/extra/add',
             'type'  => 'n'
         ),
         array(
             'text'  => '<i class="icon-pencil"></i> Редактировать',
-            'href'  => '/admin/extra/edit',
+            'href'  => '/extra/edit',
             'type'  =>  'y'
         ),
         array(
             'text'  => '<i class="icon-trash"></i> Удалить',
-            'href'  => '/admin/extra/delete',
+            'href'  => '/extra/delete',
             'type'  => 'y'
         ),
     );
@@ -123,28 +111,81 @@ class Controller_Admin_Extra extends Controller_Back implements Controller_Admin
             ->select(array(DB::expr('COUNT(*)'), 'ecount'))
             ->join(array('extras', 'ej'), 'INNER')
             ->on('material.id', '=', 'ej.material_id')
-            //->distinct('material.id')
             ->group_by('ej.material_id')
             ->order_by('id', 'ASC')
             ->find_all();
         $extras = ORM_Log::factory('extra')->order_by('material_id', 'ASC')->order_by('decree_cancel_date', 'DESC')->find_all();
-        $view = View::factory('/back/extra_view');
+        $view = View::factory('/front/extra_view');
         $view->material_headers = $this->material_headers;
         $view->extra_headers = $this->extra_headers;
         $view->caption_material = "Сообщения";
         $view->caption_extra = "ДОПы";
         $view->materials = $materials;
         $view->extras = $extras;
-        $view->sub_admin_menus = $this->sub_menus;
+        $view->sub_menus = $this->sub_menus;
 
-        /*Рендер шаблона админка*/
-        $cp = View::factory('/back/control_panel');
-        $cp->p_title = "ДОПы";
-        $cp->admin_menus = $this->menu_to_cp;
-        $cp->content = $view;
+        $grid = View::factory('front/front_grid');
+        $grid->p_title = "ДОПы";
+        //$grid->filters = $filters;
+        $grid->top_content = $view;
+        /*$grid->left_content = $today_table;
+        $grid->right_content = $fail_table;*/
 
-        $this->template->body = $cp;
-        //$this->template->debug = Debug::vars($materials);
+        $this->template->body = $grid;
+
+    }
+    public function action_delete()
+    {
+        $id = Request::$current->param('id');
+
+        if(isset($id) AND $id > 0)
+        {
+            if(isset($_POST['id']))
+            {
+                $post_id = Arr::get($_POST, 'id', 0);
+                $deleted_extra = ORM::factory('extra', $post_id);
+                try
+                {
+                    $deleted_extra->delete();
+                    $content = View::factory('back/accept');
+                    $content->message = 'ДОП успешно удален';
+                    $content->back_path = '/extra';
+                    $content->back_path_text = 'Вернуться к ДОПам';
+                }
+                catch(Database_Exception $e)
+                {
+                    $content = View::factory('/back/error');
+                    $content->message = "Произошла ошибка во время удаления ДОПа: <br>".$e->getMessage();
+                    $content->back_path = '/extra';
+                    $content->back_path_text = 'Вернуться назад';
+                }
+            }
+            else
+            {
+                $deleted_extra = ORM::factory('extra', $id);
+                $content = View::factory('/back/delete');
+                $content->back_path = "/extra";
+                $content->back_path_text = "Вернуться назад";
+                $content->id = $id;
+                $content->delete_text =
+                    "Удалить ДОП сообщения №".(isset($deleted_extra->material->krsp_num) ? $deleted_extra->material->krsp_num : ' не задан')
+                    .' с датой отмены решения: '
+                    .date('d.m.Y', strtotime($deleted_extra->decree_cancel_date));
+            }
+        }
+        else
+        {
+            $content = View::factory('/back/error');
+            $content->message = 'Необходимо выбрать строку для удаления';
+            $content->back_path = '/admin/extra';
+            $content->back_path_text = 'Вернуться назад';
+        }
+
+        $grid = View::factory('front/front_grid');
+        $grid->p_title = "Удаление ДОПа";
+        $grid->top_content = $content;
+
+        $this->template->body = $grid;
     }
 
     public function action_add()
@@ -154,10 +195,34 @@ class Controller_Admin_Extra extends Controller_Back implements Controller_Admin
         $this->addScript('jquery.ui.datepicker-ru');
         $this->addScript('jui-plug');
         $this->addScript('extra-admin-table');
-        $material_id = Request::$current->param('id');
 
+        //Получаем параметры из адреса
+        $krsp_num = Request::$current->param('krsp', NULL);
+        $year = Request::$current->param('year', NULL);
+        //Ищем материал с введеными параметрами
+        $parent_material = ORM::factory('material')
+            ->where('krsp_num', '=', $krsp_num)
+            ->and_where('work_year', '=', $year)
+            ->and_where('archive', '=', 0)
+            ->offset(0)
+            ->limit(1)
+            ->find();
+
+        if(!is_null($krsp_num) AND !is_null($year) AND is_null($parent_material->id))
+        {
+            //если материала нет, то не задаем material_id и пишем ошибку
+            $material_id = NULL;
+            $wrap_error = 'Сообщения с введенными значениями не было найдено';
+        }
+        else
+        {
+            //если материал есть, задаем его id как material_id
+            $material_id = $parent_material->id;
+        }
+        $this->template->debug = Debug::vars($krsp_num, $year, $parent_material);
         if(isset($material_id) AND !is_null($material_id))
         {
+
             $investigators = ORM::factory('investigator')->find_all();
             $decrees = ORM::factory('decree')->find_all();
             $periods = ORM::factory('period')->find_all();
@@ -200,12 +265,12 @@ class Controller_Admin_Extra extends Controller_Back implements Controller_Admin
                     $new_extra->save();
                     $content = View::factory('/back/accept');
                     $content->message = 'Новый ДОП успешно добавлен';
-                    $content->back_path = '/admin/extra';
+                    $content->back_path = '/extra';
                     $content->back_path_text = 'Вернуться назад';
                 }
                 catch(ORM_Validation_Exception $e)
                 {
-                    $content = View::factory('/back/edit_extra');
+                    $content = View::factory('/front/edit_extra');
 
                     $content->extra = $new_extra;
                     $content->material_id = $material_id;
@@ -220,7 +285,7 @@ class Controller_Admin_Extra extends Controller_Back implements Controller_Admin
             }
             else
             {
-                $content = View::factory('/back/edit_extra');
+                $content = View::factory('/front/edit_extra');
                 $content->material_id = $material_id;
                 $content->sub_menus = $this->back_menu;
                 $content->legend = "Добавление ДОПа";
@@ -234,22 +299,23 @@ class Controller_Admin_Extra extends Controller_Back implements Controller_Admin
         }
         else
         {
-            $materials = ORM_Log::factory('material')->where('archive', '=', 0)->order_by('registration_date', 'DESC')->find_all();
-            $material_table = View::factory('/back/materials_table');
-            $material_table->caption = 'Список сообщений';
-            $material_table->datas = $materials;
-            $material_table->t_headers = Model_Material::$t_headers;
+            $this->addScript('extra-wrapper');
+            $content = View::factory('/front/extra_wrapper');
+            if(isset($wrap_error))
+                $content->error = $wrap_error;
 
-            $content = View::factory('/back/extra_wrapper');
-            $content->content = $material_table;
+            $krsp_num_obj = ORM::factory('material')->select('krsp_num')->distinct('krsp_num')->group_by('krsp_num')->having('krsp_num', '!=', NULL)->find_all();
+            $year_obj = ORM::factory('material')->select('work_year')->distinct('work_year')->group_by('work_year')->having('work_year', '!=', NULL)->find_all();
+            $content->krsps = Help::array_to_string($krsp_num_obj->as_array(NULL, 'krsp_num'));
+            $content->years = Help::array_to_string($year_obj->as_array(NULL, 'work_year'));
         }
 
-        $cp = View::factory('/back/control_panel');
-        $cp->p_title = "Добавление ДОПа";
-        $cp->admin_menus = $this->menu_to_cp;
-        $cp->content = $content;
+        $grid = View::factory('/front/front_grid');
+        $grid->p_title = "Добавление ДОПа";
+        $grid->admin_menus = $this->back_menu;
+        $grid->top_content = $content;
 
-        $this->template->body = $cp;
+        $this->template->body = $grid;
     }
 
     public function action_edit()
@@ -296,12 +362,12 @@ class Controller_Admin_Extra extends Controller_Back implements Controller_Admin
                     $extra->save();
                     $content = View::factory('/back/accept');
                     $content->message = 'ДОП успешно изменен';
-                    $content->back_path = '/admin/extra';
+                    $content->back_path = '/extra';
                     $content->back_path_text = 'Вернуться назад';
                 }
                 catch(ORM_Validation_Exception $e)
                 {
-                    $content = View::factory('/back/edit_extra');
+                    $content = View::factory('/front/edit_extra');
                     $content->material_id = $extra->material->id;
                     $content->sub_menus = $this->back_menu;
                     $content->legend = "Редактирование ДОПа";
@@ -317,7 +383,7 @@ class Controller_Admin_Extra extends Controller_Back implements Controller_Admin
             }
             else
             {
-                $content = View::factory('/back/edit_extra');
+                $content = View::factory('/front/edit_extra');
                 $content->material_id = $extra->material->id;
                 $content->sub_menus = $this->back_menu;
                 $content->legend = "Редактирование ДОПа";
@@ -334,69 +400,15 @@ class Controller_Admin_Extra extends Controller_Back implements Controller_Admin
         {
             $content = View::factory('/back/error');
             $content->message = 'Необходимо выбрать ДОП для редактирования';
-            $content->back_path = '/admin/extra';
+            $content->back_path = '/extra';
             $content->back_path_text = 'Вернуться назад';
         }
 
-        $cp = View::factory('/back/control_panel');
-        $cp->p_title = "ДОПы";
-        $cp->admin_menus = $this->menu_to_cp;
-        $cp->content = $content;
+        $grid = View::factory('/front/front_grid');
+        $grid->p_title = "Изменение ДОПа";
+        $grid->admin_menus = $this->back_menu;
+        $grid->top_content = $content;
 
-        $this->template->body = $cp;
+        $this->template->body = $grid;
     }
-
-    public function action_delete()
-    {
-        $id = Request::$current->param('id');
-
-        if(isset($id) AND $id > 0)
-        {
-            if(isset($_POST['id']))
-            {
-                $post_id = Arr::get($_POST, 'id', 0);
-                $deleted_extra = ORM::factory('extra', $post_id);
-                try
-                {
-                    $deleted_extra->delete();
-                    $content = View::factory('back/accept');
-                    $content->message = 'ДОП успешно удален';
-                    $content->back_path = '/admin/extra';
-                    $content->back_path_text = 'Вернуться к ДОПам';
-                }
-                catch(Database_Exception $e)
-                {
-                    $content = View::factory('/back/error');
-                    $content->message = "Произошла ошибка во время удаления ДОПа: <br>".$e->getMessage();
-                    $content->back_path = '/admin/extra';
-                    $content->back_path_text = 'Вернуться назад';
-                }
-            }
-            else
-            {
-                $deleted_extra = ORM::factory('extra', $id);
-                $content = View::factory('/back/delete');
-                $content->back_path = "/admin/extra";
-                $content->back_path_text = "Вернуться назад";
-                $content->id = $id;
-                $content->delete_text =
-                    "Удалить ДОП сообщения №".(isset($deleted_extra->material->krsp_num) ? $deleted_extra->material->krsp_num : ' не задан')
-                    .' с датой отмены решения: '
-                    .date('d.m.Y', strtotime($deleted_extra->decree_cancel_date));
-            }
-        }
-        else
-        {
-            $content = View::factory('/back/error');
-            $content->message = 'Необходимо выбрать строку для удаления';
-            $content->back_path = '/admin/extra';
-            $content->back_path_text = 'Вернуться назад';
-        }
-
-        $admin_view = View::factory('/back/control_panel');
-        $admin_view->p_title = 'Удаление ДОПа';
-        $admin_view->content = $content;
-        $this->template->body = $admin_view;
-    }
-
 }

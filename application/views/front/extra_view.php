@@ -6,11 +6,11 @@
  * Time: 16:47
  * To change this template use File | Settings | File Templates.
  */
-if(isset($sub_admin_menus)){
+if(isset($sub_menus)){
     ?>
     <div class="sub_menu">
         <?php
-        foreach($sub_admin_menus as $item){
+        foreach($sub_menus as $item){
             ?>
             <a class="btn <?php
             if($item['type'] == 'y')

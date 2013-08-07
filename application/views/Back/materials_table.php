@@ -96,7 +96,7 @@ if(isset($total_materials) AND isset($badges))
                         ?>
                         </ul>
                     </td>
-                    <td><?=$data->decree->text?></td>
+                    <?php /*<td><?=$data->decree->text?></td> */?>
                     <td><?=!is_null($data->decree_date)? date('d.m.Y H:i:s', strtotime($data->decree_date)) : ''?></td>
                     <td><?=isset($data->period->days) ? $data->period->days.' дня(ей)' : ''?></td>
                     <td><?=$data->failure_cause->text?></td>

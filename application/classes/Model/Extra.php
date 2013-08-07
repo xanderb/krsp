@@ -31,14 +31,35 @@ class Model_Extra extends ORM_Log
         'user'  => array(
             'model'         => 'user',
             'foreign_key'   => 'user_id'
-        )
-    );
-
-    protected $_has_one = array(
+        ),
         'parent'    => array(
             'model'         => 'extra',
             'foreign_key'   => 'parent_extra_id'
         )
     );
+
+    protected $_has_one = array(
+
+    );
+
+    public function rules()
+    {
+        return array(
+            'decree_cancel_date' => array(
+                array('not_empty'),
+                array('date')
+            ),
+            'material_id' => array(
+                array('not_empty')
+            ),
+            'period_id' => array(
+                array('not_empty')
+            ),
+            'decree_date' => array(
+                array('date')
+            ),
+
+        );
+    }
 
 }

@@ -31,7 +31,7 @@ class Controller_Admin_Period extends Controller_Back implements Controller_Admi
         ),
         array(
             'href'  => '/admin/material',
-            'text'  => '<i class="icon-list-alt icon-white"></i> Материалы',
+            'text'  => '<i class="icon-th-list icon-white"></i> Материалы',
             'class' => 'btn-info'
         )
     );

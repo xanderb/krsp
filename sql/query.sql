@@ -37,4 +37,7 @@ ALTER TABLE `extras`
   ADD CONSTRAINT `extras_ibfk_5` FOREIGN KEY (`decree_id`) REFERENCES `decrees` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE `kohana`.`materials` DROP INDEX `krsp_num` ,
-ADD INDEX `krsp_num` ( `krsp_num` )
+ADD INDEX `krsp_num` ( `krsp_num` );
+
+ALTER TABLE `materials` ADD `work_year` YEAR NULL ,
+ADD INDEX ( `work_year` )

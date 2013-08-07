@@ -21,6 +21,9 @@ $(function(){
         if($('.js-p.changed').length < 1){
             hrefs = [];
         }
+        if($('.js-f.changed').length < 1){
+            actions = [];
+        }
 
         $('.js-p').each(function(n, val){
             if($(this).hasClass('changed') == false){
@@ -30,6 +33,15 @@ $(function(){
             var href = hrefs[n];
             href = href + "/" +row_id;
             $(this).attr('href', href);
+        });
+        $('.js-f').each(function(n, val){
+            if($(this).hasClass('changed') == false){
+                actions[n] = $(val).prop('action');
+                $(this).addClass('changed');
+            }
+            var action = actions[n];
+            action = action + "/" +row_id;
+            $(this).prop('action', action);
         });
     });
 });

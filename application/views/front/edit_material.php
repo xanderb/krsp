@@ -191,7 +191,7 @@ echo Form::hidden('id', (isset($material)) ? $material->id: NULL);?>
                 'investigator_id',
                 (isset($material) ? $material->inv->name : NULL),
                 array(
-                    'id' => 'source',
+                    'id' => 'investigator',
                     'class' => 'span2',
                     'disabled' => (isset($material->inv->name) ? 'disabled' : NULL),
                     'placeholder' => 'Введите следователя',

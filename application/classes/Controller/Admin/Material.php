@@ -97,10 +97,10 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
             'text' => 'Характеристика',
             'field' => 'characteristic'
         ),
-        array(
+       /* array(
             'text' => 'Решение',
             'field' => 'decree'
-        ),
+        ),*/
         array(
             'text' => 'Дата принятия решения',
             'field' => 'decree_date'
@@ -144,8 +144,8 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
         $materials = ORM_Log::factory('material')
             ->where('archive', '=', 0)
             ->order_by('registration_date', 'DESC')
-            ->limit($this->config->items_per_page)
-            ->offset((isset($page) ? ($page-1)*$this->config->items_per_page : 0))
+            //->limit($this->config->items_per_page)
+            //->offset((isset($page) ? ($page-1)*$this->config->items_per_page : 0))
             ->find_all();
         $content = View::factory('/back/materials_table');
         $content->t_headers = $this->t_headers;

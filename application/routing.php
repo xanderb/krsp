@@ -1,4 +1,4 @@
-<?php
+ <?php
 /**
  * Created by JetBrains PhpStorm.
  * User: XanderB
@@ -28,6 +28,24 @@ Route::set('prints', 'print(/<type>)')
         'directory'  => 'front',
         'controller' => 'material',
         'action'     => 'print',
+    ));
+Route::set('extra_add', 'extra/add(/<krsp>(/<year>))')
+     ->defaults(array(
+         'directory'  => 'front',
+         'controller' => 'extra',
+         'action'     => 'add',
+     ));
+Route::set('change_filters', 'filter/change(/<type>)')
+ ->defaults(array(
+     'directory'  => 'front',
+     'controller' => 'filter',
+     'action'     => 'change',
+ ));
+Route::set('clear_filters', 'filter/alldelete(/<type>)')
+     ->defaults(array(
+         'directory'  => 'front',
+         'controller' => 'filter',
+         'action'     => 'alldelete',
     ));
 Route::set('get_filters', 'filter/<var>/<val>')
     ->defaults(array(

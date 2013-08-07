@@ -25,6 +25,11 @@ class Controller_Admin_Cp extends Controller_Back
             'class' => 'btn-info'
         ),
         array(
+            'text'  => 'ДОПы',
+            'href'  => '/admin/extra',
+            'class' => 'btn-info'
+        ),
+        array(
             'text'  => 'Архив сообщений',
             'href'  => '/admin/archive',
             'class' => 'btn-info'
