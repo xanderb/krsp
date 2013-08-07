@@ -438,6 +438,8 @@ class Controller_Front_Material extends Controller_Front
                 $new_material->add_date = date('Y-m-d H:i:s', time()); //Время добавления записи
 
                 $chars_array = Arr::get($_POST, 'chars', NULL);
+
+                $new_material->set_work_year();
                 try
                 {
                     $new_material->save();
@@ -583,6 +585,8 @@ class Controller_Front_Material extends Controller_Front
                     }
 
                     $chars_array = Arr::get($_POST, 'chars', NULL);
+
+                    $material->set_work_year();
                     try
                     {
                         $material->save();

@@ -300,7 +300,7 @@ class Model_Material extends ORM_Log
         );
         if(is_null($sort))
         {
-            $this->order_by('add_date', 'DESC');
+            $this->order_by('registration_date', 'DESC');
         }
         else
         {
@@ -380,5 +380,26 @@ class Model_Material extends ORM_Log
         $filters->clear_filters = '/filter/alldelete/filters';
 
         return $filters;
+    }
+
+    //Метод для автоматического указания года производства
+    public function set_work_year()
+    {
+        if(!is_null($this->decree_date))
+        {
+            $year = date('Y', strtotime($this->decree_date));
+            $this->work_year = $year;
+        }
+        else
+        {
+            if(!is_null($this->registration_date))
+            {
+                $year = date('Y', strtotime($this->registration_date));
+                $this->work_year = $year;
+            }
+            else
+                $this->work_year = date('Y', time());
+        }
+        return $this;
     }
 }

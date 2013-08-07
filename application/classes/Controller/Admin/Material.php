@@ -219,6 +219,8 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
             $new_material->add_date = date('Y-m-d H:i:s', time()); //Время добавления записи
 
             $chars_array = Arr::get($_POST, 'chars', NULL);
+
+            $new_material->set_work_year();
             try
             {
                 $new_material->save();
@@ -320,6 +322,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
                 }
 
                 $chars_array = Arr::get($_POST, 'chars', NULL);
+                $material_info->set_work_year();
                 try
                 {
                     $material_info->save();
