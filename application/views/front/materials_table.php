@@ -58,6 +58,7 @@ if(isset($total_materials) AND isset($badges))
             <?php
             foreach($t_headers as $h){
                 ?>
+
                 <th <?php echo ($h['field'] == 'id' ? 'class="hid"' : NULL);?>>
                     <?php
                     if(!isset($sort) OR count($sort) < 1)
@@ -113,7 +114,7 @@ if(isset($total_materials) AND isset($badges))
                 ?>
                 <tr class="js-row">
                     <td class="js-id hid"><?=$data->id?></td>
-                    <td><?=$data->krsp_num?></td>
+                    <td><?=$data->krsp_num?><?=isset($data->krsp_num) ? 'пр'.substr($data->work_year, 2, 2) : NULL?></td>
                     <td><?=date('d.m.Y', strtotime($data->registration_date))?></td>
                     <td><?=$data->source->text?></td>
                     <td class="word-wrap">
@@ -123,7 +124,7 @@ if(isset($total_materials) AND isset($badges))
                     </td>
                     <td><?=$data->article_id?></td>
                     <td><?=$data->inv->name?></td>
-                    <td>
+                    <td class="char-wrap">
                         <?php
                         $chars = $data->characteristic->find_all();
                         ?>

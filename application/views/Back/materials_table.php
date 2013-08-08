@@ -82,7 +82,7 @@ if(isset($total_materials) AND isset($badges))
                     </td>
                     <td><?=$data->article_id?></td>
                     <td><?=$data->inv->name?></td>
-                    <td>
+                    <td class="char-wrap">
                         <?php
                         $chars = $data->characteristic->find_all();
                         ?>

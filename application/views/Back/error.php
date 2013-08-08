@@ -7,10 +7,12 @@
  * To change this template use File | Settings | File Templates.
  */
 ?>
-<div class="span12">
-    <h1>Ошибка!</h1>
-    <div class="alert alert-error">
-        <?=$message?>
+<div class="row-fluid">
+    <div class="span12">
+        <h1>Ошибка!</h1>
+        <div class="alert alert-error">
+            <?=$message?>
+        </div>
+        <a class="btn" href="<?=$back_path?>"><?=$back_path_text?></a>
     </div>
-    <a class="btn" href="<?=$back_path?>"><?=$back_path_text?></a>
 </div>

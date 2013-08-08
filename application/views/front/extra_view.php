@@ -64,7 +64,7 @@ if($materials->count() AND $extras->count())
                     ?>
                 <tr class="toggler" tab-toggle="<?=$material->id?>">
                     <td class="hid"><?=$material->id?></td>
-                    <td><?=$material->krsp_num?></td>
+                    <td><?=$material->krsp_num?><?=isset($material->krsp_num) ? 'пр'.substr($material->work_year, 2, 2) : NULL?></td>
                     <td><?=$material->inv->name?></td>
                     <td><?=$material->article_id?></td>
                     <td><?=!is_null($material->registration_date) ? date('d.m.Y', strtotime($material->registration_date)) : ''?></td>

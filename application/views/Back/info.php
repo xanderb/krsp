@@ -7,7 +7,6 @@
  * To change this template use File | Settings | File Templates.
  */
 ?>
-<div class="span12">
     <div class="row-fluid">
         <div class="span6">
             <table class="table table-striped">
@@ -121,4 +120,3 @@
         ?>
 
     </div>
-</div>

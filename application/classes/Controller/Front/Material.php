@@ -102,7 +102,7 @@ class Controller_Front_Material extends Controller_Front
         ),
         array(
             'text' => 'Характеристика',
-            'field' => 'characteristic'
+            'field' => 'characteristic',
         ),
         /*array(
             'text' => 'Решение',
