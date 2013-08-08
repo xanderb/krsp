@@ -106,15 +106,22 @@ class Controller_Front_Extra extends Controller_Front
     public function action_index()
     {
         $this->addScript('extra-admin-table');
+        $this->addScript('filters');
+        $this->addScript('datepicker.10.3.min');
+        $this->addStyle('ui.10.3.min');
+        $this->addScript('jquery.ui.datepicker-ru');
 
+        $filters = Model_Extra::render_filter_form('select');
         $materials = ORM_Log::factory('material')
             ->select(array(DB::expr('COUNT(*)'), 'ecount'))
             ->join(array('extras', 'ej'), 'INNER')
             ->on('material.id', '=', 'ej.material_id')
+            ->where('material.archive', '=', 0)
+            ->add_sub_extra_filters('ej', $this->session->get('extra_filters'))
             ->group_by('ej.material_id')
             ->order_by('id', 'ASC')
             ->find_all();
-        $extras = ORM_Log::factory('extra')->order_by('material_id', 'ASC')->order_by('decree_cancel_date', 'DESC')->find_all();
+        $extras = ORM_Log::factory('extra')->add_filters($this->session->get('extra_filters'))->order_by('material_id', 'ASC')->order_by('decree_cancel_date', 'DESC')->find_all();
         $view = View::factory('/front/extra_view');
         $view->material_headers = $this->material_headers;
         $view->extra_headers = $this->extra_headers;
@@ -126,10 +133,16 @@ class Controller_Front_Extra extends Controller_Front
 
         $grid = View::factory('front/front_grid');
         $grid->p_title = "ДОПы";
-        //$grid->filters = $filters;
+        $grid->filters = $filters;
         $grid->top_content = $view;
         /*$grid->left_content = $today_table;
         $grid->right_content = $fail_table;*/
+
+        $filter_button = View::factory('front/filter_button');
+        if(count($this->session->get('extra_filters')) > 0)
+            $filter_button->success = 'success';
+        $filter_button->text = "Фильтры по ДОПам";
+        $this->template->filter_button = $filter_button;
 
         $this->template->body = $grid;
 
@@ -293,8 +306,6 @@ class Controller_Front_Extra extends Controller_Front
                 $content->inv_text = Help::array_to_string($investigators->as_array('id', 'name'));
                 $content->decrees = $decrees->as_array('id', 'text');
                 $content->periods = $periods->as_array('id', 'days');
-
-
             }
         }
         else
@@ -308,6 +319,7 @@ class Controller_Front_Extra extends Controller_Front
             $year_obj = ORM::factory('material')->select('work_year')->distinct('work_year')->group_by('work_year')->having('work_year', '!=', NULL)->find_all();
             $content->krsps = Help::array_to_string($krsp_num_obj->as_array(NULL, 'krsp_num'));
             $content->years = Help::array_to_string($year_obj->as_array(NULL, 'work_year'));
+            $content->sub_menus = $this->back_menu;
         }
 
         $grid = View::factory('/front/front_grid');

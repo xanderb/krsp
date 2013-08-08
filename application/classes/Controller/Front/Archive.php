@@ -110,6 +110,7 @@ class Controller_Front_Archive extends Controller_Front
     public function action_index()
     {
         $this->addScript('front');
+        $this->addScript('filters');
         $this->addScript('datepicker.10.3.min');
         $this->addStyle('ui.10.3.min');
         $this->addScript('jquery.ui.datepicker-ru');
@@ -229,6 +230,7 @@ class Controller_Front_Archive extends Controller_Front
         $this->template->filter_button = View::factory('front/filter_button');
         if(count($this->session->get('archive_filters')) > 0)
             $this->template->filter_button->success = TRUE;
+        $this->template->filter_button->text = 'Фильтр архивных сообщений';
 
         $this->template->debug = Debug::vars($this->session);
     }

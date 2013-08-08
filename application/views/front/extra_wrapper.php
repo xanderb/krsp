@@ -6,6 +6,23 @@
  * Time: 16:04
  * To change this template use File | Settings | File Templates.
  */
+if(isset($sub_menus)){
+    ?>
+    <div class="sub_menu">
+        <?php
+        foreach($sub_menus as $item){
+            ?>
+            <a class="btn <?php
+            if($item['type'] == 'y')
+                echo 'js-p';
+            ?>" href="<?=$item['href']?>"><?=$item['text']?></a>
+        <?php
+        }
+        ?>
+    </div>
+<?php
+}
+
 if(isset($error))
 {
     ?>

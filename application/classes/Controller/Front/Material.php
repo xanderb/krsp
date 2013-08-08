@@ -196,6 +196,7 @@ class Controller_Front_Material extends Controller_Front
 	public function action_index()
 	{
         $this->addScript('front');
+        $this->addScript('filters');
         $this->addScript('datepicker.10.3.min');
         $this->addStyle('ui.10.3.min');
         $this->addScript('jquery.ui.datepicker-ru');

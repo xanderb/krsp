@@ -287,6 +287,60 @@ class Model_Material extends ORM_Log
         return $this;
     }
 
+    public function add_sub_extra_filters($sub, $filters = NULL)
+    {
+        if(isset($filters) AND is_array($filters))
+        {
+            foreach($filters as $key => $values)
+            {
+                switch($key)
+                {
+                    case 'investigators':
+                        if(is_array($values))
+                            $this->and_where($sub.'.'.'investigator_id', 'IN', $values);
+                        else
+                            $this->and_where($sub.'.'.'investigator_id', '=', NULL);
+                        break;
+                    case 'decrees':
+                        if(is_array($values))
+                            $this->and_where($sub.'.'.'decree_id', 'IN', $values);
+                        else
+                            $this->and_where($sub.'.'.'decree_id', '=', NULL);
+                        break;
+                    case 'periods':
+                        $this->and_where($sub.'.'.'period_id', 'IN', $values);
+                        break;
+                    case 'decree_date':
+                    case 'decree_cancel_date':
+                        if(is_array($values))
+                        {
+                            if(count($values) > 1)
+                            {
+                                $from = date('Y-m-d 00:00:00', strtotime($values[0]));
+                                $to = date('Y-m-d 23:59:59', strtotime($values[1]));
+                                $this->and_where_open()->where($sub.'.'.$key, '>=', $from)->and_where($sub.'.'.$key, '<=', $to)->and_where_close();
+                            }
+                            elseif(isset($values[0]))
+                            {
+                                $from = date('Y-m-d 00:00:00', strtotime($values[0]));
+                                $this->and_where($sub.'.'.$key, '>=', $from);
+                            }
+                            elseif(isset($values[1]))
+                            {
+                                $to = date('Y-m-d 23:59:59', strtotime($values[1]));
+                                $this->and_where($sub.'.'.$key, '<=', $to);
+                            }
+                        }
+                        else
+                            $this->and_where($sub.'.'.$key, '=', NULL);
+                        break;
+                }
+            }
+        }
+
+        return $this;
+    }
+
     public function add_sort($sort = NULL)
     {
         $without_join = array(

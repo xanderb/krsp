@@ -62,4 +62,93 @@ class Model_Extra extends ORM_Log
         );
     }
 
+    public function add_filters($filters = NULL)
+    {
+        if(isset($filters) AND is_array($filters))
+        {
+            foreach($filters as $key => $values)
+            {
+                switch($key)
+                {
+                    case 'investigators':
+                        if(is_array($values))
+                            $this->and_where('investigator_id', 'IN', $values);
+                        else
+                            $this->and_where('investigator_id', '=', NULL);
+                        break;
+                    case 'decrees':
+                        if(is_array($values))
+                            $this->and_where('decree_id', 'IN', $values);
+                        else
+                            $this->and_where('decree_id', '=', NULL);
+                        break;
+                    case 'periods':
+                        $this->and_where('period_id', 'IN', $values);
+                        break;
+                    case 'decree_date':
+                    case 'decree_cancel_date':
+                        if(is_array($values))
+                        {
+                            if(count($values) > 1)
+                            {
+                                $from = date('Y-m-d 00:00:00', strtotime($values[0]));
+                                $to = date('Y-m-d 23:59:59', strtotime($values[1]));
+                                $this->and_where_open()->where($key, '>=', $from)->and_where($key, '<=', $to)->and_where_close();
+                            }
+                            elseif(isset($values[0]))
+                            {
+                                $from = date('Y-m-d 00:00:00', strtotime($values[0]));
+                                $this->and_where($key, '>=', $from);
+                            }
+                            elseif(isset($values[1]))
+                            {
+                                $to = date('Y-m-d 23:59:59', strtotime($values[1]));
+                                $this->and_where($key, '<=', $to);
+                            }
+                        }
+                        else
+                            $this->and_where($key, '=', NULL);
+                        break;
+                }
+            }
+        }
+
+        return $this;
+    }
+
+    public static function render_filter_form($type = 'select')
+    {
+        $session = Session::instance();
+        $post_filters = $session->get('extra_filters');
+        if($type == 'checkbox')
+        {
+
+        }
+        elseif($type == 'select')
+        {
+            $articles_value = ORM::factory('article')-> order_by('sort')->find_all()->as_array('id', 'value');
+            $articles_text = ORM::factory('article')-> order_by('sort')->find_all()->as_array('id', 'text');
+            foreach($articles_value as $key => $value){
+                $articles[$key] = $value.' - '.$articles_text[$key];
+            }
+            $investigators = ORM::factory('investigator')->order_by('sort')->find_all()->as_array('id', 'name');
+            $decrees = ORM::factory('decree')->order_by('sort')->find_all()->as_array('id', 'text');
+            $periods = ORM::factory('period')->order_by('sort')->find_all()->as_array('id', 'days');
+
+
+
+            $filters = View::factory('front/extra_filters');
+        }
+
+        $filters->filters = $post_filters;
+        $filters->action = '/filter/change/extra_filters';
+
+        $filters->invs = $investigators;
+        $filters->decrees = $decrees;
+        $filters->periods = $periods;
+
+        $filters->clear_filters = '/filter/alldelete/extra_filters';
+
+        return $filters;
+    }
 }

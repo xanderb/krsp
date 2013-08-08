@@ -408,7 +408,7 @@ if(isset($decrees))
             <?=Form::label('decree_date', 'Фильтрация по дате принятия решения')?>
             <?php echo Form::input(
                 'decree_date[0]',
-                isset($filters['decree_date'][0]) AND is_array($filters['decree_date']) ? $filters['decree_date'][0] : NULL,
+                isset($filters['decree_date'][0]) ? $filters['decree_date'][0] : NULL,
                 array(
                     'class' => 'span4 datepicker',
                     'id' => 'decree_date_from'
@@ -416,7 +416,7 @@ if(isset($decrees))
             ).' - '.
                 Form::input(
                     'decree_date[1]',
-                    isset($filters['decree_date'][1]) AND is_array($filters['decree_date']) ? $filters['decree_date'][1] : NULL,
+                    isset($filters['decree_date'][1]) ? $filters['decree_date'][1] : NULL,
                     array(
                         'class' => 'span4 datepicker',
                         'id' => 'decree_date_to'
@@ -491,7 +491,7 @@ if(isset($failure_causes))
 {
     ?>
     <fieldset id="failure_cause-select">
-        <legend>Причины для отмены решения</legend>
+        <legend>Причины отказа</legend>
         <div class="row-fluid">
             <div class="span7">
                 <?php
@@ -506,7 +506,7 @@ if(isset($failure_causes))
                                 'class' => 'failure_cause-select block',
                                 'id' => ($k_filter == 0 ? 'first-failure_cause-select' : '')
                             ),
-                            array('' => '=Причина для отмены решения='),
+                            array('' => '=Причина отказа='),
                             TRUE
                         );
                     }
@@ -517,7 +517,7 @@ if(isset($failure_causes))
                         array(
                             'class' => 'failure_cause-select block',
                         ),
-                        array('' => '=Причина для отмены решения='),
+                        array('' => '=Причина отказа='),
                         TRUE
                     );
                 }else{
@@ -529,14 +529,14 @@ if(isset($failure_causes))
                             'class' => 'failure_cause-select block',
                             'id' => 'first-failure_cause-select',
                         ),
-                        array('' => '=Причина для отмены решения='),
+                        array('' => '=Причина отказа='),
                         TRUE
                     );
                 }
                 ?>
             </div>
             <div class="span5">
-                <?=Form::label('null-failure_causes', 'Сообщения без причин отмены решения')?>
+                <?=Form::label('null-failure_causes', 'Сообщения без причин отказа')?>
                 <?=Form::checkbox(
                     'failure_causes',
                     'NULL',
@@ -552,261 +552,7 @@ if(isset($failure_causes))
 
 <?php
 }
-/*?>
-<fieldset>
-    <legend>Дата отмены решения</legend>
-    <div class="row-fluid">
-        <div class="span7">
-            <?=Form::label('decree_cancel_date', 'Фильтрация по дате отмены решения')?>
-            <?php echo Form::input(
-                'decree_cancel_date[0]',
-                isset($filters['decree_cancel_date'][0]) AND is_array($filters['decree_cancel_date']) ? $filters['decree_cancel_date'][0] : NULL,
-                array(
-                    'class' => 'span4 datepicker',
-                    'id' => 'decree_cancel_date_from'
-                )
-            ).' - '.
-                Form::input(
-                    'decree_cancel_date[1]',
-                    isset($filters['decree_cancel_date'][1]) AND is_array($filters['decree_cancel_date']) ? $filters['decree_cancel_date'][1] : NULL,
-                    array(
-                        'class' => 'span4 datepicker',
-                        'id' => 'decree_cancel_date_to'
-                    )
-                )?>
-        </div>
-        <div class="span5">
-            <?=Form::label('null-decree_cancel_date', 'Сообщения без даты отмены решения')?>
-            <?=Form::checkbox(
-                'decree_cancel_date',
-                'NULL',
-                isset($filters['decree_cancel_date']) AND !is_array($filters['decree_cancel_date']) ? TRUE : FALSE,
-                array(
-                    'class' => 'null_check',
-                    'id' => 'null-decree_cancel_date'
-                )
-            )?>
-        </div>
-    </div>
-</fieldset>
-<?php
-if(isset($invs))
-{
-    ?>
-    <fieldset id="extra_invest-select">
-        <legend>(ДОП) Следователи</legend>
-        <div class="row-fluid">
-            <div class="span7">
-                <?php
-                if(isset($filters['extra_investigators']) AND is_array($filters['extra_investigators']) AND count($filters['extra_investigators']) > 0){
-                    foreach($filters['extra_investigators'] as $k_filter => $filter)
-                    {
-                        echo Help::select(
-                            'extra_investigators[]',
-                            $invs,
-                            $filter,
-                            array(
-                                'class' => 'extra_invest-select block',
-                                'id' => ($k_filter == 0 ? 'first-extra_invest-select' : '')
-                            ),
-                            array('' => '=(ДОП) Следователи='),
-                            TRUE
-                        );
-                    }
-                    echo Help::select(
-                        'extra_investigators[]',
-                        $invs,
-                        NULL,
-                        array(
-                            'class' => 'extra_invest-select block',
-                        ),
-                        array('' => '=(ДОП) Следователи='),
-                        TRUE
-                    );
-                }else{
-                    echo Help::select(
-                        'extra_investigators[]',
-                        $invs,
-                        isset($filters['extra_investigators'][0]) ? $filters['extra_investigators'][0] : NULL,
-                        array(
-                            'class' => 'extra_invest-select block',
-                            'id' => 'first-extra_invest-select',
-                        ),
-                        array('' => '=(ДОП) Следователи='),
-                        TRUE
-                    );
-                }
-                ?>
-            </div>
-            <div class="span5">
-                <?=Form::label('null-extra_investigators', 'Сообщения без (ДОП) следователя')?>
-                <?=Form::checkbox(
-                    'extra_investigators',
-                    'NULL',
-                    isset($filters['extra_investigators']) AND !is_array($filters['extra_investigators']) ? TRUE : FALSE,
-                    array(
-                        'class' => 'null_check',
-                        'id' => 'null-extra_investigators'
-                    )
-                )?>
-            </div>
-        </div>
-    </fieldset>
-<?php
-}
-
-if(isset($periods))
-{
-    ?>
-    <fieldset id="extra_period-select">
-        <legend>(ДОП) Сроки рассмотрения сообщений</legend>
-        <?php
-        if(isset($filters['extra_periods']) AND count($filters['extra_periods']) > 0){
-            foreach($filters['extra_periods'] as $k_filter => $filter)
-            {
-                echo Help::select(
-                    'extra_periods[]',
-                    $periods,
-                    $filter,
-                    array(
-                        'class' => 'extra_period-select block',
-                        'id' => ($k_filter == 0 ? 'first-extra_period-select' : '')
-                    ),
-                    array('' => '=(ДОП) Срок рассмотрения='),
-                    TRUE
-                );
-            }
-            echo Help::select(
-                'extra_periods[]',
-                $periods,
-                NULL,
-                array(
-                    'class' => 'extra_period-select block',
-                ),
-                array('' => '=(ДОП) Срок рассмотрения='),
-                TRUE
-            );
-        }else{
-            echo Help::select(
-                'extra_periods[]',
-                $periods,
-                isset($filters['extra_periods'][0]) ? $filters['extra_periods'][0] : NULL,
-                array(
-                    'class' => 'extra_period-select block',
-                    'id' => 'first-extra_period-select',
-                ),
-                array('' => '=(ДОП) Срок рассмотрения='),
-                TRUE
-            );
-        }
-        ?>
-    </fieldset>
-
-<?php
-}
-if(isset($decrees))
-{
-    ?>
-    <fieldset id="extra_decree-select">
-        <legend>(ДОП) Решения по сообщению</legend>
-        <div class="row-fluid">
-            <div class="span7">
-                <?php
-                if(isset($filters['extra_decrees']) AND is_array($filters['extra_decrees']) AND count($filters['extra_decrees']) > 0){
-                    foreach($filters['extra_decrees'] as $k_filter => $filter)
-                    {
-                        echo Help::select(
-                            'extra_decrees[]',
-                            $decrees,
-                            $filter,
-                            array(
-                                'class' => 'extra_decree-select block',
-                                'id' => ($k_filter == 0 ? 'first-extra_decree-select' : '')
-                            ),
-                            array('' => '=(ДОП) Решения по сообщению='),
-                            TRUE
-                        );
-                    }
-                    echo Help::select(
-                        'extra_decree[]',
-                        $decrees,
-                        NULL,
-                        array(
-                            'class' => 'extra_decree-select block',
-                        ),
-                        array('' => '=(ДОП) Решения по сообщению='),
-                        TRUE
-                    );
-                }else{
-                    echo Help::select(
-                        'extra_decrees[]',
-                        $decrees,
-                        isset($filters['extra_decrees'][0]) ? $filters['extra_decrees'][0] : NULL,
-                        array(
-                            'class' => 'extra_decree-select block',
-                            'id' => 'first-extra_decree-select',
-                        ),
-                        array('' => '=(ДОП) Решения по сообщению='),
-                        TRUE
-                    );
-                }
-                ?>
-            </div>
-            <div class="span5">
-                <?=Form::label('null-extra_decrees', 'Сообщения без (ДОП) решения')?>
-                <?=Form::checkbox(
-                    'extra_decrees',
-                    'NULL',
-                    isset($filters['extra_decrees']) AND !is_array($filters['extra_decrees']) ? TRUE : FALSE,
-                    array(
-                        'class' => 'null_check',
-                        'id' => 'null-extra_decrees'
-                    )
-                )?>
-            </div>
-        </div>
-    </fieldset>
-
-<?php
-}
 ?>
-<fieldset>
-    <legend>(ДОП) Дата принятия решения</legend>
-    <div class="row-fluid">
-        <div class="span7">
-            <?=Form::label('extra_decree_date', 'Фильтрация по дате принятия решения (ДОП)')?>
-            <?php echo Form::input(
-                'extra_decree_date[0]',
-                isset($filters['extra_decree_date'][0]) AND is_array($filters['extra_decree_date']) ? $filters['extra_decree_date'][0] : NULL,
-                array(
-                    'class' => 'span4 datepicker',
-                    'id' => 'extra_decree_date_from'
-                )
-            ).' - '.
-                Form::input(
-                    'extra_decree_date[1]',
-                    isset($filters['extra_decree_date'][1]) AND is_array($filters['extra_decree_date']) ? $filters['extra_decree_date'][1] : NULL,
-                    array(
-                        'class' => 'span4 datepicker',
-                        'id' => 'extra_decree_date_to'
-                    )
-                )?>
-        </div>
-        <div class="span5">
-            <?=Form::label('null-extra_decree_date', 'Сообщения без (ДОП) даты принятия решения')?>
-            <?=Form::checkbox(
-                'extra_decree_date',
-                'NULL',
-                isset($filters['extra_decree_date']) AND !is_array($filters['extra_decree_date']) ? TRUE : FALSE,
-                array(
-                    'class' => 'null_check',
-                    'id' => 'null-extra_decree_date'
-                )
-            )?>
-        </div>
-    </div>
-</fieldset>
-<?php */ ?>
 </div>
 <div class="modal-footer">
     <button class="btn" data-dismiss="modal">Закрыть</button>
