@@ -71,7 +71,10 @@ $(function(){
     }).find('td').click(function(e){
         var id = $(this).parent().find('.js-id').html();
             //alert('сработало. id = '+id);
-        location.href = "/material/info/"+id;
+            var contr = $('span#controller').html();
+            if(contr == '')
+                contr = 'material';
+        location.href = "/"+contr+"/info/"+id;
     });
 
     $('.null_check').click(function(e){

@@ -22,6 +22,6 @@ class Controller_Front_Sort extends Controller_Front
             ),
         ));
 
-        Controller::redirect('');
+        Controller::redirect(Request::$current->referrer());
     }
 }

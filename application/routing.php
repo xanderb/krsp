@@ -29,6 +29,12 @@ Route::set('prints', 'print(/<type>)')
         'controller' => 'material',
         'action'     => 'print',
     ));
+ Route::set('year_view', '(<controller>/)year(/<wyear>)')
+     ->defaults(array(
+         'directory'  => 'front',
+         'controller' => 'material',
+         'action'     => 'index',
+     ));
 Route::set('extra_add', 'extra/add(/<krsp>(/<year>))')
      ->defaults(array(
          'directory'  => 'front',

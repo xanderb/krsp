@@ -202,11 +202,23 @@ class Controller_Front_Material extends Controller_Front
         $this->addScript('jquery.ui.datepicker-ru');
 
         $page = Request::$current->param('page');
+        $year = Request::$current->param('wyear', NULL);
 
         $filters = Model_Material::render_filter_form('select');
         $sort = $this->session->get('sort');
 
         $materials = ORM_Log::factory('material')->where('archive', '=', '0');
+        //***Добавление фильтрации по году производства****//
+        if(!is_null($year))
+        {
+            if($year != 'all')
+                $materials->where('work_year', '=', $year);
+        }
+        else
+        {
+            $materials->where('work_year', '=', date('Y', time()));
+        }
+        //*************************************************//
         $materials =
             $materials
             ->add_filters($this->session->get('filters'))
@@ -214,13 +226,10 @@ class Controller_Front_Material extends Controller_Front
             //->limit($this->config->items_per_page)
             //->offset((isset($page) ? ($page-1)*$this->config->items_per_page : 0))
             ->find_all();
-        $total_items = ORM_Log::factory('material')
-            ->where('archive', '=', '0')
-            ->add_filters($this->session->get('filters'))
-            ->add_sort(isset($sort['materials']) ? $sort['materials'] : NULL)
-            ->find_all()->count();
+        $total_items = $materials->count();
 
         $materials_view = View::factory('front/materials_table');
+        $materials_view->controller = 'material'; //Указание контроллера для JS перехода на страницу подробностей
         $materials_view->caption = "Сообщения в книге";
         $materials_view->datas = $materials;
         $materials_view->t_headers = $this->materials_headers;
@@ -335,13 +344,14 @@ class Controller_Front_Material extends Controller_Front
         $grid->top_content = $materials_view;
         $grid->left_content = $today_table;
         $grid->right_content = $fail_table;
+        $grid->buttons = Model_Material::year_buttons(); //Навигация по годам
 
         $this->template->body = $grid;
         $filter_button = View::factory('front/filter_button');
         if(count($this->session->get('filters')) > 0)
             $filter_button->success = 'success';
         $this->template->filter_button = $filter_button;
-        $this->template->debug = Debug::vars($this->session, Request::$current->referrer());
+        $this->template->debug = Debug::vars($year, Request::$current->route());
 	}
 
     public function action_info()
@@ -355,6 +365,7 @@ class Controller_Front_Material extends Controller_Front
             $view->auth = $this->auth;
             $view->user = $this->user;
             $view->roles = $this->config->auth_required;
+
             $view->back_path = '/';
             $view->back_path_text = "Назад";
         }
@@ -366,7 +377,7 @@ class Controller_Front_Material extends Controller_Front
             $view->back_path_text = "Вернуться назад";
         }
         $this->template->body = $view;
-        $this->template->debug = Debug::vars(URL::site(Request::$current->referrer()));
+        $this->template->debug = Debug::vars(Request::$current);
     }
 
     public function action_add()

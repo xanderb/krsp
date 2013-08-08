@@ -36,9 +36,9 @@
         <?php
         if(isset($buttons))
         {
-            foreach($buttons as $button)
+            foreach($buttons as $key => $button)
             {
-                if(isset($button[0]) AND is_array($button[0]))
+                if(isset($button[$key]) AND is_array($button[$key]))
                 {
                     ?>
                     <div class="btn-group">
@@ -46,7 +46,7 @@
                         foreach($button as $_button)
                         {
                             ?>
-                            <a class="btn <?=Arr::get($_button, 'type', '')?>" href="<?=Arr::get($_button, 'href', '#')?>">
+                            <a class="btn <?=Arr::get($_button, 'type', '')?> <?=Arr::get($_button, 'class', '')?>" href="<?=Arr::get($_button, 'href', '#')?>"  title="<?=Arr::get($_button, 'title', '')?>">
                                 <?php
                                 if(!is_null(Arr::get($_button, 'icon', NULL)))
                                 {
@@ -66,7 +66,7 @@
                 else
                 {
                     ?>
-                    <a class="btn" href="<?=Arr::get($button, 'href', '#')?>">
+                    <a class="btn <?=Arr::get($_button, 'type', '')?> <?=Arr::get($_button, 'class', '')?>" href="<?=Arr::get($button, 'href', '#')?>" title="<?=Arr::get($_button, 'title', '')?>">
                         <?php
                         if(!is_null(Arr::get($button, 'icon', NULL)))
                         {

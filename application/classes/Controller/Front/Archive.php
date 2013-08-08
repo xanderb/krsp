@@ -116,11 +116,19 @@ class Controller_Front_Archive extends Controller_Front
         $this->addScript('jquery.ui.datepicker-ru');
 
         $page = Request::$current->param('page');
+        $year = Request::$current->param('wyear', NULL);
 
         $filters = Model_Archive::render_filter_form('select');
         $sort = $this->session->get('sort');
 
         $materials = ORM_Log::factory('material')->where('archive', '=', '1');
+        //***Добавление фильтрации по году производства****//
+        if(!is_null($year))
+        {
+            if($year != 'all')
+                $materials->where('work_year', '=', $year);
+        }
+        //*************************************************//
         $materials =
             $materials
                 ->add_filters($this->session->get('archive_filters'))
@@ -128,13 +136,10 @@ class Controller_Front_Archive extends Controller_Front
                 //->limit($this->config->items_per_page)
                 //->offset((isset($page) ? ($page-1)*$this->config->items_per_page : 0))
                 ->find_all();
-        $total_items = ORM_Log::factory('material')
-            ->where('archive', '=', '1')
-            ->add_filters($this->session->get('archive_filters'))
-            ->add_sort(isset($sort['materials']) ? $sort['materials'] : NULL)
-            ->find_all()->count();
+        $total_items = $materials->count();
 
         $materials_view = View::factory('front/materials_table');
+        $materials_view->controller = 'archive'; //Указание контроллера для JS перехода на страницу подробностей
         $materials_view->caption = "Сообщения в журнале";
         $materials_view->datas = $materials;
         $materials_view->t_headers = $this->materials_headers;
@@ -225,6 +230,7 @@ class Controller_Front_Archive extends Controller_Front
         $grid->top_content = $materials_view;
        /* $grid->left_content = $today_table;
         $grid->right_content = $fail_table;*/
+        $grid->buttons = Model_Archive::year_buttons();
 
         $this->template->body = $grid;
         $this->template->filter_button = View::factory('front/filter_button');
@@ -233,6 +239,32 @@ class Controller_Front_Archive extends Controller_Front
         $this->template->filter_button->text = 'Фильтр архивных сообщений';
 
         $this->template->debug = Debug::vars($this->session);
+    }
+
+    public function action_info()
+    {
+        $id = Request::$current->param('id', NULL);
+        if(!is_null($id))
+        {
+            $material = ORM_Log::factory('material', $id);
+            $view = View::factory('front/info');
+            $view->material = $material;
+            $view->auth = $this->auth;
+            $view->user = $this->user;
+            $view->roles = $this->config->auth_required;
+
+            $view->back_path = '/archive';
+            $view->back_path_text = "Назад";
+        }
+        else
+        {
+            $view = View::factory('back/error');
+            $view->message = "Не был указан ID сообщения для вывода";
+            $view->back_path = URL::site(Request::$current->referrer());
+            $view->back_path_text = "Вернуться назад";
+        }
+        $this->template->body = $view;
+        $this->template->debug = Debug::vars(Request::$current);
     }
 
 

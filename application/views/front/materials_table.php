@@ -43,6 +43,7 @@ if(isset($total_materials) AND isset($badges))
     <?php
 }
 ?>
+<span class="hid" id="controller"><?=isset($controller) ? $controller : 'material'?></span>
 <table class="table table-striped table-bordered">
     <?php
     if(isset($caption)){

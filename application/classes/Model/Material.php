@@ -456,4 +456,29 @@ class Model_Material extends ORM_Log
         }
         return $this;
     }
+
+    public static function year_buttons()
+    {
+        $year_obj = ORM::factory('material')->select('work_year')->distinct('work_year')->group_by('work_year')->having('work_year', '!=', NULL)->and_having('archive', '=', 0)->find_all();
+        $years = array();
+        foreach($year_obj as $year)
+        {
+            $years[] = array(
+                'text' => $year->work_year,
+                'href' => '/year/'.$year->work_year,
+                'icon' => 'icon-calendar',
+                'class' => 'tt',
+                'title' => 'Сообщения за '.$year->work_year
+            );
+        }
+        $years[] = array(
+            'text' => 'Все года',
+            'href' => '/year/all',
+            'icon' => 'icon-calendar',
+            'class' => 'tt',
+            'title' => 'Сообщения за все года'
+        );
+        $buttons = array($years);
+        return $buttons;
+    }
 }

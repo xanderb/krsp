@@ -11,6 +11,14 @@
     <h1>Подробная информация о сообщении</h1>
     <div class="row-fluid">
         <div class="span6">
+            <?php
+            if(isset($material) AND $material->archive == 1)
+            {
+                ?>
+                <p><span class="label label-info">Архивное сообщение!</span></p>
+                <?php
+            }
+            ?>
             <table class="table table-striped">
                 <tbody>
                 <?php
@@ -102,8 +110,8 @@
         if(
             isset($material)
             AND isset($auth)
-            AND ($auth->logged_in($roles['front_edit']) OR $auth->logged_in('admin'))
-            AND (!isset($back_path) OR $back_path != '/archive')
+            AND ($auth->logged_in($roles['front_edit']) OR $auth->logged_in('admin') OR $auth->logged_in('sadmin'))
+            AND $material->archive == 0
         )
         {
             ?>
@@ -112,7 +120,7 @@
         }
         ?>
         <?php
-        if(isset($material) AND isset($auth) AND $auth->logged_in('admin') AND 0)
+        if(isset($material) AND isset($auth) AND $auth->logged_in('sadmin') AND 0)
         {
             ?>
             <a class="btn btn-info" href="/material/logs/<?=$material->id?>">Логи изменения сообщения</a>
