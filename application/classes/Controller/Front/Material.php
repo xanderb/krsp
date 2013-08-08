@@ -214,10 +214,10 @@ class Controller_Front_Material extends Controller_Front
             if($year != 'all')
                 $materials->where('work_year', '=', $year);
         }
-        else
+        /*else
         {
             $materials->where('work_year', '=', date('Y', time()));
-        }
+        }*/
         //*************************************************//
         $materials =
             $materials
@@ -251,31 +251,16 @@ class Controller_Front_Material extends Controller_Front
         $today_mess = ORM_Log::factory('material')
             ->join(array('periods', 'p'), 'LEFT OUTER')
             ->on('period_id', '=', 'p.id')
-            ->join( array('periods', 'ep'), 'LEFT OUTER')
-            ->on('extra_period_id', '=', 'ep.id')
             ->where_open()
                 ->where(DB::expr('material.registration_date + INTERVAL p.days DAY'), '>=', $today.' 00:00:00')
                 ->and_where(DB::expr('material.registration_date + INTERVAL p.days DAY'), '<=', $today.' 23:59:59')
-                ->and_where('decree_id', '=', NULL)
+                ->and_where('decree_date', '=', NULL)
             ->where_close()
-            ->or_where_open()
-                ->where('failure_cause_id', '!=', NULL)
-                ->and_where(DB::expr('material.decree_cancel_date + INTERVAL ep.days DAY'), '>=', $today.' 00:00:00')
-                ->and_where(DB::expr('material.decree_cancel_date + INTERVAL ep.days DAY'), '<=', $today.' 23:59:59')
-                ->and_where('extra_decree_id', '=', NULL)
-            ->or_where_close()
+            ->and_where('material.archive', '=', 0)
             ->join(array('investigators', 'jt'), 'LEFT OUTER')
             ->on('investigator_id', '=', 'jt.id')
             ->order_by('jt.name', 'ASC')
             ->find_all();
-        /*$today_mess = DB::query(
-            Database::SELECT,
-            "SELECT m.*
-              FROM `materials` as m
-                  INNER JOIN `periods` AS p ON m.period_id = p.id
-                  WHERE
-                  m.registration_date + INTERVAL p.days DAY >= '{$today} 00:00:00'
-                  AND m.registration_date + INTERVAL p.days DAY <= '{$today} 23:59:59'")->execute();*/
 
         $today_table = View::factory('front/short_materials');
         $today_table->sub_menus = $this->today_sub_menu;
@@ -297,29 +282,15 @@ class Controller_Front_Material extends Controller_Front
         $fail_mess = ORM_Log::factory('material')
             ->join(array('periods', 'p'), 'LEFT OUTER')
             ->on('period_id', '=', 'p.id')
-            ->join( array('periods', 'ep'), 'LEFT OUTER')
-            ->on('extra_period_id', '=', 'ep.id')
             ->where_open()
                 ->where(DB::expr('material.registration_date + INTERVAL p.days DAY'), '<', $today.' 00:00:00')
                 ->and_where('decree_date', '=', NULL)
             ->where_close()
-            ->or_where_open()
-                ->where('failure_cause_id', '!=', NULL)
-                ->and_where(DB::expr('material.decree_cancel_date + INTERVAL ep.days DAY'), '<', $today.' 00:00:00')
-                ->and_where('extra_decree_date', '=', NULL)
-            ->or_where_close()
+            ->and_where('material.archive', '=', 0)
             ->join(array('investigators', 'jt'), 'LEFT OUTER')
             ->on('investigator_id', '=', 'jt.id')
             ->order_by('jt.name', 'ASC')
             ->find_all();
-        /*$today_mess = DB::query(
-            Database::SELECT,
-            "SELECT m.*
-              FROM `materials` as m
-                  INNER JOIN `periods` AS p ON m.period_id = p.id
-                  WHERE
-                  m.registration_date + INTERVAL p.days DAY >= '{$today} 00:00:00'
-                  AND m.registration_date + INTERVAL p.days DAY <= '{$today} 23:59:59'")->execute();*/
 
         $fail_table = View::factory('front/short_materials');
         $fail_table->sub_menus = $this->fail_sub_menu;
@@ -351,7 +322,7 @@ class Controller_Front_Material extends Controller_Front
         if(count($this->session->get('filters')) > 0)
             $filter_button->success = 'success';
         $this->template->filter_button = $filter_button;
-        $this->template->debug = Debug::vars($year, Request::$current->route());
+        $this->template->debug = Debug::vars($year, $fail_mess);
 	}
 
     public function action_info()

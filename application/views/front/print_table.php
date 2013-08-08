@@ -38,7 +38,7 @@ if(isset($datas))
 
                 <td class="js-id hid"><?=$data->id?></td>
                 <td><?=$data->inv->name?></td>
-                <td><?=$data->krsp_num?></td>
+                <td><?=$data->krsp_num?><?=isset($data->krsp_num) ? 'пр'.substr($data->work_year, 2, 2) : NULL?></td>
                 <td class="word-wrap"><?=$data->plot?></td>
                 <td><?=isset($data->period->days) ? $data->period->days.' дня(ей)' : ''?></td>
                 <?php
@@ -48,7 +48,7 @@ if(isset($datas))
                 ?>
                 <td class="js-id hid"><?=$data->id?></td>
                 <td><?=$data->inv->name?></td>
-                <td><?=$data->krsp_num?></td>
+                <td><?=$data->krsp_num?><?=isset($data->krsp_num) ? 'пр'.substr($data->work_year, 2, 2) : NULL?></td>
                 <td class="word-wrap"><?=$data->plot?></td>
                 <td>
                     <?=date('d.m.Y', strtotime($data->registration_date) + ($data->period->days * 86400));?>

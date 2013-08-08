@@ -113,9 +113,9 @@ if(isset($total_materials) AND isset($badges))
 
             foreach($datas as $data){
                 ?>
-                <tr class="js-row">
+                <tr class="js-row<?=date('Y', time()) > date('Y', strtotime($data->registration_date)) ? ' warning' : NULL?>">
                     <td class="js-id hid"><?=$data->id?></td>
-                    <td><?=$data->krsp_num?><?=isset($data->krsp_num) ? 'пр'.substr($data->work_year, 2, 2) : NULL?></td>
+                    <td><?=$data->krsp_num?><?=isset($data->krsp_num) ? 'пр'.substr(date('Y', strtotime($data->registration_date)), 2, 2) : NULL?></td>
                     <td><?=date('d.m.Y', strtotime($data->registration_date))?></td>
                     <td><?=$data->source->text?></td>
                     <td class="word-wrap">

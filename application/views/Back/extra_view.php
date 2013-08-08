@@ -62,9 +62,9 @@ if($materials->count() AND $extras->count())
                     if(!isset($first_material))
                         $first_material = $material->id;
                     ?>
-                <tr class="toggler" tab-toggle="<?=$material->id?>">
+                <tr class="toggler<?=date('Y', time()) > date('Y', strtotime($material->registration_date)) ? ' warning' : NULL?>" tab-toggle="<?=$material->id?>">
                     <td class="hid"><?=$material->id?></td>
-                    <td><?=$material->krsp_num?></td>
+                    <td><?=$material->krsp_num?><?=isset($material->krsp_num) ? 'пр'.substr(date('Y', strtotime($material->registration_date)), 2, 2) : NULL?></td>
                     <td><?=$material->inv->name?></td>
                     <td><?=$material->article_id?></td>
                     <td><?=!is_null($material->registration_date) ? date('d.m.Y', strtotime($material->registration_date)) : ''?></td>
@@ -143,7 +143,7 @@ if($materials->count() AND $extras->count())
                             <?php
                             }
                             ?>
-                            <tr class="js-row">
+                            <tr class="extra-js-row">
                                 <td class="js-id hid"><?=$extra->id?></td>
                                 <td><?=$extra->material->krsp_num.' от '.date('d.m.Y', strtotime($extra->material->registration_date))?></td>
                                 <?php /*<td><?=!is_null($extra->parent->decree_cancel_date) ? 'От '.date('d.m.Y', strtotime($extra->parent->decree_cancel_date)) : ''?></td>*/ ?>
@@ -158,7 +158,7 @@ if($materials->count() AND $extras->count())
                     else
                     {
                         ?>
-                        <tr class="js-row">
+                        <tr class="extra-js-row">
                             <td class="js-id hid"><?=$extra->id?></td>
                             <td><?=$extra->material->krsp_num.' от '.date('d.m.Y', strtotime($extra->material->registration_date))?></td>
                             <?php /*<td><?=!is_null($extra->parent->decree_cancel_date) ? 'От '.date('d.m.Y', strtotime($extra->parent->decree_cancel_date)) : ''?></td>*/ ?>

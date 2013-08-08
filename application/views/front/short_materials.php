@@ -70,7 +70,7 @@ if(isset($caption)){
 
         foreach($datas as $data){
             ?>
-            <tr class="js-row">
+            <tr class="js-row<?=date('Y', time()) > date('Y', strtotime( isset($data->registration_date) ? $data->registration_date : $data->material->registration_date)) ? ' warning' : NULL?>">
                 <?php
                 if(isset($type))
                 {
@@ -79,7 +79,7 @@ if(isset($caption)){
                             ?>
                             <td class="js-id hid"><?=$data->id?></td>
                             <td><?=$data->inv->name?></td>
-                            <td><?=$data->krsp_num?></td>
+                            <td><?=$data->krsp_num?><?=isset($data->krsp_num) ? 'пр'.substr(date('Y', strtotime($data->registration_date)), 2, 2) : NULL?></td>
                             <td class="word-wrap">
                                 <a class="plot" href="#cur" rel="popover" data-content="<?=$data->plot?>" data-original-title="Краткая фабула">
                                     <?php echo mb_substr($data->plot, 0, 50).(strlen($data->plot) > 50 ? '&hellip;' : NULL); ?>
@@ -92,7 +92,7 @@ if(isset($caption)){
                             ?>
                             <td class="js-id hid"><?=$data->id?></td>
                             <td><?=$data->inv->name?></td>
-                            <td><?=$data->krsp_num?></td>
+                            <td><?=$data->krsp_num?><?=isset($data->krsp_num) ? 'пр'.substr(date('Y', strtotime($data->registration_date)), 2, 2) : NULL?></td>
                             <td class="word-wrap">
                                 <a class="plot" href="#cur" rel="popover" data-content="<?=$data->plot?>" data-original-title="Краткая фабула">
                                     <?php echo mb_substr($data->plot, 0, 50).(strlen($data->plot) > 50 ? '&hellip;' : NULL); ?>
@@ -104,13 +104,42 @@ if(isset($caption)){
                             <td><?=isset($data->period->days) ? $data->period->days.' дня(ей)' : ''?></td>
                             <?php
                             break;
+                        case 'extra_today':
+                            ?>
+                            <td class="js-id hid"><?=$data->material->id?></td>
+                            <td><?=$data->investigator->name?></td>
+                            <td><?=$data->material->krsp_num?><?=isset($data->material->krsp_num) ? 'пр'.substr(date('Y', strtotime($data->material->registration_date)), 2, 2) : NULL?></td>
+                            <td class="word-wrap">
+                                <a class="plot" href="#cur" rel="popover" data-content="<?=$data->material->plot?>" data-original-title="Краткая фабула">
+                                    <?php echo mb_substr($data->material->plot, 0, 50).(strlen($data->material->plot) > 50 ? '&hellip;' : NULL); ?>
+                                </a>
+                            </td>
+                            <td><?=isset($data->period->days) ? $data->period->days.' дня(ей)' : ''?></td>
+                            <?php
+                            break;
+                        case 'extra_fail':
+                            ?>
+                            <td class="js-id hid"><?=$data->material->id?></td>
+                            <td><?=$data->investigator->name?></td>
+                            <td><?=$data->material->krsp_num?><?=isset($data->material->krsp_num) ? 'пр'.substr(date('Y', strtotime($data->material->registration_date)), 2, 2) : NULL?></td>
+                            <td class="word-wrap">
+                                <a class="plot" href="#cur" rel="popover" data-content="<?=$data->material->plot?>" data-original-title="Краткая фабула">
+                                    <?php echo mb_substr($data->material->plot, 0, 50).(strlen($data->material->plot) > 50 ? '&hellip;' : NULL); ?>
+                                </a>
+                            </td>
+                            <td>
+                                <?=date('d.m.Y', strtotime($data->decree_cancel_date) + ($data->period->days * 86400));?>
+                            </td>
+                            <td><?=isset($data->period->days) ? $data->period->days.' дня(ей)' : ''?></td>
+                            <?php
+                            break;
                     }
                 }
                 else
                 {
                   ?>
                     <td class="js-id hid"><?=$data->id?></td>
-                    <td><?=$data->krsp_num?></td>
+                    <td><?=$data->krsp_num?><?=isset($data->krsp_num) ? 'пр'.substr(date('Y', strtotime($data->registration_date)), 2, 2) : NULL?></td>
                     <td><?=date('d.m.Y', strtotime($data->registration_date))?></td>
                     <td><?=isset($data->period->days) ? $data->period->days.' дня(ей)' : ''?></td>
                     <td class="word-wrap">

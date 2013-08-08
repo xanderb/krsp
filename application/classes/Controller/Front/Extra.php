@@ -17,6 +17,20 @@ class Controller_Front_Extra extends Controller_Front
         ),
 
     );
+    public $today_sub_menu = array(
+        array(
+            'href'  => '/print/today',
+            'text'  => '<i class="icon-print"></i> Распечатать',
+            'type'  => 'n'
+        ),
+    );
+    public $fail_sub_menu = array(
+        array(
+            'href'  => '/print/fail',
+            'text'  => '<i class="icon-print"></i> Распечатать',
+            'type'  => 'n'
+        ),
+    );
 
     public $sub_menus = array(
         array(
@@ -103,6 +117,57 @@ class Controller_Front_Extra extends Controller_Front
         ),
     );
 
+    public $today_table_headers = array(
+        array(
+            'text'  => 'ID',
+            'field' => 'id'
+        ),
+        array(
+            'text' => 'Следователь',
+            'field' => 'investigator'
+        ),
+        array(
+            'text' => 'КРСП',
+            'field' => 'krsp_num'
+        ),
+        array(
+            'text' => 'Краткая фабула',
+            'field' => 'plot'
+        ),
+        array(
+            'text' => 'Срок рассмотрения',
+            'field' => 'period'
+        ),
+    );
+    public $fail_table_headers = array(
+        array(
+            'text'  => 'ID',
+            'field' => 'id'
+        ),
+        array(
+            'text' => 'Следователь',
+            'field' => 'investigator'
+        ),
+        array(
+            'text' => 'КРСП',
+            'field' => 'krsp_num'
+        ),
+        array(
+            'text' => 'Краткая фабула',
+            'field' => 'plot'
+        ),
+        array(
+            'text' => 'Когда истек срок',
+            'field' => 'fail_date'
+        ),
+        array(
+            'text' => 'Срок рассмотрения',
+            'field' => 'period'
+        ),
+
+
+    );
+
     public function action_index()
     {
         $this->addScript('extra-admin-table');
@@ -131,12 +196,74 @@ class Controller_Front_Extra extends Controller_Front
         $view->extras = $extras;
         $view->sub_menus = $this->sub_menus;
 
+        //Таблица сообщений актуальных сегодня
+        $today = date('Y-m-d', time());
+        $today_mess = ORM_Log::factory('extra')
+            ->join(array('periods', 'p'), 'LEFT OUTER')
+            ->on('period_id', '=', 'p.id')
+            ->where_open()
+            ->where(DB::expr('extra.decree_cancel_date + INTERVAL p.days DAY'), '>=', $today.' 00:00:00')
+            ->and_where(DB::expr('extra.decree_cancel_date + INTERVAL p.days DAY'), '<=', $today.' 23:59:59')
+            ->and_where('extra.decree_date', '=', NULL)
+            ->where_close()
+            ->join(array('investigators', 'jt'), 'LEFT OUTER')
+            ->on('extra.investigator_id', '=', 'jt.id')
+            ->order_by('jt.name', 'ASC')
+            ->find_all();
+
+        $today_table = View::factory('front/short_materials');
+        $today_table->sub_menus = $this->today_sub_menu;
+        $today_table->datas = $today_mess;
+        $today_table->t_headers = $this->today_table_headers;
+        $today_table->caption = 'ДОПы срок рассмотрения которых заканчивается сегодня';
+        $today_table->caption_type = 'invert';
+        $today_table->total_materials = $today_mess->count();
+        $today_table->type = 'extra_today';
+        $today_table->badges = array(
+            array(
+                'text' => 'Всего актуальных сегодня ДОПов',
+                'class' => 'badge-info'
+            ),
+        );
+        //
+
+        //Таблица просроченных сообщений
+        $fail_mess = ORM_Log::factory('extra')
+            ->join(array('periods', 'p'), 'LEFT OUTER')
+            ->on('period_id', '=', 'p.id')
+            ->where_open()
+            ->where(DB::expr('extra.decree_cancel_date + INTERVAL p.days DAY'), '<', $today.' 00:00:00')
+            ->and_where('extra.decree_date', '=', NULL)
+            ->where_close()
+            ->join(array('investigators', 'jt'), 'LEFT OUTER')
+            ->on('investigator_id', '=', 'jt.id')
+            ->order_by('jt.name', 'ASC')
+            ->find_all();
+
+        $fail_table = View::factory('front/short_materials');
+        $fail_table->sub_menus = $this->fail_sub_menu;
+        $fail_table->datas = $fail_mess;
+        $fail_table->t_headers = $this->fail_table_headers;
+        $fail_table->caption = 'Просроченные ДОПы';
+        $fail_table->caption_type = 'danger';
+        $fail_table->total_materials = $fail_mess->count();
+        $fail_table->type = 'extra_fail';
+        $fail_table->badges = array(
+            array(
+                'text' => 'Всего просроченных ДОПов',
+                'class' => 'badge-info'
+            ),
+        );
+        //
+
+
+
         $grid = View::factory('front/front_grid');
         $grid->p_title = "ДОПы";
         $grid->filters = $filters;
         $grid->top_content = $view;
-        /*$grid->left_content = $today_table;
-        $grid->right_content = $fail_table;*/
+        $grid->left_content = $today_table;
+        $grid->right_content = $fail_table;
 
         $filter_button = View::factory('front/filter_button');
         if(count($this->session->get('extra_filters')) > 0)
@@ -422,5 +549,31 @@ class Controller_Front_Extra extends Controller_Front
         $grid->top_content = $content;
 
         $this->template->body = $grid;
+    }
+
+    public function action_info()
+    {
+        $id = Request::$current->param('id', NULL);
+        if(!is_null($id))
+        {
+            $material = ORM_Log::factory('material', $id);
+            $view = View::factory('front/info');
+            $view->material = $material;
+            $view->auth = $this->auth;
+            $view->user = $this->user;
+            $view->roles = $this->config->auth_required;
+
+            $view->back_path = '/extra';
+            $view->back_path_text = "Назад";
+        }
+        else
+        {
+            $view = View::factory('back/error');
+            $view->message = "Не был указан ID сообщения для вывода";
+            $view->back_path = URL::site(Request::$current->referrer());
+            $view->back_path_text = "Вернуться назад";
+        }
+        $this->template->body = $view;
+        $this->template->debug = Debug::vars(Request::$current);
     }
 }

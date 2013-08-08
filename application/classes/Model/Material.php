@@ -407,11 +407,11 @@ class Model_Material extends ORM_Log
         elseif($type == 'select')
         {
             $sources = ORM::factory('source')->order_by('sort')->find_all()->as_array('id', 'text');
-            $articles_value = ORM::factory('article')-> order_by('sort')->find_all()->as_array('id', 'value');
+            /*$articles_value = ORM::factory('article')-> order_by('sort')->find_all()->as_array('id', 'value');
             $articles_text = ORM::factory('article')-> order_by('sort')->find_all()->as_array('id', 'text');
             foreach($articles_value as $key => $value){
                 $articles[$key] = $value.' - '.$articles_text[$key];
-            }
+            }*/
             $investigators = ORM::factory('investigator')->order_by('sort')->find_all()->as_array('id', 'name');
             $decrees = ORM::factory('decree')->order_by('sort')->find_all()->as_array('id', 'text');
             $periods = ORM::factory('period')->order_by('sort')->find_all()->as_array('id', 'days');

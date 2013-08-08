@@ -72,7 +72,7 @@ $(function(){
         var id = $(this).parent().find('.js-id').html();
             //alert('сработало. id = '+id);
             var contr = $('span#controller').html();
-            if(contr == '')
+            if(contr == '' || contr == undefined)
                 contr = 'material';
         location.href = "/"+contr+"/info/"+id;
     });

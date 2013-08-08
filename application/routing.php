@@ -23,7 +23,7 @@ Route::set('logout', 'logout')
         'controller' => 'reg',
         'action'     => 'logout',
     ));
-Route::set('prints', 'print(/<type>)')
+Route::set('prints', '(<controller>/)print(/<type>)')
     ->defaults(array(
         'directory'  => 'front',
         'controller' => 'material',

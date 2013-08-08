@@ -14,7 +14,7 @@ $(function(){
         $('#extra'+mat_id).show();
         $(this).addClass('success');
     });
-    $('.js-row').click(function(e){
+    $('.extra-js-row').click(function(e){
         $('.js-row').removeClass('info');
         $(this).addClass('info');
         var row_id = $(this).find('.js-id').html();
@@ -44,4 +44,17 @@ $(function(){
             $(this).prop('action', action);
         });
     });
+
+    $('.js-row').hover(function(e){
+        $(this).addClass('success').css('cursor', 'pointer');
+    }, function(e){
+        $(this).removeClass('success');
+    }).find('td').click(function(e){
+            var id = $(this).parent().find('.js-id').html();
+            //alert('сработало. id = '+id);
+            var contr = $('span#controller').html();
+            if(contr == '' || contr == undefined)
+                contr = 'material';
+            location.href = "/"+contr+"/info/"+id;
+        });
 });
