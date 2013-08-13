@@ -235,7 +235,7 @@ class Controller_Admin_Extra extends Controller_Back implements Controller_Admin
         else
         {
             $materials = ORM_Log::factory('material')->where('archive', '=', 0)->order_by('registration_date', 'DESC')->find_all();
-            $material_table = View::factory('/back/materials_table');
+            $material_table = View::factory('/back/extra_materials_table');
             $material_table->caption = 'Список сообщений';
             $material_table->datas = $materials;
             $material_table->t_headers = Model_Material::$t_headers;

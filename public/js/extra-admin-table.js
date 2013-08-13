@@ -15,7 +15,7 @@ $(function(){
         $(this).addClass('success');
     });
     $('.extra-js-row').click(function(e){
-        $('.js-row').removeClass('info');
+        $('.extra-js-row').removeClass('info');
         $(this).addClass('info');
         var row_id = $(this).find('.js-id').html();
         if($('.js-p.changed').length < 1){
