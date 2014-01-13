@@ -177,7 +177,7 @@ class Controller_Front_Extra extends Controller_Front
         $this->addScript('jquery.ui.datepicker-ru');
 
         $filters = Model_Extra::render_filter_form('select');
-        $materials = ORM_Log::factory('material')
+        $materials = ORM_Log::factory('Material')
             ->select(array(DB::expr('COUNT(*)'), 'ecount'))
             ->join(array('extras', 'ej'), 'INNER')
             ->on('material.id', '=', 'ej.material_id')
@@ -186,7 +186,7 @@ class Controller_Front_Extra extends Controller_Front
             ->group_by('ej.material_id')
             ->order_by('id', 'ASC')
             ->find_all();
-        $extras = ORM_Log::factory('extra')->add_filters($this->session->get('extra_filters'))->order_by('material_id', 'ASC')->order_by('decree_cancel_date', 'DESC')->find_all();
+        $extras = ORM_Log::factory('Extra')->add_filters($this->session->get('extra_filters'))->order_by('material_id', 'ASC')->order_by('decree_cancel_date', 'DESC')->find_all();
         $view = View::factory('/front/extra_view');
         $view->material_headers = $this->material_headers;
         $view->extra_headers = $this->extra_headers;
@@ -198,7 +198,7 @@ class Controller_Front_Extra extends Controller_Front
 
         //Таблица сообщений актуальных сегодня
         $today = date('Y-m-d', time());
-        $today_mess = ORM_Log::factory('extra')
+        $today_mess = ORM_Log::factory('Extra')
             ->join(array('periods', 'p'), 'LEFT OUTER')
             ->on('period_id', '=', 'p.id')
             ->where_open()
@@ -228,7 +228,7 @@ class Controller_Front_Extra extends Controller_Front
         //
 
         //Таблица просроченных сообщений
-        $fail_mess = ORM_Log::factory('extra')
+        $fail_mess = ORM_Log::factory('Extra')
             ->join(array('periods', 'p'), 'LEFT OUTER')
             ->on('period_id', '=', 'p.id')
             ->where_open()
@@ -375,7 +375,7 @@ class Controller_Front_Extra extends Controller_Front
             //$this->template->debug = Debug::vars($parent_extra);
             if(isset($_POST['extra-submit']))
             {
-                $new_extra = ORM_Log::factory('extra');
+                $new_extra = ORM_Log::factory('Extra');
                 $new_extra->values(
                     array(
                         'material_id'       => Arr::get($_POST, 'material_id', NULL) == '' ? NULL : Arr::get($_POST, 'material_id', NULL),
@@ -556,7 +556,7 @@ class Controller_Front_Extra extends Controller_Front
         $id = Request::$current->param('id', NULL);
         if(!is_null($id))
         {
-            $material = ORM_Log::factory('material', $id);
+            $material = ORM_Log::factory('Material', $id);
             $view = View::factory('front/info');
             $view->material = $material;
             $view->auth = $this->auth;

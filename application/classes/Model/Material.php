@@ -161,7 +161,7 @@ class Model_Material extends ORM_Log
 
     public static function render_table()
     {
-        $materials = ORM_Log::factory('material')
+        $materials = ORM_Log::factory('Material')
             ->where('archive', '=', 0)
             ->order_by('id', 'DESC')
             ->limit(10)

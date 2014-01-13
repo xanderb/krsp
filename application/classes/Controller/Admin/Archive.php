@@ -128,7 +128,7 @@ class Controller_Admin_Archive extends Controller_Back
         $page = Request::$current->param('page');
 
         /*Рендер таблицы с материалами*/
-        $materials = ORM_Log::factory('material')
+        $materials = ORM_Log::factory('Material')
             ->where('archive', '=', 1)
             ->order_by('registration_date', 'DESC')
             ->limit($this->config->items_per_page)
@@ -161,7 +161,7 @@ class Controller_Admin_Archive extends Controller_Back
         $id = Request::$current->param('id');
         if(isset($id) AND $id > 0)
         {
-            $material = ORM_Log::factory('material', $id);
+            $material = ORM_Log::factory('Material', $id);
             $material->archive = 0;
             try
             {
@@ -197,7 +197,7 @@ class Controller_Admin_Archive extends Controller_Back
         $id = Request::$current->param('id', NULL);
         if(!is_null($id))
         {
-            $material = ORM_Log::factory('material', $id);
+            $material = ORM_Log::factory('Material', $id);
             $content = View::factory('back/info');
             $content->material = $material;
             $content->auth = $this->auth;

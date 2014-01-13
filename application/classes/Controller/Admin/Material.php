@@ -141,7 +141,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
         $page = Request::$current->param('page');
         $total_items = ORM::factory('Material')->where('archive', '=', 0)->find_all()->count();
         /*Рендер таблицы с материалами*/
-        $materials = ORM_Log::factory('material')
+        $materials = ORM_Log::factory('Material')
             ->where('archive', '=', 0)
             ->order_by('registration_date', 'DESC')
             //->limit($this->config->items_per_page)
@@ -187,7 +187,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
         //***//
 
         if(isset($_POST['submit'])){
-            $new_material = ORM_Log::factory('material');
+            $new_material = ORM_Log::factory('Material');
             $new_material->values(
                 array(
                     'krsp_num' => (Arr::get($_POST, 'krsp_num', NULL) == '' ? NULL : Arr::get($_POST, 'krsp_num', NULL)),
@@ -281,7 +281,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
         $id = Request::$current->param('id');
         if(isset($id) AND $id > 0)
         {
-            $material_info = ORM_Log::factory('material', $id);
+            $material_info = ORM_Log::factory('Material', $id);
             //Получение списков для формы
             $sources = ORM::factory('Source')->find_all();
             //$articles = ORM::factory('Article')->find_all();
@@ -444,7 +444,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
         $id = Request::$current->param('id');
         if(isset($id) AND $id > 0)
         {
-            $material = ORM_Log::factory('material', $id);
+            $material = ORM_Log::factory('Material', $id);
             $material->archive = 1;
             try
             {
@@ -480,7 +480,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
         $id = Request::$current->param('id', NULL);
         if(!is_null($id))
         {
-            $material = ORM_Log::factory('material', $id);
+            $material = ORM_Log::factory('Material', $id);
             $content = View::factory('back/info');
             $content->material = $material;
             $content->auth = $this->auth;

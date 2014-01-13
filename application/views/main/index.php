@@ -24,7 +24,7 @@
 </head>
 <body>
 <?php
-    if(isset($profiler_opt))
+    if(isset($profiler_opt) AND class_exists('ProfilerToolbar'))
         ProfilerToolbar::render($profiler_opt->value);
 ?>
 <?php

@@ -207,7 +207,7 @@ class Controller_Front_Material extends Controller_Front
         $filters = Model_Material::render_filter_form('select');
         $sort = $this->session->get('sort');
 
-        $materials = ORM_Log::factory('material')->where('archive', '=', '0');
+        $materials = ORM_Log::factory('Material')->where('archive', '=', '0');
         //***Добавление фильтрации по году производства****//
         if(!is_null($year))
         {
@@ -248,7 +248,7 @@ class Controller_Front_Material extends Controller_Front
 
         //Таблица сообщений актуальных сегодня
         $today = date('Y-m-d', time());
-        $today_mess = ORM_Log::factory('material')
+        $today_mess = ORM_Log::factory('Material')
             ->join(array('periods', 'p'), 'LEFT OUTER')
             ->on('period_id', '=', 'p.id')
             ->where_open()
@@ -279,7 +279,7 @@ class Controller_Front_Material extends Controller_Front
         //
 
         //Таблица просроченных сообщений
-        $fail_mess = ORM_Log::factory('material')
+        $fail_mess = ORM_Log::factory('Material')
             ->join(array('periods', 'p'), 'LEFT OUTER')
             ->on('period_id', '=', 'p.id')
             ->where_open()
@@ -330,7 +330,7 @@ class Controller_Front_Material extends Controller_Front
         $id = Request::$current->param('id', NULL);
         if(!is_null($id))
         {
-            $material = ORM_Log::factory('material', $id);
+            $material = ORM_Log::factory('Material', $id);
             $view = View::factory('front/info');
             $view->material = $material;
             $view->auth = $this->auth;
@@ -372,7 +372,7 @@ class Controller_Front_Material extends Controller_Front
 
             if(isset($_POST['submit']))
             {
-                $new_material = ORM_Log::factory('material');
+                $new_material = ORM_Log::factory('Material');
                 $new_material->values(
                     array(
                         'krsp_num' => (Arr::get($_POST, 'krsp_num', NULL) == '' ? NULL : Arr::get($_POST, 'krsp_num', NULL)),
@@ -506,7 +506,7 @@ class Controller_Front_Material extends Controller_Front
         {
             if($this->auth->logged_in($auth_required) OR $this->auth->logged_in($this->config->auth_required['admin']))
             {
-                $material = ORM_Log::factory('material', $id);
+                $material = ORM_Log::factory('Material', $id);
                 //Получение списков для формы
                 $sources = ORM::factory('Source')->find_all();
                 //$articles = ORM::factory('Article')->find_all();
@@ -647,7 +647,7 @@ class Controller_Front_Material extends Controller_Front
             $today = date('Y-m-d', time());
             switch($type){
                 case 'today':
-                    $data = ORM_Log::factory('material')
+                    $data = ORM_Log::factory('Material')
                         ->join(array('periods', 'p'), 'LEFT OUTER')
                         ->on('period_id', '=', 'p.id')
                         ->join( array('periods', 'ep'), 'LEFT OUTER')
@@ -671,7 +671,7 @@ class Controller_Front_Material extends Controller_Front
                     $view->t_headers = $this->today_table_headers;
                     break;
                 case 'fail':
-                    $data = ORM_Log::factory('material')
+                    $data = ORM_Log::factory('Material')
                         ->join(array('periods', 'p'), 'LEFT OUTER')
                         ->on('period_id', '=', 'p.id')
                         ->join( array('periods', 'ep'), 'LEFT OUTER')

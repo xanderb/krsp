@@ -121,7 +121,7 @@ class Controller_Front_Archive extends Controller_Front
         $filters = Model_Archive::render_filter_form('select');
         $sort = $this->session->get('sort');
 
-        $materials = ORM_Log::factory('material')->where('archive', '=', '1');
+        $materials = ORM_Log::factory('Material')->where('archive', '=', '1');
         //***Добавление фильтрации по году производства****//
         if(!is_null($year))
         {
@@ -158,7 +158,7 @@ class Controller_Front_Archive extends Controller_Front
 
         //Таблица сообщений актуальных сегодня
         /*$today = date('Y-m-d', time());
-        $today_mess = ORM_Log::factory('material')
+        $today_mess = ORM_Log::factory('Material')
             ->join(array('periods', 'p'), 'LEFT OUTER')
             ->on('period_id', '=', 'p.id')
             ->join( array('periods', 'ep'), 'LEFT OUTER')
@@ -192,7 +192,7 @@ class Controller_Front_Archive extends Controller_Front
         //
 
         //Таблица просроченных сообщений
-        $fail_mess = ORM_Log::factory('material')
+        $fail_mess = ORM_Log::factory('Material')
             ->join(array('periods', 'p'), 'LEFT OUTER')
             ->on('period_id', '=', 'p.id')
             ->join( array('periods', 'ep'), 'LEFT OUTER')
@@ -246,7 +246,7 @@ class Controller_Front_Archive extends Controller_Front
         $id = Request::$current->param('id', NULL);
         if(!is_null($id))
         {
-            $material = ORM_Log::factory('material', $id);
+            $material = ORM_Log::factory('Material', $id);
             $view = View::factory('front/info');
             $view->material = $material;
             $view->auth = $this->auth;

@@ -119,7 +119,7 @@ class Controller_Admin_Extra extends Controller_Back implements Controller_Admin
     {
         $this->addScript('extra-admin-table');
 
-        $materials = ORM_Log::factory('material')
+        $materials = ORM_Log::factory('Material')
             ->select(array(DB::expr('COUNT(*)'), 'ecount'))
             ->join(array('extras', 'ej'), 'INNER')
             ->on('material.id', '=', 'ej.material_id')
@@ -127,7 +127,7 @@ class Controller_Admin_Extra extends Controller_Back implements Controller_Admin
             ->group_by('ej.material_id')
             ->order_by('id', 'ASC')
             ->find_all();
-        $extras = ORM_Log::factory('extra')->order_by('material_id', 'ASC')->order_by('decree_cancel_date', 'DESC')->find_all();
+        $extras = ORM_Log::factory('Extra')->order_by('material_id', 'ASC')->order_by('decree_cancel_date', 'DESC')->find_all();
         $view = View::factory('/back/extra_view');
         $view->material_headers = $this->material_headers;
         $view->extra_headers = $this->extra_headers;
@@ -170,7 +170,7 @@ class Controller_Admin_Extra extends Controller_Back implements Controller_Admin
             //$this->template->debug = Debug::vars($parent_extra);
             if(isset($_POST['extra-submit']))
             {
-                $new_extra = ORM_Log::factory('extra');
+                $new_extra = ORM_Log::factory('Extra');
                 $new_extra->values(
                     array(
                         'material_id'       => Arr::get($_POST, 'material_id', NULL) == '' ? NULL : Arr::get($_POST, 'material_id', NULL),
@@ -234,7 +234,7 @@ class Controller_Admin_Extra extends Controller_Back implements Controller_Admin
         }
         else
         {
-            $materials = ORM_Log::factory('material')->where('archive', '=', 0)->order_by('registration_date', 'DESC')->find_all();
+            $materials = ORM_Log::factory('Material')->where('archive', '=', 0)->order_by('registration_date', 'DESC')->find_all();
             $material_table = View::factory('/back/extra_materials_table');
             $material_table->caption = 'Список сообщений';
             $material_table->datas = $materials;
