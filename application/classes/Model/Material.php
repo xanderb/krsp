@@ -13,29 +13,29 @@ class Model_Material extends ORM_Log
 
     protected $_belongs_to = array(
         'source'            => array(
-            'model'         => 'source',
+            'model'         => 'Source',
             'foreign_key'   => 'source_id'
         ),
         'inv'      => array(
-            'model'         => 'investigator',
+            'model'         => 'Investigator',
             'foreign_key'   => 'investigator_id'
         ),
         'failure_cause'     => array(
-            'model'         => 'fcause',
+            'model'         => 'Fcause',
             'foreign_key'   => 'failure_cause_id'
         ),
         'period'            => array(
-            'model'         => 'period',
+            'model'         => 'Period',
             'foreign_key'   => 'period_id'
         ),
 
         'decree'            => array(
-            'model'         => 'decree',
+            'model'         => 'Decree',
             'foreign_key'   => 'decree_id'
         ),
 
         'user'              => array(
-            'model'         => 'user',
+            'model'         => 'User',
             'foreign_key'   => 'user_id'
         ),
 
@@ -91,11 +91,11 @@ class Model_Material extends ORM_Log
 
     protected $_has_many = array(
         'characteristic'         => array(
-            'model'         => 'characteristic',
+            'model'         => 'Characteristic',
             'through'       => 'materials_characteristics'
         ),
         'extra'     => array(
-            'model'         => 'extra',
+            'model'         => 'Extra',
             'foreign_key'   => 'material_id'
         ),
     );

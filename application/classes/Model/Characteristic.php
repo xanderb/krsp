@@ -11,7 +11,7 @@ class Model_Characteristic extends ORM
 {
     protected $_has_many = array(
         'materials'         => array(
-            'model'         => 'material',
+            'model'         => 'Material',
             'through'       => 'materials_characteristics'
         ),
     );

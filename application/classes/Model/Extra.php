@@ -13,27 +13,27 @@ class Model_Extra extends ORM_Log
 
     protected $_belongs_to = array(
         'investigator'      => array(
-            'model'         => 'investigator',
+            'model'         => 'Investigator',
             'foreign_key'   => 'investigator_id'
         ),
         'period'      => array(
-            'model'         => 'period',
+            'model'         => 'Period',
             'foreign_key'   => 'period_id'
         ),
         'decree'      => array(
-            'model'         => 'decree',
+            'model'         => 'Decree',
             'foreign_key'   => 'decree_id'
         ),
         'material'  => array(
-            'model'         => 'material',
+            'model'         => 'Material',
             'foreign_key'   => 'material_id'
         ),
         'user'  => array(
-            'model'         => 'user',
+            'model'         => 'User',
             'foreign_key'   => 'user_id'
         ),
         'parent'    => array(
-            'model'         => 'extra',
+            'model'         => 'Extra',
             'foreign_key'   => 'parent_extra_id'
         )
     );
