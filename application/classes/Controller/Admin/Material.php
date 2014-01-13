@@ -139,7 +139,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
     {
         $this->addScript('admin-table'); //Скрипты выбора поля для редактирования
         $page = Request::$current->param('page');
-        $total_items = ORM::factory('material')->where('archive', '=', 0)->find_all()->count();
+        $total_items = ORM::factory('Material')->where('archive', '=', 0)->find_all()->count();
         /*Рендер таблицы с материалами*/
         $materials = ORM_Log::factory('material')
             ->where('archive', '=', 0)
@@ -177,13 +177,13 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
         $this->addScript('material-form');
 
         //Получение списков для формы
-        $sources = ORM::factory('source')->find_all();
-        //$articles = ORM::factory('article')->find_all();
-        $investigators = ORM::factory('investigator')->find_all();
-        $chars = ORM::factory('characteristic')->find_all();
-        $decrees = ORM::factory('decree')->find_all();
-        $periods = ORM::factory('period')->find_all();
-        $failure_causes = ORM::factory('fcause')->find_all();
+        $sources = ORM::factory('Source')->find_all();
+        //$articles = ORM::factory('Article')->find_all();
+        $investigators = ORM::factory('Investigator')->find_all();
+        $chars = ORM::factory('Characteristic')->find_all();
+        $decrees = ORM::factory('Decree')->find_all();
+        $periods = ORM::factory('Period')->find_all();
+        $failure_causes = ORM::factory('Fcause')->find_all();
         //***//
 
         if(isset($_POST['submit'])){
@@ -283,13 +283,13 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
         {
             $material_info = ORM_Log::factory('material', $id);
             //Получение списков для формы
-            $sources = ORM::factory('source')->find_all();
-            //$articles = ORM::factory('article')->find_all();
-            $investigators = ORM::factory('investigator')->find_all();
-            $chars = ORM::factory('characteristic')->find_all();
-            $decrees = ORM::factory('decree')->find_all();
-            $periods = ORM::factory('period')->find_all();
-            $failure_causes = ORM::factory('fcause')->find_all();
+            $sources = ORM::factory('Source')->find_all();
+            //$articles = ORM::factory('Article')->find_all();
+            $investigators = ORM::factory('Investigator')->find_all();
+            $chars = ORM::factory('Characteristic')->find_all();
+            $decrees = ORM::factory('Decree')->find_all();
+            $periods = ORM::factory('Period')->find_all();
+            $failure_causes = ORM::factory('Fcause')->find_all();
             //***//
             if(isset($_POST['submit']))
             {
@@ -393,7 +393,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
             if(isset($_POST['id']))
             {
                 $post_id = Arr::get($_POST, 'id', 0);
-                $deleted_material = ORM::factory('material', $post_id);
+                $deleted_material = ORM::factory('Material', $post_id);
                 try
                 {
                     $deleted_material->delete();
@@ -412,7 +412,7 @@ class Controller_Admin_Material extends Controller_Back implements Controller_Ad
             }
             else
             {
-                $deleted_material = ORM::factory('material', $id);
+                $deleted_material = ORM::factory('Material', $id);
                 $content = View::factory('/back/delete');
                 $content->back_path = "/admin/material";
                 $content->back_path_text = "Вернуться назад";

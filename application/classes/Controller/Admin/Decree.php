@@ -78,14 +78,14 @@ class Controller_Admin_Decree extends Controller_Back implements Controller_Admi
     {
         $this->addScript('admin-table');
         $page = Request::$current->param('page');
-        $total_items = ORM::factory('decree')->find_all()->count();
+        $total_items = ORM::factory('Decree')->find_all()->count();
 
         $table_view = View::factory('/back/table');
         $table_view->sub_admin_menus = $this->sub_menus;    //Меню выводимое над таблицей
         $table_view->t_headers = $this->t_headers;  //Имя полей в таблице и их текстовое описание
         $table_view->caption = "Решения по материалам";
 
-        $decree = ORM::factory('decree')
+        $decree = ORM::factory('Decree')
             ->order_by('sort', 'ASC')
             ->limit($this->config->items_per_page)
             ->offset((isset($page) ? ($page-1)*$this->config->items_per_page : 0))
@@ -114,11 +114,11 @@ class Controller_Admin_Decree extends Controller_Back implements Controller_Admi
         {
             $text = Arr::get($_POST, 'text');
             $value = Arr::get($_POST, 'value');
-            $decree = ORM::factory('decree');
+            $decree = ORM::factory('Decree');
             $decree->value = $value;
             $decree->text = $text;
 
-            $last_decree = ORM::factory('decree')->order_by('sort', 'DESC')->find();
+            $last_decree = ORM::factory('Decree')->order_by('sort', 'DESC')->find();
             $decree->sort = $last_decree->sort + 1;
             try
             {
@@ -158,7 +158,7 @@ class Controller_Admin_Decree extends Controller_Back implements Controller_Admi
             $text = Arr::get($_POST, 'text');
             $value = Arr::get($_POST, 'value');
             $sort =  Arr::get($_POST, 'sort');
-            $decree = ORM::factory('decree', $id);
+            $decree = ORM::factory('Decree', $id);
             $decree->value = $value;
             $decree->text = $text;
             $decree->sort = $sort;
@@ -187,7 +187,7 @@ class Controller_Admin_Decree extends Controller_Back implements Controller_Admi
                 $content = View::factory('/back/edit_decree');
                 $content->sub_menus = $this->back_menu;
                 $content->legend = "Форма редактирования решения";
-                $decree = ORM::factory('decree', $id);
+                $decree = ORM::factory('Decree', $id);
                 $content->data = $decree;
             }
         }
@@ -203,7 +203,7 @@ class Controller_Admin_Decree extends Controller_Back implements Controller_Admi
     {
         $id = Request::$current->param('id');
         if(isset($_POST['id'])){
-            $decree = ORM::factory('decree', $id);
+            $decree = ORM::factory('Decree', $id);
             try{
                 $decree->delete();
                 $content = View::factory('back/accept');
@@ -223,7 +223,7 @@ class Controller_Admin_Decree extends Controller_Back implements Controller_Admi
                 $content->back_path = '/admin/decree';
                 $content->back_path_text = 'Вернуться назад';
             }else{
-                $decree = ORM::factory('decree', $id);
+                $decree = ORM::factory('Decree', $id);
                 $content = View::factory('/back/delete');
                 $content->id = $id;
                 $content->delete_text = "Удалить решение \"".$decree->text."\" из списка решений";

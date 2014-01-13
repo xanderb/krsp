@@ -75,7 +75,7 @@ class Controller_Admin_User extends Controller_Back {
     public function action_index()
     {
         $this->addScript('admin-table');
-        $users = ORM::factory('user')->find_all();
+        $users = ORM::factory('User')->find_all();
         $count_users = $users->count();
 
         $user_list = View::factory('/back/user_table');
@@ -97,7 +97,7 @@ class Controller_Admin_User extends Controller_Back {
     public function action_add()
     {
         if(isset($_POST['submit'])){
-            $new_user = ORM::factory('user');
+            $new_user = ORM::factory('User');
             $user_values = array(
                 'username'  => Arr::get($_POST, 'form_username', ''),
                 'email'     => Arr::get($_POST, 'form_email', ''),
@@ -119,7 +119,7 @@ class Controller_Admin_User extends Controller_Back {
                 $content->back_path_text = 'Вернуться назад к списку пользователей';
             }catch(ORM_Validation_Exception $ex){
                 $user_form = View::factory('/back/edit_user');
-                $roles = ORM::factory('role')->find_all();
+                $roles = ORM::factory('Role')->find_all();
                 $user_form->roles = $roles;
                 $user_form->legend = "Форма создания пользователя";
                 $user_form->sub_menus = $this->back_menu;
@@ -128,7 +128,7 @@ class Controller_Admin_User extends Controller_Back {
 
             }
         }else{
-            $roles = ORM::factory('role')->find_all();
+            $roles = ORM::factory('Role')->find_all();
             $user_form = View::factory('/back/edit_user');
             $user_form->roles = $roles;
             $user_form->legend = "Форма создания пользователя";
@@ -147,7 +147,7 @@ class Controller_Admin_User extends Controller_Back {
         if(isset($id) AND $id > 0){
             if(isset($_POST['id'])){
                 $post_id = Arr::get($_POST, 'id', 0);
-                $deleted_user = ORM::factory('user', $post_id);
+                $deleted_user = ORM::factory('User', $post_id);
                 try
                 {
                     $deleted_user->delete();
@@ -164,7 +164,7 @@ class Controller_Admin_User extends Controller_Back {
                     $content->back_path_text = 'Вернуться назад';
                 }
             }else{
-                $deleted_user = ORM::factory('user', $id);
+                $deleted_user = ORM::factory('User', $id);
                 $content = View::factory('/back/delete');
                 $content->back_path = "/admin/user";
                 $content->back_path_text = "Вернуться назад";
@@ -187,7 +187,7 @@ class Controller_Admin_User extends Controller_Back {
     {
         $id = Request::$current->param('id');
         if(isset($id) AND $id > 0){
-            $user_info = ORM::factory('user', $id);
+            $user_info = ORM::factory('User', $id);
             if(isset($_POST['submit'])){
                 $user_values = array(
                     'username'  => Arr::get($_POST, 'form_username', ''),
@@ -211,7 +211,7 @@ class Controller_Admin_User extends Controller_Back {
                     $content->back_path_text = 'Вернуться назад к списку пользователей';
                 }catch(ORM_Validation_Exception $ex){
                     $user_form = View::factory('/back/edit_user');
-                    $roles = ORM::factory('role')->find_all();
+                    $roles = ORM::factory('Role')->find_all();
                     $user_form->uinfo = $user_info;
                     $user_form->roles = $roles;
                     $user_form->legend = "Форма редактирования информации о пользователе";
@@ -220,7 +220,7 @@ class Controller_Admin_User extends Controller_Back {
                     $content = $user_form;
                 }
             }else{
-                $roles = ORM::factory('role')->find_all();
+                $roles = ORM::factory('Role')->find_all();
                 $user_form = View::factory('/back/edit_user');
                 $user_form->roles = $roles;
                 $user_form->uinfo = $user_info;

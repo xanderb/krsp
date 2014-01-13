@@ -40,7 +40,7 @@ class ORM_Log extends ORM {
             // Compile changed data
             $data[$column] = $this->_object[$column];
             //Loging changes
-            $log = ORM::factory('upLog');
+            $log = ORM::factory('UpLog');
             $log_values = array(
                 'table'         =>  $this->getTable(),
                 'id_obj'        =>  $this->pk(),

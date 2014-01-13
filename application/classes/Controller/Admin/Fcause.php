@@ -76,14 +76,14 @@ class Controller_Admin_Fcause extends Controller_Back implements Controller_Admi
     {
         $this->addScript('admin-table');
         $page = Request::$current->param('page');
-        $total_items = ORM::factory('fcause')->find_all()->count();
+        $total_items = ORM::factory('Fcause')->find_all()->count();
 
         $table_view = View::factory('/back/table');
         $table_view->sub_admin_menus = $this->sub_menus;    //Меню выводимое над таблицей
         $table_view->t_headers = $this->t_headers;  //Имя полей в таблице и их текстовое описание
         $table_view->caption = "Причины отказа";
 
-        $fcause = ORM::factory('fcause')
+        $fcause = ORM::factory('Fcause')
             ->order_by('sort', 'ASC')
             ->limit($this->config->items_per_page)
             ->offset((isset($page) ? ($page-1)*$this->config->items_per_page : 0))
@@ -111,11 +111,11 @@ class Controller_Admin_Fcause extends Controller_Back implements Controller_Admi
         {
             $text = Arr::get($_POST, 'text');
             $value = Arr::get($_POST, 'value');
-            $fcause = ORM::factory('fcause');
+            $fcause = ORM::factory('Fcause');
             $fcause->value = $value;
             $fcause->text = $text;
 
-            $last_fcause = ORM::factory('fcause')->order_by('sort', 'DESC')->find();
+            $last_fcause = ORM::factory('Fcause')->order_by('sort', 'DESC')->find();
             $fcause->sort = $last_fcause->sort + 1;
             try
             {
@@ -155,7 +155,7 @@ class Controller_Admin_Fcause extends Controller_Back implements Controller_Admi
             $text = Arr::get($_POST, 'text');
             $value = Arr::get($_POST, 'value');
             $sort =  Arr::get($_POST, 'sort');
-            $fcause = ORM::factory('fcause', $id);
+            $fcause = ORM::factory('Fcause', $id);
             $fcause->value = $value;
             $fcause->text = $text;
             $fcause->sort = $sort;
@@ -184,7 +184,7 @@ class Controller_Admin_Fcause extends Controller_Back implements Controller_Admi
                 $content = View::factory('/back/edit_fcause');
                 $content->sub_menus = $this->back_menu;
                 $content->legend = "Форма редактирования причины отказа";
-                $fcause = ORM::factory('fcause', $id);
+                $fcause = ORM::factory('Fcause', $id);
                 $content->data = $fcause;
             }
         }
@@ -200,7 +200,7 @@ class Controller_Admin_Fcause extends Controller_Back implements Controller_Admi
     {
         $id = Request::$current->param('id');
         if(isset($_POST['id'])){
-            $fcause = ORM::factory('fcause', $id);
+            $fcause = ORM::factory('Fcause', $id);
             try{
                 $fcause->delete();
                 $content = View::factory('back/accept');
@@ -220,7 +220,7 @@ class Controller_Admin_Fcause extends Controller_Back implements Controller_Admi
                 $content->back_path = '/admin/fcause';
                 $content->back_path_text = 'Вернуться назад';
             }else{
-                $fcause = ORM::factory('fcause', $id);
+                $fcause = ORM::factory('Fcause', $id);
                 $content = View::factory('/back/delete');
                 $content->id = $id;
                 $content->delete_text = "Удалить причину ".$fcause->text." из списка причин отказа";

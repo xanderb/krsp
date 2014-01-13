@@ -75,7 +75,7 @@ class Controller_Admin_Period extends Controller_Back implements Controller_Admi
         $table_view->sub_admin_menus = $this->sub_menus;    //Меню выводимое над таблицей
         $table_view->t_headers = $this->t_headers;  //Имя полей в таблице и их текстовое описание
 
-        $periods = ORM::factory('period')->find_all();
+        $periods = ORM::factory('Period')->find_all();
         $table_view->datas = $periods;
         $table_view->caption = "Сроки рассмотрения материалов";
 
@@ -94,10 +94,10 @@ class Controller_Admin_Period extends Controller_Back implements Controller_Admi
         if(isset($_POST['days'])){
 
             $days = Arr::get($_POST, 'days');
-            $period = ORM::factory('period');
+            $period = ORM::factory('Period');
             $period->days = $days;
 
-            $last_period = ORM::factory('period')->order_by('sort', 'DESC')->find();
+            $last_period = ORM::factory('Period')->order_by('sort', 'DESC')->find();
             $period->sort = $last_period->sort + 1;
             try{
                 $period->save();
@@ -131,7 +131,7 @@ class Controller_Admin_Period extends Controller_Back implements Controller_Admi
         if(isset($_POST['days'])){
             $id = Arr::get($_POST, 'id');
             $days = Arr::get($_POST, 'days');
-            $period = ORM::factory('period', $id);
+            $period = ORM::factory('Period', $id);
             $period->days = $days;
 
             if($period->save()){
@@ -157,7 +157,7 @@ class Controller_Admin_Period extends Controller_Back implements Controller_Admi
                 $content = View::factory('/back/edit_period');
                 $content->sub_menus = $this->back_menu;
                 $content->legend = "Форма редактирования срока рассмотрения";
-                $period = ORM::factory('period', $id);
+                $period = ORM::factory('Period', $id);
                 $content->data = $period;
             }
         }
@@ -170,7 +170,7 @@ class Controller_Admin_Period extends Controller_Back implements Controller_Admi
     public function action_delete() {
         $id = Request::$current->param('id');
         if(isset($_POST['id'])){
-            $period = ORM::factory('period', $id);
+            $period = ORM::factory('Period', $id);
             try{
                 $period->delete();
                 $content = View::factory('back/accept');
@@ -190,7 +190,7 @@ class Controller_Admin_Period extends Controller_Back implements Controller_Admi
                 $content->back_path = '/admin/period/';
                 $content->back_path_text = 'Вернуться назад';
             }else{
-                $period = ORM::factory('period', $id);
+                $period = ORM::factory('Period', $id);
                 $content = View::factory('/back/delete');
                 $content->id = $id;
                 $content->delete_text = "Удалить срок рассмотрения в ".$period->days." дней из списка";

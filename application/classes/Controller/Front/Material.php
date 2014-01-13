@@ -361,13 +361,13 @@ class Controller_Front_Material extends Controller_Front
         if($this->auth->logged_in($this->config->auth_required['front_add']) OR $this->auth->logged_in($this->config->auth_required['admin']))
         {
             //Получение списков для формы
-            $sources = ORM::factory('source')->find_all();
-            //$articles = ORM::factory('article')->find_all();
-            $investigators = ORM::factory('investigator')->find_all();
-            $chars = ORM::factory('characteristic')->find_all();
-            $decrees = ORM::factory('decree')->find_all();
-            $periods = ORM::factory('period')->find_all();
-            $failure_causes = ORM::factory('fcause')->find_all();
+            $sources = ORM::factory('Source')->find_all();
+            //$articles = ORM::factory('Article')->find_all();
+            $investigators = ORM::factory('Investigator')->find_all();
+            $chars = ORM::factory('Characteristic')->find_all();
+            $decrees = ORM::factory('Decree')->find_all();
+            $periods = ORM::factory('Period')->find_all();
+            $failure_causes = ORM::factory('Fcause')->find_all();
             //***//
 
             if(isset($_POST['submit']))
@@ -393,14 +393,14 @@ class Controller_Front_Material extends Controller_Front
                 $source_text = Arr::get($_POST, 'source_id', NULL);
                 if(!is_null($source_text))
                 {
-                    $source = ORM::factory('source')->where('text', '=', $source_text)->find();
+                    $source = ORM::factory('Source')->where('text', '=', $source_text)->find();
                     $new_material->source_id = $source->id;
                 }
 
                 $investigator_text = Arr::get($_POST, 'investigator_id', NULL);
                 if(!is_null($investigator_text))
                 {
-                    $inv = ORM::factory('investigator')->where('name', '=', $investigator_text)->find();
+                    $inv = ORM::factory('Investigator')->where('name', '=', $investigator_text)->find();
                     $new_material->investigator_id = $inv->id;
                 }
 
@@ -508,13 +508,13 @@ class Controller_Front_Material extends Controller_Front
             {
                 $material = ORM_Log::factory('material', $id);
                 //Получение списков для формы
-                $sources = ORM::factory('source')->find_all();
-                //$articles = ORM::factory('article')->find_all();
-                $investigators = ORM::factory('investigator')->find_all();
-                $chars = ORM::factory('characteristic')->find_all();
-                $decrees = ORM::factory('decree')->find_all();
-                $periods = ORM::factory('period')->find_all();
-                $failure_causes = ORM::factory('fcause')->find_all();
+                $sources = ORM::factory('Source')->find_all();
+                //$articles = ORM::factory('Article')->find_all();
+                $investigators = ORM::factory('Investigator')->find_all();
+                $chars = ORM::factory('Characteristic')->find_all();
+                $decrees = ORM::factory('Decree')->find_all();
+                $periods = ORM::factory('Period')->find_all();
+                $failure_causes = ORM::factory('Fcause')->find_all();
                 //***//
                 if(isset($_POST['submit']))
                 {
@@ -543,14 +543,14 @@ class Controller_Front_Material extends Controller_Front
                     $source_text = Arr::get($_POST, 'source_id', NULL);
                     if(!is_null($source_text))
                     {
-                        $source = ORM::factory('source')->where('text', '=', $source_text)->find();
+                        $source = ORM::factory('Source')->where('text', '=', $source_text)->find();
                         $material->source_id = $source->id;
                     }
 
                     $investigator_text = Arr::get($_POST, 'investigator_id', NULL);
                     if(!is_null($investigator_text))
                     {
-                        $inv = ORM::factory('investigator')->where('name', '=', $investigator_text)->find();
+                        $inv = ORM::factory('Investigator')->where('name', '=', $investigator_text)->find();
                         $material->investigator_id = $inv->id;
                     }
                     //***********************************************************//

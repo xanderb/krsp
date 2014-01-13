@@ -283,7 +283,7 @@ class Controller_Front_Extra extends Controller_Front
             if(isset($_POST['id']))
             {
                 $post_id = Arr::get($_POST, 'id', 0);
-                $deleted_extra = ORM::factory('extra', $post_id);
+                $deleted_extra = ORM::factory('Extra', $post_id);
                 try
                 {
                     $deleted_extra->delete();
@@ -302,7 +302,7 @@ class Controller_Front_Extra extends Controller_Front
             }
             else
             {
-                $deleted_extra = ORM::factory('extra', $id);
+                $deleted_extra = ORM::factory('Extra', $id);
                 $content = View::factory('/back/delete');
                 $content->back_path = "/extra";
                 $content->back_path_text = "Вернуться назад";
@@ -340,7 +340,7 @@ class Controller_Front_Extra extends Controller_Front
         $krsp_num = Request::$current->param('krsp', NULL);
         $year = Request::$current->param('year', NULL);
         //Ищем материал с введеными параметрами
-        $parent_material = ORM::factory('material')
+        $parent_material = ORM::factory('Material')
             ->where('krsp_num', '=', $krsp_num)
             ->and_where('work_year', '=', $year)
             ->and_where('archive', '=', 0)
@@ -363,10 +363,10 @@ class Controller_Front_Extra extends Controller_Front
         if(isset($material_id) AND !is_null($material_id))
         {
 
-            $investigators = ORM::factory('investigator')->find_all();
-            $decrees = ORM::factory('decree')->find_all();
-            $periods = ORM::factory('period')->find_all();
-            $parent_extra = ORM::factory('extra')
+            $investigators = ORM::factory('Investigator')->find_all();
+            $decrees = ORM::factory('Decree')->find_all();
+            $periods = ORM::factory('Period')->find_all();
+            $parent_extra = ORM::factory('Extra')
                 ->where('material_id', '=', $material_id)
                 ->order_by('decree_cancel_date', 'DESC')
                 ->offset(0)
@@ -389,7 +389,7 @@ class Controller_Front_Extra extends Controller_Front
                 $investigator_text = Arr::get($_POST, 'investigator_id', NULL);
                 if(!is_null($investigator_text))
                 {
-                    $inv = ORM::factory('investigator')->where('name', '=', $investigator_text)->find();
+                    $inv = ORM::factory('Investigator')->where('name', '=', $investigator_text)->find();
                     $new_extra->investigator_id = $inv->id;
                 }
 
@@ -442,8 +442,8 @@ class Controller_Front_Extra extends Controller_Front
             if(isset($wrap_error))
                 $content->error = $wrap_error;
 
-            $krsp_num_obj = ORM::factory('material')->select('krsp_num')->distinct('krsp_num')->group_by('krsp_num')->having('krsp_num', '!=', NULL)->find_all();
-            $year_obj = ORM::factory('material')->select('work_year')->distinct('work_year')->group_by('work_year')->having('work_year', '!=', NULL)->find_all();
+            $krsp_num_obj = ORM::factory('Material')->select('krsp_num')->distinct('krsp_num')->group_by('krsp_num')->having('krsp_num', '!=', NULL)->find_all();
+            $year_obj = ORM::factory('Material')->select('work_year')->distinct('work_year')->group_by('work_year')->having('work_year', '!=', NULL)->find_all();
             $content->krsps = Help::array_to_string($krsp_num_obj->as_array(NULL, 'krsp_num'));
             $content->years = Help::array_to_string($year_obj->as_array(NULL, 'work_year'));
             $content->sub_menus = $this->back_menu;
@@ -467,10 +467,10 @@ class Controller_Front_Extra extends Controller_Front
         $extra_id = Request::$current->param('id');
         if(isset($extra_id) AND $extra_id > 0)
         {
-            $extra = ORM::factory('extra', $extra_id);
-            $investigators = ORM::factory('investigator')->find_all();
-            $decrees = ORM::factory('decree')->find_all();
-            $periods = ORM::factory('period')->find_all();
+            $extra = ORM::factory('Extra', $extra_id);
+            $investigators = ORM::factory('Investigator')->find_all();
+            $decrees = ORM::factory('Decree')->find_all();
+            $periods = ORM::factory('Period')->find_all();
             if(isset($_POST['extra-submit']))
             {
                 $extra->values(
@@ -485,7 +485,7 @@ class Controller_Front_Extra extends Controller_Front
                 $investigator_text = Arr::get($_POST, 'investigator_id', NULL);
                 if(!is_null($investigator_text))
                 {
-                    $inv = ORM::factory('investigator')->where('name', '=', $investigator_text)->find();
+                    $inv = ORM::factory('Investigator')->where('name', '=', $investigator_text)->find();
                     $extra->investigator_id = $inv->id;
                 }
 

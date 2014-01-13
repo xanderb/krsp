@@ -78,14 +78,14 @@ class Controller_Admin_Char extends Controller_Back implements Controller_Admin_
     {
         $this->addScript('admin-table');
         $page = Request::$current->param('page');
-        $total_items = ORM::factory('characteristic')->find_all()->count();
+        $total_items = ORM::factory('Characteristic')->find_all()->count();
 
         $table_view = View::factory('/back/table');
         $table_view->sub_admin_menus = $this->sub_menus;    //Меню выводимое над таблицей
         $table_view->t_headers = $this->t_headers;  //Имя полей в таблице и их текстовое описание
         $table_view->caption = "Характеристики";
 
-        $char = ORM::factory('characteristic')
+        $char = ORM::factory('Characteristic')
             ->order_by('sort', 'ASC')
             ->limit($this->config->items_per_page)
             ->offset((isset($page) ? ($page-1)*$this->config->items_per_page : 0))
@@ -113,11 +113,11 @@ class Controller_Admin_Char extends Controller_Back implements Controller_Admin_
         {
             $text = Arr::get($_POST, 'text');
             $value = Arr::get($_POST, 'value');
-            $char = ORM::factory('characteristic');
+            $char = ORM::factory('Characteristic');
             $char->value = $value;
             $char->text = $text;
 
-            $last_char = ORM::factory('characteristic')->order_by('sort', 'DESC')->find();
+            $last_char = ORM::factory('Characteristic')->order_by('sort', 'DESC')->find();
             $char->sort = $last_char->sort + 1;
             try
             {
@@ -157,7 +157,7 @@ class Controller_Admin_Char extends Controller_Back implements Controller_Admin_
             $text = Arr::get($_POST, 'text');
             $value = Arr::get($_POST, 'value');
             $sort =  Arr::get($_POST, 'sort');
-            $char = ORM::factory('characteristic', $id);
+            $char = ORM::factory('Characteristic', $id);
             $char->value = $value;
             $char->text = $text;
             $char->sort = $sort;
@@ -186,7 +186,7 @@ class Controller_Admin_Char extends Controller_Back implements Controller_Admin_
                 $content = View::factory('/back/edit_char');
                 $content->sub_menus = $this->back_menu;
                 $content->legend = "Форма редактирования характеристики";
-                $char = ORM::factory('characteristic', $id);
+                $char = ORM::factory('Characteristic', $id);
                 $content->data = $char;
             }
         }
@@ -202,7 +202,7 @@ class Controller_Admin_Char extends Controller_Back implements Controller_Admin_
     {
         $id = Request::$current->param('id');
         if(isset($_POST['id'])){
-            $char = ORM::factory('characteristic', $id);
+            $char = ORM::factory('Characteristic', $id);
             try{
                 $char->delete();
                 $content = View::factory('back/accept');
@@ -222,7 +222,7 @@ class Controller_Admin_Char extends Controller_Back implements Controller_Admin_
                 $content->back_path = '/admin/char';
                 $content->back_path_text = 'Вернуться назад';
             }else{
-                $char = ORM::factory('characteristic', $id);
+                $char = ORM::factory('Characteristic', $id);
                 $content = View::factory('/back/delete');
                 $content->id = $id;
                 $content->delete_text = "Удалить \"".$char->text."\" из списка характеристик";

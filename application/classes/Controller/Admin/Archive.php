@@ -124,7 +124,7 @@ class Controller_Admin_Archive extends Controller_Back
     public function action_index()
     {
         $this->addScript('admin-table'); //Скрипты выбора поля для редактирования
-        $total_items = ORM::factory('material')->where('archive', '=', 1)->find_all()->count();
+        $total_items = ORM::factory('Material')->where('archive', '=', 1)->find_all()->count();
         $page = Request::$current->param('page');
 
         /*Рендер таблицы с материалами*/

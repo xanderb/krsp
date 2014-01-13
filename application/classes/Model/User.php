@@ -24,7 +24,7 @@ class Model_User extends Model_Auth_User
     );
 
     public static function render_table(){
-        $users_list = ORM::factory('user')
+        $users_list = ORM::factory('User')
             ->order_by('id')
             ->find_all();
 

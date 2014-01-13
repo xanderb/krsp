@@ -70,7 +70,7 @@ class Controller_Admin_Role extends Controller_Back {
         $table_view->t_headers = $this->t_headers;  //Имя полей в таблице и их текстовое описание
         $table_view->caption = "Роли пользователей";
 
-        $role = ORM::factory('role')->find_all();
+        $role = ORM::factory('Role')->find_all();
         $table_view->datas = $role;
         $admin_view = View::factory('/back/control_panel');
         $admin_view->p_title = 'Роли пользователей'; //заголовок выводимый на страницу в h1
@@ -87,7 +87,7 @@ class Controller_Admin_Role extends Controller_Back {
         {
             $name = Arr::get($_POST, 'name');
             $description = Arr::get($_POST, 'description');
-            $role = ORM::factory('role');
+            $role = ORM::factory('Role');
             $role->name = $name;
             $role->description = $description;
 
@@ -132,7 +132,7 @@ class Controller_Admin_Role extends Controller_Back {
                 $description = Arr::get($_POST, 'description');
                 $post_id = Arr::get($_POST, 'id', 0);
 
-                $role = ORM::factory('role', $post_id);
+                $role = ORM::factory('Role', $post_id);
                 $role->name = $name;
                 $role->description = $description;
 
@@ -155,7 +155,7 @@ class Controller_Admin_Role extends Controller_Back {
             }
             else
             {
-                $role = ORM::factory('role', $id);
+                $role = ORM::factory('Role', $id);
                 $content = View::factory('/back/edit_role');
                 $content->legend = "Форма редактирования роли";
                 $content->data = $role;
@@ -181,7 +181,7 @@ class Controller_Admin_Role extends Controller_Back {
         if(isset($id) AND $id > 0){
             if(isset($_POST['id'])){
                 $post_id = Arr::get($_POST, 'id', 0);
-                $deleted_role = ORM::factory('role', $post_id);
+                $deleted_role = ORM::factory('Role', $post_id);
                 try
                 {
                     $deleted_role->delete();
@@ -198,7 +198,7 @@ class Controller_Admin_Role extends Controller_Back {
                     $content->back_path_text = 'Вернуться назад';
                 }
             }else{
-                $deleted_role = ORM::factory('role', $id);
+                $deleted_role = ORM::factory('Role', $id);
                 $content = View::factory('/back/delete');
                 $content->back_path = "/admin/role";
                 $content->back_path_text = "Вернуться назад";

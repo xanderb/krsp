@@ -72,7 +72,7 @@ class Controller_Admin_Option extends Controller_Back
         $table_view->t_headers = $this->t_headers;  //Имя полей в таблице и их текстовое описание
         $table_view->caption = "Параметры приложения";
 
-        $options = ORM::factory('option')->find_all();
+        $options = ORM::factory('Option')->find_all();
         $table_view->options = $options;
 
 
@@ -97,7 +97,7 @@ class Controller_Admin_Option extends Controller_Back
                 'label' => Arr::get($_POST, 'label', NULL),
                 'type' => Arr::get($_POST, 'type', NULL)
             );
-            $option = ORM::factory('option');
+            $option = ORM::factory('Option');
             $option->values($values);
             try
             {
@@ -143,7 +143,7 @@ class Controller_Admin_Option extends Controller_Back
                     'label' => Arr::get($_POST, 'label', NULL),
                     'type' => Arr::get($_POST, 'type', NULL)
                 );
-                $option = ORM::factory('option', $id);
+                $option = ORM::factory('Option', $id);
                 $option->values($values);
                 try
                 {
@@ -164,7 +164,7 @@ class Controller_Admin_Option extends Controller_Back
             }
             else
             {
-                $option = ORM::factory('option', $id);
+                $option = ORM::factory('Option', $id);
                 $content = View::factory('back/edit_option');
                 $content->sub_menus = $this->back_menu;
                 $content->legend = "Форма изменения системного параметра";
@@ -188,7 +188,7 @@ class Controller_Admin_Option extends Controller_Back
     {
         $id = Request::$current->param('id');
         if(isset($_POST['id'])){
-            $option = ORM::factory('option', $id);
+            $option = ORM::factory('Option', $id);
             try{
                 $option->delete();
                 $content = View::factory('back/accept');
@@ -208,7 +208,7 @@ class Controller_Admin_Option extends Controller_Back
                 $content->back_path = '/admin/option';
                 $content->back_path_text = 'Вернуться назад';
             }else{
-                $option = ORM::factory('option', $id);
+                $option = ORM::factory('Option', $id);
                 $content = View::factory('/back/delete');
                 $content->id = $id;
                 $content->delete_text = "Удалить параметр ".$option->param;
@@ -231,7 +231,7 @@ class Controller_Admin_Option extends Controller_Back
         {
             foreach($values as $key => $val)
             {
-                $option = ORM::factory('option', $key);
+                $option = ORM::factory('Option', $key);
                 $option->value = $val;
                 $option->save();
             }
@@ -247,7 +247,7 @@ class Controller_Admin_Option extends Controller_Back
             if(!is_null($id))
             {
                 $value = Arr::get($_POST, 'value', 0);
-                $option = ORM::factory('option', $id);
+                $option = ORM::factory('Option', $id);
                 if(is_array($value))
                     $value = $value[$id];
                 $option->value = $value;

@@ -139,24 +139,24 @@ class Help
         $post_filters = $session->get('filters');
         if($type == 'checkbox')
         {
-            $sources = ORM::factory('source')->order_by('sort')->find_all();
-            $articles = ORM::factory('article')-> order_by('sort')->find_all();
+            $sources = ORM::factory('Source')->order_by('sort')->find_all();
+            $articles = ORM::factory('Article')-> order_by('sort')->find_all();
 
             $filters = View::factory('front/filters');
         }
         elseif($type == 'select')
         {
-            $sources = ORM::factory('source')->order_by('sort')->find_all()->as_array('id', 'text');
-            $articles_value = ORM::factory('article')-> order_by('sort')->find_all()->as_array('id', 'value');
-            $articles_text = ORM::factory('article')-> order_by('sort')->find_all()->as_array('id', 'text');
+            $sources = ORM::factory('Source')->order_by('sort')->find_all()->as_array('id', 'text');
+            $articles_value = ORM::factory('Article')-> order_by('sort')->find_all()->as_array('id', 'value');
+            $articles_text = ORM::factory('Article')-> order_by('sort')->find_all()->as_array('id', 'text');
             foreach($articles_value as $key => $value){
                 $articles[$key] = $value.' - '.$articles_text[$key];
             }
-            $investigators = ORM::factory('investigator')->order_by('sort')->find_all()->as_array('id', 'name');
-            $decrees = ORM::factory('decree')->order_by('sort')->find_all()->as_array('id', 'text');
-            $periods = ORM::factory('period')->order_by('sort')->find_all()->as_array('id', 'days');
-            $chars = ORM::factory('characteristic')->order_by('sort')->find_all()->as_array('id', 'text');
-            $failure_causes = ORM::factory('fcause')->order_by('sort')->find_all()->as_array('id', 'text');
+            $investigators = ORM::factory('Investigator')->order_by('sort')->find_all()->as_array('id', 'name');
+            $decrees = ORM::factory('Decree')->order_by('sort')->find_all()->as_array('id', 'text');
+            $periods = ORM::factory('Period')->order_by('sort')->find_all()->as_array('id', 'days');
+            $chars = ORM::factory('Characteristic')->order_by('sort')->find_all()->as_array('id', 'text');
+            $failure_causes = ORM::factory('Fcause')->order_by('sort')->find_all()->as_array('id', 'text');
 
 
             $filters = View::factory('front/select_filters');

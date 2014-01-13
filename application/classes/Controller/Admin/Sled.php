@@ -78,14 +78,14 @@ class Controller_Admin_Sled extends Controller_Back implements Controller_Admin_
     {
         $this->addScript('admin-table');
         $page = Request::$current->param('page');
-        $total_items = ORM::factory('investigator')->find_all()->count();
+        $total_items = ORM::factory('Investigator')->find_all()->count();
 
         $table_view = View::factory('/back/table');
         $table_view->sub_admin_menus = $this->sub_menus;    //Меню выводимое над таблицей
         $table_view->t_headers = $this->t_headers;  //Имя полей в таблице и их текстовое описание
         $table_view->caption = "Список следователей";
 
-        $invest = ORM::factory('investigator')
+        $invest = ORM::factory('Investigator')
             ->order_by('sort', 'ASC')
             ->limit($this->config->items_per_page)
             ->offset((isset($page) ? ($page-1)*$this->config->items_per_page : 0))
@@ -113,11 +113,11 @@ class Controller_Admin_Sled extends Controller_Back implements Controller_Admin_
         {
             $name = Arr::get($_POST, 'name');
             $position = Arr::get($_POST, 'position');
-            $investigator = ORM::factory('investigator');
+            $investigator = ORM::factory('Investigator');
             $investigator->name = $name;
             $investigator->position = $position;
 
-            $last_investigator = ORM::factory('investigator')->order_by('sort', 'DESC')->find();
+            $last_investigator = ORM::factory('Investigator')->order_by('sort', 'DESC')->find();
             $investigator->sort = $last_investigator->sort + 1;
             try
             {
@@ -157,7 +157,7 @@ class Controller_Admin_Sled extends Controller_Back implements Controller_Admin_
             $name = Arr::get($_POST, 'name');
             $position = Arr::get($_POST, 'position');
             $sort =  Arr::get($_POST, 'sort');
-            $investigator = ORM::factory('investigator', $id);
+            $investigator = ORM::factory('Investigator', $id);
             $investigator->name = $name;
             $investigator->position = $position;
             $investigator->sort = $sort;
@@ -186,7 +186,7 @@ class Controller_Admin_Sled extends Controller_Back implements Controller_Admin_
                 $content = View::factory('/back/edit_investigator');
                 $content->sub_menus = $this->back_menu;
                 $content->legend = "Форма редактирования следователя";
-                $investigator = ORM::factory('investigator', $id);
+                $investigator = ORM::factory('Investigator', $id);
                 $content->data = $investigator;
             }
         }
@@ -202,7 +202,7 @@ class Controller_Admin_Sled extends Controller_Back implements Controller_Admin_
     {
         $id = Request::$current->param('id');
         if(isset($_POST['id'])){
-            $investigator = ORM::factory('investigator', $id);
+            $investigator = ORM::factory('Investigator', $id);
             try{
                 $investigator->delete();
                 $content = View::factory('back/accept');
@@ -222,7 +222,7 @@ class Controller_Admin_Sled extends Controller_Back implements Controller_Admin_
                 $content->back_path = '/admin/sled';
                 $content->back_path_text = 'Вернуться назад';
             }else{
-                $investigator = ORM::factory('investigator', $id);
+                $investigator = ORM::factory('Investigator', $id);
                 $content = View::factory('/back/delete');
                 $content->id = $id;
                 $content->delete_text = "Удалить ".$investigator->name." из списка следователей";

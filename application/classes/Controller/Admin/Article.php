@@ -78,14 +78,14 @@ class Controller_Admin_Article extends Controller_Back implements Controller_Adm
     {
         $this->addScript('admin-table');
         $page = Request::$current->param('page');
-        $total_items = ORM::factory('article')->find_all()->count();
+        $total_items = ORM::factory('Article')->find_all()->count();
 
         $table_view = View::factory('/back/table');
         $table_view->sub_admin_menus = $this->sub_menus;    //Меню выводимое над таблицей
         $table_view->t_headers = $this->t_headers;  //Имя полей в таблице и их текстовое описание
         $table_view->caption = "Статьи";
 
-        $article = ORM::factory('article')
+        $article = ORM::factory('Article')
             ->order_by('sort', 'ASC')
             ->limit($this->config->items_per_page)
             ->offset((isset($page) ? ($page-1)*$this->config->items_per_page : 0))
@@ -113,11 +113,11 @@ class Controller_Admin_Article extends Controller_Back implements Controller_Adm
         {
             $text = Arr::get($_POST, 'text');
             $value = Arr::get($_POST, 'value');
-            $article = ORM::factory('article');
+            $article = ORM::factory('Article');
             $article->value = $value;
             $article->text = $text;
 
-            $last_article = ORM::factory('article')->order_by('sort', 'DESC')->find();
+            $last_article = ORM::factory('Article')->order_by('sort', 'DESC')->find();
             $article->sort = $last_article->sort + 1;
             try
             {
@@ -157,7 +157,7 @@ class Controller_Admin_Article extends Controller_Back implements Controller_Adm
             $text = Arr::get($_POST, 'text');  //TODO сделать nr2br для сохранения html-ных переносов строк
             $value = Arr::get($_POST, 'value');
             $sort =  Arr::get($_POST, 'sort');
-            $article = ORM::factory('article', $id);
+            $article = ORM::factory('Article', $id);
             $article->value = $value;
             $article->text = $text;
             $article->sort = $sort;
@@ -187,7 +187,7 @@ class Controller_Admin_Article extends Controller_Back implements Controller_Adm
                 $content->sub_menus = $this->back_menu;
                 $content->legend = 'Форма редактирования статьи';
 
-                $article = ORM::factory('article', $id);
+                $article = ORM::factory('Article', $id);
                 $content->data = $article;
             }
         }
@@ -203,7 +203,7 @@ class Controller_Admin_Article extends Controller_Back implements Controller_Adm
     {
         $id = Request::$current->param('id');
         if(isset($_POST['id'])){
-            $article = ORM::factory('article', $id);
+            $article = ORM::factory('Article', $id);
             try{
                 $article->delete();
                 $content = View::factory('back/accept');
@@ -223,7 +223,7 @@ class Controller_Admin_Article extends Controller_Back implements Controller_Adm
                 $content->back_path = '/admin/article';
                 $content->back_path_text = 'Вернуться назад';
             }else{
-                $article = ORM::factory('article', $id);
+                $article = ORM::factory('Article', $id);
                 $content = View::factory('/back/delete');
                 $content->id = $id;
                 $content->delete_text = "Удалить статью ".$article->value." \"".$article->text."\" из списка статей";

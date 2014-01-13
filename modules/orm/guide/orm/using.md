@@ -81,7 +81,7 @@ To set multiple values at once, use [ORM::values]
 	
 	try
 	{
-		$user = ORM::factory('user')
+		$user = ORM::factory('User')
 			->values($this->request->post(), array('username','password'))
 			->create();
 	}

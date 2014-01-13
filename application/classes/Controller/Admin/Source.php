@@ -79,14 +79,14 @@ class Controller_Admin_Source extends Controller_Back implements Controller_Admi
     {
         $this->addScript('admin-table');
         $page = Request::$current->param('page');
-        $total_items = ORM::factory('source')->find_all()->count();
+        $total_items = ORM::factory('Source')->find_all()->count();
 
         $table_view = View::factory('/back/table');
         $table_view->sub_admin_menus = $this->sub_menus;    //Меню выводимое над таблицей
         $table_view->t_headers = $this->t_headers;  //Имя полей в таблице и их текстовое описание
         $table_view->caption = "Источники сообщений";
 
-        $periods = ORM::factory('source')
+        $periods = ORM::factory('Source')
             ->order_by('sort', 'ASC')
             ->limit($this->config->items_per_page)
             ->offset((isset($page) ? ($page-1)*$this->config->items_per_page : 0))
@@ -115,11 +115,11 @@ class Controller_Admin_Source extends Controller_Back implements Controller_Admi
         {
             $text = Arr::get($_POST, 'text');
             $value = Arr::get($_POST, 'value');
-            $source = ORM::factory('source');
+            $source = ORM::factory('Source');
             $source->value = $value;
             $source->text = $text;
 
-            $last_source = ORM::factory('source')->order_by('sort', 'DESC')->find();
+            $last_source = ORM::factory('Source')->order_by('sort', 'DESC')->find();
             $source->sort = $last_source->sort + 1;
             try
             {
@@ -159,7 +159,7 @@ class Controller_Admin_Source extends Controller_Back implements Controller_Admi
             $text = Arr::get($_POST, 'text');
             $value = Arr::get($_POST, 'value');
             $sort =  Arr::get($_POST, 'sort');
-            $source = ORM::factory('source', $id);
+            $source = ORM::factory('Source', $id);
             $source->value = $value;
             $source->text = $text;
             $source->sort = $sort;
@@ -187,7 +187,7 @@ class Controller_Admin_Source extends Controller_Back implements Controller_Admi
                 $content = View::factory('/back/edit_source');
                 $content->sub_menus = $this->back_menu;
                 $content->legend = "Форма редактирования источника сообщения";
-                $source = ORM::factory('source', $id);
+                $source = ORM::factory('Source', $id);
                 $content->data = $source;
             }
         }
@@ -203,7 +203,7 @@ class Controller_Admin_Source extends Controller_Back implements Controller_Admi
     {
         $id = Request::$current->param('id');
         if(isset($_POST['id'])){
-            $source = ORM::factory('source', $id);
+            $source = ORM::factory('Source', $id);
             try{
                 $source->delete();
                 $content = View::factory('back/accept');
@@ -223,7 +223,7 @@ class Controller_Admin_Source extends Controller_Back implements Controller_Admi
                 $content->back_path = '/admin/source';
                 $content->back_path_text = 'Вернуться назад';
             }else{
-                $source = ORM::factory('source', $id);
+                $source = ORM::factory('Source', $id);
                 $content = View::factory('/back/delete');
                 $content->id = $id;
                 $content->delete_text = "Удалить ".$source->text." из источников сообщений";

@@ -158,10 +158,10 @@ class Controller_Admin_Extra extends Controller_Back implements Controller_Admin
 
         if(isset($material_id) AND !is_null($material_id))
         {
-            $investigators = ORM::factory('investigator')->find_all();
-            $decrees = ORM::factory('decree')->find_all();
-            $periods = ORM::factory('period')->find_all();
-            $parent_extra = ORM::factory('extra')
+            $investigators = ORM::factory('Investigator')->find_all();
+            $decrees = ORM::factory('Decree')->find_all();
+            $periods = ORM::factory('Period')->find_all();
+            $parent_extra = ORM::factory('Extra')
                 ->where('material_id', '=', $material_id)
                 ->order_by('decree_cancel_date', 'DESC')
                 ->offset(0)
@@ -184,7 +184,7 @@ class Controller_Admin_Extra extends Controller_Back implements Controller_Admin
                 $investigator_text = Arr::get($_POST, 'investigator_id', NULL);
                 if(!is_null($investigator_text))
                 {
-                    $inv = ORM::factory('investigator')->where('name', '=', $investigator_text)->find();
+                    $inv = ORM::factory('Investigator')->where('name', '=', $investigator_text)->find();
                     $new_extra->investigator_id = $inv->id;
                 }
 
@@ -262,10 +262,10 @@ class Controller_Admin_Extra extends Controller_Back implements Controller_Admin
         $extra_id = Request::$current->param('id');
         if(isset($extra_id) AND $extra_id > 0)
         {
-            $extra = ORM::factory('extra', $extra_id);
-            $investigators = ORM::factory('investigator')->find_all();
-            $decrees = ORM::factory('decree')->find_all();
-            $periods = ORM::factory('period')->find_all();
+            $extra = ORM::factory('Extra', $extra_id);
+            $investigators = ORM::factory('Investigator')->find_all();
+            $decrees = ORM::factory('Decree')->find_all();
+            $periods = ORM::factory('Period')->find_all();
             if(isset($_POST['extra-submit']))
             {
                 $extra->values(
@@ -280,7 +280,7 @@ class Controller_Admin_Extra extends Controller_Back implements Controller_Admin
                 $investigator_text = Arr::get($_POST, 'investigator_id', NULL);
                 if(!is_null($investigator_text))
                 {
-                    $inv = ORM::factory('investigator')->where('name', '=', $investigator_text)->find();
+                    $inv = ORM::factory('Investigator')->where('name', '=', $investigator_text)->find();
                     $extra->investigator_id = $inv->id;
                 }
 
@@ -355,7 +355,7 @@ class Controller_Admin_Extra extends Controller_Back implements Controller_Admin
             if(isset($_POST['id']))
             {
                 $post_id = Arr::get($_POST, 'id', 0);
-                $deleted_extra = ORM::factory('extra', $post_id);
+                $deleted_extra = ORM::factory('Extra', $post_id);
                 try
                 {
                     $deleted_extra->delete();
@@ -374,7 +374,7 @@ class Controller_Admin_Extra extends Controller_Back implements Controller_Admin
             }
             else
             {
-                $deleted_extra = ORM::factory('extra', $id);
+                $deleted_extra = ORM::factory('Extra', $id);
                 $content = View::factory('/back/delete');
                 $content->back_path = "/admin/extra";
                 $content->back_path_text = "Вернуться назад";

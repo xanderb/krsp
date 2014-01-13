@@ -52,11 +52,11 @@ class Model_Option  extends ORM
                     if(isset($p) AND $p !== '')
                         $_in_params[] = $p;
                 }
-                $obj = ORM::factory('option')->where('param', 'IN', $_in_params)->find_all();
+                $obj = ORM::factory('Option')->where('param', 'IN', $_in_params)->find_all();
             }
             else
             {
-                $obj = ORM::factory('option')->where('param', '=', $param)->find();
+                $obj = ORM::factory('Option')->where('param', '=', $param)->find();
             }
             return $obj;
         }
@@ -68,10 +68,10 @@ class Model_Option  extends ORM
         if(isset($option))
         {
             if(isset($option['id']))
-                $obj = ORM::factory('option', $option['id']);
+                $obj = ORM::factory('Option', $option['id']);
             else
             {
-                $obj = ORM::factory('option');
+                $obj = ORM::factory('Option');
                 $obj->values($option);
                 try
                 {
